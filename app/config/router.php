@@ -1,7 +1,12 @@
 <?php
 
 $router = $di->getRouter();
+/* routing login */
 
-// Define your routes here
+$router->addGet('/','Index::index');
+
+$router->addPost('/','Index::login');
+
+$router->addGet('/prueba','Prueba::index')->setName('prueba');
 
 $router->handle();

@@ -8,7 +8,8 @@ class PruebaController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-        var_dump(Bibliotecarios::findFirst(1)->bibliotecas->nombre);
+        $this->view->pick('prueba/prueba');
+
     }
 
 }
