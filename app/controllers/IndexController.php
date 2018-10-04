@@ -13,27 +13,31 @@ class IndexController extends ControllerBase
 
     public function loginAction(){
         $this->view->disable();
-        $response= new Response();
+
         $name=$this->request->getPost('username');
         $password=$this->request->getPost('password');
   
 
         $user=Users::findFirst("username='".$name."'");
-        $user->password=$this->security->hash($user->password);
+
         if($user){
             if($this->security->checkHash($password,$user->password)){
+               // creando session id and username
+
                 $this->session->set("id", $user->id);
                 $this->session->set("username",$user->username);
+              
+                if($user->roles->nombre='Administrador')
+                    $this->response->redirect('/administrador');
 
-
-
-                var_dump('exito');
-            }
-
+                elseif($user->roles->nombre='Bibliotecario')
+                    $this->response->redirect('/bibliotecario');   
+                           
+        }
+        else{
+            return $this->response->redirect('/');
         }
 
-        var_dump($password);
-        var_dump($user->password);
     }
 }
-
+}
