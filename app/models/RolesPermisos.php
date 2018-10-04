@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Subcategorias extends \Phalcon\Mvc\Model
+class RolesPermisos extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -13,27 +13,15 @@ class Subcategorias extends \Phalcon\Mvc\Model
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $nombre;
-
-    /**
-     *
-     * @var string
-     */
-    public $descripcion;
-
-    /**
-     *
-     * @var string
-     */
-    public $codigo;
+    public $idrol;
 
     /**
      *
      * @var integer
      */
-    public $idcategoria;
+    public $idpermiso;
 
     /**
      * Initialize method for model.
@@ -41,9 +29,9 @@ class Subcategorias extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("subcategorias");
-        $this->hasMany('id', 'App\Models\Materialesbibliograficos', 'idsubcategoria', ['alias' => 'Materialesbibliograficos']);
-        $this->belongsTo('idcategoria', 'App\Models\Categorias', 'id', ['alias' => 'Categorias']);
+        $this->setSource("roles_permisos");
+        $this->belongsTo('idpermiso', 'App\Models\Permisos', 'id', ['alias' => 'Permisos']);
+        $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
     }
 
     /**
@@ -53,14 +41,14 @@ class Subcategorias extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'subcategorias';
+        return 'roles_permisos';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Subcategorias[]|Subcategorias|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return RolesPermisos[]|RolesPermisos|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -71,7 +59,7 @@ class Subcategorias extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Subcategorias|\Phalcon\Mvc\Model\ResultInterface
+     * @return RolesPermisos|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

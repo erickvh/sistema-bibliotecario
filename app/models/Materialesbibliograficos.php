@@ -54,18 +54,24 @@ class Materialesbibliograficos extends \Phalcon\Mvc\Model
     public $idbiblioteca;
 
     /**
+     *
+     * @var integer
+     */
+    public $idsubcategoria;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
         $this->setSource("materialesbibliograficos");
-        $this->hasMany('id', 'App\Models\Autores', 'idmaterial', ['alias' => 'Autores']);
         $this->hasMany('id', 'App\Models\Libros', 'idmaterial', ['alias' => 'Libros']);
+        $this->hasMany('id', 'App\Models\MaterialesAutores', 'idmaterial', ['alias' => 'MaterialesAutores']);
         $this->hasMany('id', 'App\Models\Recursos', 'idmaterial', ['alias' => 'Recursos']);
-        $this->hasMany('id', 'App\Models\Subcategorias', 'idcategoria', ['alias' => 'Subcategorias']);
         $this->hasMany('id', 'App\Models\Unidades', 'idmaterial', ['alias' => 'Unidades']);
         $this->belongsTo('idbiblioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
+        $this->belongsTo('idsubcategoria', 'App\Models\Subcategorias', 'id', ['alias' => 'Subcategorias']);
     }
 
     /**

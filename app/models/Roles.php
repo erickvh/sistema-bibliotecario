@@ -30,7 +30,8 @@ class Roles extends \Phalcon\Mvc\Model
     {
         $this->setSchema("public");
         $this->setSource("roles");
-        $this->hasMany('id', 'App\Models\UsersRoles', 'idrol', ['alias' => 'UsersRoles']);
+        $this->hasMany('id', 'App\Models\RolesPermisos', 'idrol', ['alias' => 'RolesPermisos']);
+        $this->hasMany('id', 'App\Models\Users', 'idrol', ['alias' => 'Users']);
     }
 
     /**

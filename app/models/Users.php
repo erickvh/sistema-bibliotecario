@@ -51,6 +51,12 @@ class Users extends \Phalcon\Mvc\Model
     public $sexo;
 
     /**
+     *
+     * @var integer
+     */
+    public $idrol;
+
+    /**
      * Validations and business logic
      *
      * @return boolean
@@ -80,7 +86,7 @@ class Users extends \Phalcon\Mvc\Model
         $this->setSchema("public");
         $this->setSource("users");
         $this->hasMany('id', 'App\Models\Bibliotecarios', 'iduser', ['alias' => 'Bibliotecarios']);
-        $this->hasMany('id', 'App\Models\UsersRoles', 'iduser', ['alias' => 'UsersRoles']);
+        $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
     }
 
     /**

@@ -36,19 +36,13 @@ class Autores extends \Phalcon\Mvc\Model
     public $sexo;
 
     /**
-     *
-     * @var integer
-     */
-    public $idmaterial;
-
-    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
         $this->setSource("autores");
-        $this->belongsTo('idmaterial', 'App\Models\Materialesbibliograficos', 'id', ['alias' => 'Materialesbibliograficos']);
+        $this->hasMany('id', 'App\Models\MaterialesAutores', 'idautor', ['alias' => 'MaterialesAutores']);
     }
 
     /**

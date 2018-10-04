@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class UsersRoles extends \Phalcon\Mvc\Model
+class MaterialesAutores extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,13 +15,13 @@ class UsersRoles extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
-    public $iduser;
+    public $idmaterial;
 
     /**
      *
      * @var integer
      */
-    public $idrol;
+    public $idautor;
 
     /**
      * Initialize method for model.
@@ -29,9 +29,9 @@ class UsersRoles extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("users_roles");
-        $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
-        $this->belongsTo('iduser', 'App\Models\Users', 'id', ['alias' => 'Users']);
+        $this->setSource("materiales_autores");
+        $this->belongsTo('idautor', 'App\Models\Autores', 'id', ['alias' => 'Autores']);
+        $this->belongsTo('idmaterial', 'App\Models\Materialesbibliograficos', 'id', ['alias' => 'Materialesbibliograficos']);
     }
 
     /**
@@ -41,14 +41,14 @@ class UsersRoles extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'users_roles';
+        return 'materiales_autores';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return UsersRoles[]|UsersRoles|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return MaterialesAutores[]|MaterialesAutores|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -59,7 +59,7 @@ class UsersRoles extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return UsersRoles|\Phalcon\Mvc\Model\ResultInterface
+     * @return MaterialesAutores|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

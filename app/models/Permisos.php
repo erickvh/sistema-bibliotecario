@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Subcategorias extends \Phalcon\Mvc\Model
+class Permisos extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,7 +15,7 @@ class Subcategorias extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $nombre;
+    public $tipo;
 
     /**
      *
@@ -24,26 +24,13 @@ class Subcategorias extends \Phalcon\Mvc\Model
     public $descripcion;
 
     /**
-     *
-     * @var string
-     */
-    public $codigo;
-
-    /**
-     *
-     * @var integer
-     */
-    public $idcategoria;
-
-    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("subcategorias");
-        $this->hasMany('id', 'App\Models\Materialesbibliograficos', 'idsubcategoria', ['alias' => 'Materialesbibliograficos']);
-        $this->belongsTo('idcategoria', 'App\Models\Categorias', 'id', ['alias' => 'Categorias']);
+        $this->setSource("permisos");
+        $this->hasMany('id', 'App\Models\RolesPermisos', 'idpermiso', ['alias' => 'RolesPermisos']);
     }
 
     /**
@@ -53,14 +40,14 @@ class Subcategorias extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'subcategorias';
+        return 'permisos';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Subcategorias[]|Subcategorias|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Permisos[]|Permisos|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -71,7 +58,7 @@ class Subcategorias extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Subcategorias|\Phalcon\Mvc\Model\ResultInterface
+     * @return Permisos|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

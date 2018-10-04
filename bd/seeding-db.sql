@@ -1,17 +1,15 @@
--- creacion de dos usuarios 
-INSERT INTO users(id,username,password, email, fechanacimiento, nombre, sexo)
-VALUES(default,'admin','admin','erick@dot.com',now(),'Erick Ventura','M');
-
-INSERT INTO users(id,username,password, email, fechanacimiento, nombre, sexo)
-VALUES(default,'bib','bib','vero@dot.com',now(),'Veronica Reyes','F');
-
 --roles
 INSERT INTO roles(id,nombre,descripcion) VALUES(default,'Administrador','Administrador del sistema');
 INSERT INTO roles(id,nombre,descripcion) VALUES(default,'Bibliotecario','Persona encargada de labores diarias en biblioteca');
 INSERT INTO roles(id,nombre,descripcion) VALUES(default,'Prestamista','Persona con capacidad de solicitar libros');
 
-INSERT INTO users_roles(id,idUser,idRol) VALUES(default,1,1);
-INSERT INTO users_roles(id,idUser,idRol) VALUES(default,2,1);
+-- creacion de dos usuarios 
+INSERT INTO users(id,username,password, email, fechanacimiento, nombre, sexo,idRol)
+VALUES(default,'admin','admin','erick@dot.com',now(),'Erick Ventura','M',1);
+
+INSERT INTO users(id,username,password, email, fechanacimiento, nombre, sexo,idRol)
+VALUES(default,'bib','bib','vero@dot.com',now(),'Veronica Reyes','F',2);
+
 
 -- Biblioteca y bibliotecario ejemplo
 INSERT INTO bibliotecas(id,nombre,ubicacion,telefono,clasificacion,logourl,nombrelogo,email)
