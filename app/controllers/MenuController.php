@@ -19,5 +19,6 @@ class MenuController extends \Phalcon\Mvc\Controller
         $this->response->redirect('/');
     }
 
+
 }
 

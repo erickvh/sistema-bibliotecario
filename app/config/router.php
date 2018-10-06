@@ -13,6 +13,9 @@ $router->addGet('/prueba','Prueba::index'); //ruta para pruebas con controlador 
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
+/*rutas formatos*/
+$router->addGet('/formato','Formato::index');
+
 
 
 
