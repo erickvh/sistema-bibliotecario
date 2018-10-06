@@ -15,11 +15,20 @@ $router->addGet('/bibliotecario','Menu::bibliotecario');
 
 /*rutas formatos*/
 $router->addGet('/formato','Formato::index');
-
-
-
-
-
-
+$router->addPost('/formato','Formato::crear'); //Crear Formato
+$router->addPost(
+    '/:int',
+    [
+        'controller' => 'formato',
+        'action'     => 'editar',
+        'id'     => 3
+    ]); // Ruta Editar formato
+$router->add(
+    '/:int',
+    [
+        'controller' => 'formato',
+        'action'     => 'eliminar',
+        'id'     => 3
+    ]); // Ruta Eliminar formato    
 
 $router->handle();
