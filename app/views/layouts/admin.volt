@@ -20,7 +20,7 @@
     
       <ul class="app-menu">
         <li><a class="app-menu__item" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
-        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">Gestionar Bibliotecas</span></a></li>
+        <li><a class="app-menu__item" href="biblioteca"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">Gestionar Bibliotecas</span></a></li>
         <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Gestionar Bibliotecarios</span></a></li>
       </ul>
     </aside>

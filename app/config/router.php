@@ -13,6 +13,11 @@ $router->addGet('/prueba','Prueba::index'); //ruta para pruebas con controlador 
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
+/*routing biblioteca*/
+$router->addGet('/biblioteca','Biblioteca::consultar');
+
+/*routing libro*/
+$router->addGet('/libro','Libro::consultar');
 
 
 
