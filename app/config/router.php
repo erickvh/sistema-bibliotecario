@@ -13,6 +13,11 @@ $router->addGet('/prueba/prueba','Prueba::index'); //ruta para pruebas con contr
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
+/*routing biblioteca*/
+$router->addGet('/biblioteca','Biblioteca::consultar');
+
+/*routing libro*/
+$router->addGet('/libro','Libro::consultar');
 /*rutas formatos*/
 $router->addGet('/formato','Formato::index');
 $router->addPost('/formato','Formato::crear'); //Crear Formato
