@@ -45,4 +45,13 @@ $router->addPost(
 
 /*rutas recursos*/
 $router->addPost('/recurso','Recurso::index');
+$router->addPost(
+    '/recurso/editar/{0-9}',
+    [
+        'controller' => 'recurso',
+        'action'     => 'editar',
+        'id'     => 3
+    ]); // Ruta Editar formato
+
+
 $router->handle();

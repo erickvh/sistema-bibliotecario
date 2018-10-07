@@ -1,4 +1,6 @@
-{% extends 'layouts/bibliotecario.volt' %} {% block titulo %} Editar Formato {{formato.id}} {% endblock %} {% block contenido %}
+{% extends 'layouts/bibliotecario.volt' %} 
+{% block titulo %} Editar Formato {{formato.id}} {% endblock %} 
+{% block contenido %}
 <div class="container">
     <div class="row">
         <div class="col">
