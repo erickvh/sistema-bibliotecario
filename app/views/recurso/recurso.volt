@@ -24,13 +24,13 @@
                         <th>Acción</th>
                     </thead>
                     <tbody>
-                        {% for rec in recursos %}
+                        {% for mat in materiales %}
                         <tr>
-                            <td> {{rec.idformato}}</td>
-                            <td>{{rec.idmaterial}}</td>
+                            <td> {{mat.nombre}}</td>
+                            <td>{{mat.descripcion}}</td>
                             <td>
-                                <!-- <a href="{{url('formato/editar/'~ f.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
-                                <a onclick="return abrir_modal('{{url('formato/eliminar/'~ f.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a> -->
+                                <a href="{{url('recurso/editar/'~ mat.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+                               <!--  <a onclick="return abrir_modal('{{url('formato/eliminar/'~ f.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a> -->
                             </td>
                         </tr>
                         {%endfor%}
@@ -38,7 +38,7 @@
                 </table>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearRecursoModal">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Agregar Recurso
+                    Agregar Material
                 </button>
             </div>
         </div>
@@ -57,21 +57,58 @@
             <div class="modal-body">
                 <form action="" method="post">
                     <div class="form-group">
+                        <label class="control-label">Nombre recurso</label>
+                        <input type="text" name="nombreMaterial" class="form-control" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Descripcion recurso</label>
+                        <textarea name="descMaterial" id="" cols="30" rows="3" class="form-control"></textarea>
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text" id="inputGroupFileAddon01">Imagen</span>
+                        </div>
+                        <div class="custom-file">
+                            <input name="imagenMaterial" type="file" class="custom-file-input" id="inputGroupFile01" aria-describedby="inputGroupFileAddon01">
+                            <label class="custom-file-label" for="inputGroupFile01">Seleccionar Imagen</label>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Nombre de la imagen</label>
+                        <input  name="nomImgMaterial" type="text" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Fecha de Publicacion</label>
+                        <input  name="fechaMaterial" type="date" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Es externo</label>
+                        <input  name="externoMaterial" type="checkbox">
+                    </div>
+                    <div class="form-group">
                         <label class="control-label">Formato</label>
-                        <select name="tipoFormato" id="tipoFormato">
-                        	{% for f in formatos %}
-                        	   <option value="{{f.tipoformato}}">{{f.tipoformato}}</option> 
-                        	{% endfor %}                        	
+                        <select name="tipoFormato" id="tipoFormato" class="form-control">
+                            {% for f in formatos %}
+                            <option value="{{f.tipoformato}}">{{f.tipoformato}}</option>
+                            {% endfor %}
                         </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Material</label>
-                        <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato"></textarea>
+                        <label class="control-label">Subcategoria</label>
+                        <select name="subMaterial" id="subMaterial" class="form-control">
+                            {% for s in sub %}
+                            <option value="{{s.nombre}}">{{s.nombre}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Unidades Existentes</label>
+                        <input type="number" name="cantidadMaterial" class="form-control">
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="Submit" class="btn btn-primary">Crear</button>
-                    </div>
+                    </div>                    
                 </form>
             </div>
         </div>
@@ -93,6 +130,7 @@ $('#tabFormato').DataTable({
 });
 
 $('#tipoFormato').select2();
+$('#subMaterial').select2();
 </script>
 <script type="text/javascript">
 var modal;
