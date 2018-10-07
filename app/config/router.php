@@ -19,16 +19,16 @@ $router->addGet('/biblioteca','Biblioteca::consultar');
 /*routing libro*/
 $router->addGet('/libro','Libro::consultar');
 /*rutas formatos*/
-$router->addGet('/formato','Formato::index');
-$router->addPost('/formato','Formato::crear'); //Crear Formato
+$router->addPost('/formato','Formato::index');
+// $router->addPost('/formato','Formato::crear'); //Crear Formato
 $router->addPost(
-    '/:int',
+    '/formato/editar/{0-9}',
     [
         'controller' => 'formato',
         'action'     => 'editar',
         'id'     => 3
     ]); // Ruta Editar formato
-$router->add(
+$router->addPost(
     '/:int',
     [
         'controller' => 'formato',
@@ -36,4 +36,6 @@ $router->add(
         'id'     => 3
     ]); // Ruta Eliminar formato    
 
+/*rutas recursos*/
+$router->addPost('/recurso','Recurso::index');
 $router->handle();

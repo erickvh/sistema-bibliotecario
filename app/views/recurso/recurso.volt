@@ -1,5 +1,5 @@
 {% extends 'layouts/bibliotecario.volt' %}
-{% block titulo %} Formato
+{% block titulo %} Recurso
 {% endblock %}
 {% block extraCSS %}
 <style>
@@ -24,32 +24,32 @@
                         <th>Acción</th>
                     </thead>
                     <tbody>
-                        {% for f in formato%}
+                        {% for rec in recursos %}
                         <tr>
-                            <td> {{f.tipoformato}}</td>
-                            <td>{{f.descripcion}}</td>
+                            <td> {{rec.idformato}}</td>
+                            <td>{{rec.idmaterial}}</td>
                             <td>
-                                <a href="{{url('formato/editar/'~ f.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
-                                <a onclick="return abrir_modal('{{url('formato/eliminar/'~ f.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                <!-- <a href="{{url('formato/editar/'~ f.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+                                <a onclick="return abrir_modal('{{url('formato/eliminar/'~ f.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a> -->
                             </td>
                         </tr>
                         {%endfor%}
                     </tbody>
                 </table>
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearFormatoModal">
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearRecursoModal">
                     <i class="fa fa-plus-circle" aria-hidden="true"></i>
-                    Agregar Formato
+                    Agregar Recurso
                 </button>
             </div>
         </div>
     </div>
 </div>
 <!-- modal  -->
-<div class="modal fade" id="crearFormatoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+<div class="modal fade" id="crearRecursoModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLongTitle">Crear Formato</h5>
+                <h5 class="modal-title" id="exampleModalLongTitle">Crear Recurso</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -57,11 +57,15 @@
             <div class="modal-body">
                 <form action="" method="post">
                     <div class="form-group">
-                        <label class="control-label">Tipo de Formato</label>
-                        <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" required>
+                        <label class="control-label">Formato</label>
+                        <select name="tipoFormato" id="tipoFormato">
+                        	{% for f in formatos %}
+                        	   <option value="{{f.tipoformato}}">{{f.tipoformato}}</option> 
+                        	{% endfor %}                        	
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Descripcion</label>
+                        <label class="control-label">Material</label>
                         <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato"></textarea>
                     </div>
                     <div class="modal-footer">
@@ -78,6 +82,7 @@
 </div>
 {% endblock %}
 {% block extraJS %}
+<script type="text/javascript" src="js/plugins/select2.min.js"></script>
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">
@@ -86,6 +91,8 @@ $('#tabFormato').DataTable({
         'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'
     }
 });
+
+$('#tipoFormato').select2();
 </script>
 <script type="text/javascript">
 var modal;

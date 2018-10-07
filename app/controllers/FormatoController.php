@@ -6,28 +6,9 @@ class FormatoController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
+        $this->view->pick('formato/formato');
         $formatos = Formatos::find();
         $this->view->setVar('formato', $formatos); 
-        $this->view->pick('formato/formato');
-        $this->view->setVar('error', false);
-        if ($this->request->isPost()) {
-            $formato = new Formatos;
-            $tipo = $this->request->getPost('tipoFormato');
-            $desc = $this->request->getPost('descFormato');
-            if($tipo){
-                $formato->tipoformato = $tipo;
-                $formato->descripcion = $desc;
-                $formato->save();
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
-        }
-    }
-
-    public function crearAction()
-    {
-        $this->view->pick('formato/crear');
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {
             $formato = new Formatos;
@@ -39,7 +20,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
                 $formato->save();
                 $response = new Response();
                 $response->redirect('/formato'); //Retornar al index formato
-                return $response;   
+                return $response;
             }
             else{
                 $this->view->setVar('error', true); 
@@ -50,7 +31,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
     public function editarAction()
     {
         $this->view->pick('formato/editar');
-        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
         $formato = Formatos::findFirst($id);
         $this->view->formato = $formato;
         if ($this->request->isPost()) {
@@ -70,12 +51,16 @@ class FormatoController extends \Phalcon\Mvc\Controller
 
     public function eliminarAction()
     {
-        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $this->view->pick('formato/eliminar');
+        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
         $formato = Formatos::findFirst($id);
-        $formato->delete();
-        $response = new Response();
-        $response->redirect('/formato'); //Retornar al index formato
-        return $response;     
+        $this->view->formato = $formato;
+        if ($this->request->isPost()) {
+            $formato->delete();
+            $response = new Response();
+            $response->redirect('/formato'); //Retornar al index formato
+            return $response;
+        }     
     }
 }
 
