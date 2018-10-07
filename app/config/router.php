@@ -15,6 +15,13 @@ $router->addGet('/bibliotecario','Menu::bibliotecario');
 
 /*routing biblioteca*/
 $router->addGet('/biblioteca','Biblioteca::consultar');
+$router->addPost(
+    '/biblioteca/editar/{0-9}',
+    [
+        'controller' => 'biblioteca',
+        'action'     => 'editar',
+        'id'     => 3
+    ]);
 
 /*routing libro*/
 $router->addGet('/libro','Libro::consultar');

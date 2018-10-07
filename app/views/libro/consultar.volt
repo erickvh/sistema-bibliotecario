@@ -1,5 +1,7 @@
 {% extends "layouts/bibliotecario.volt" %}
 
+{%  block titulo %} Libro {% endblock %}
+
  {% block iconActual %}
 <h1><i class="fa fa-th-list"></i>Libros</h1>
 <p></p>
@@ -7,21 +9,23 @@
 
 
 {% block contenido %}
-  <div style="padding-left: 97%;">
-    <a href="#" ><i class="fa fa-plus fa-lg" style="font-size:200%;"></i></a>
+  <div style="padding-left: 90%;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Agregar
+    </button>
   </div>
   <br>
                       
   <table class="table table-hover table-bordered" id="sampleTable">
-     <thead>
+     <thead class="bg-primary">
         <tr>
           <th>Nombre</th>
           <th>Descripción</th>
           <th>Fecha de publicación</th>
-          <th>Volumen</th>
           <th>Editorial</th>
-          <th>Sinopsis</th>
           <th>Subcategoria</th>
+          <th width="21%">Acción</th>
         </tr>
      </thead>
      <tbody>
@@ -31,10 +35,12 @@
             <td>{{ libro.Materialesbibliograficos.nombre }}</td>
             <td>{{ libro.Materialesbibliograficos.descripcion }}</td>
             <td>{{ libro.Materialesbibliograficos.fechapublicacion}}</td>
-            <td>{{ libro.volumen}}</td>
             <td>{{ libro.editorial}}</td>
-            <td>{{ libro.sinopsis}}</td>
             <td>{{ libro.Materialesbibliograficos.Subcategorias.nombre}}</td>
+            <td>
+              <a href="#" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+              <a onclick="" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+            </td>
           </tr>
          {% endif %}
         {% endfor %}

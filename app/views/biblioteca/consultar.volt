@@ -1,24 +1,30 @@
 {% extends "layouts/admin.volt" %}
 
+{%  block titulo %} Biblioteca {% endblock %}
+
  {% block iconActual %}
 <h1><i class="fa fa-th-list"></i>Bibliotecas</h1>
 <p></p>
 {% endblock %}
 
 {% block contenido %}
-  <div style="padding-left: 97%;">
-    <a href="#" ><i class="fa fa-plus fa-lg" style="font-size:200%;"></i></a>
+  <div style="padding-left: 90%;">
+    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+      <i class="fa fa-plus-circle" aria-hidden="true"></i>
+      Agregar
+    </button>
   </div>
   <br>
                       
   <table class="table table-hover table-bordered" id="sampleTable">
-     <thead>
+     <thead class="bg-primary">
         <tr>
           <th>Nombre</th>
           <th>Ubicación</th>
           <th>Télefono</th>
           <th>Clasificación</th>
           <th>Email</th>
+          <th width="22%">Acción</th>
         </tr>
      </thead>
      <tbody>
@@ -29,6 +35,10 @@
             <td>{{ biblioteca.telefono}}</td>
             <td>{{ biblioteca.clasificacion}}</td>
             <td>{{ biblioteca.email}}</td>
+            <td>
+              <a href="{{url('biblioteca/editar/'~ biblioteca.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+              <a onclick="" class="btn btn-info"><i class="fa fa-cog" aria-hidden="true"></i>Desactivar</a>
+            </td>
           </tr>
         {% endfor %}
       </tbody>
