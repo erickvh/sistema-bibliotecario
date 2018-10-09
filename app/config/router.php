@@ -62,6 +62,7 @@ $router->addPost(
 
 /*rutas recursos*/
 $router->addPost('/recurso','Recurso::index');
+
 $router->addPost(
     '/recurso/editar/{0-9}',
     [
@@ -69,6 +70,16 @@ $router->addPost(
         'action'     => 'editar',
         'id'     => 3
     ]); // Ruta Editar formato
+
+
+    
+// se integraran despues para evitar conflictos
+
+require_once('rutas_erick.php'); 
+require_once('rutas_vero.php');
+require_once('rutas_paty.php');
+require_once('rutas_christian.php');
+require_once('rutas_axel.php');
 
 
 $router->handle();
