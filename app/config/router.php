@@ -14,18 +14,6 @@ $router->addGet('/prueba/prueba','Prueba::index'); //ruta para pruebas con contr
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
-/*routing biblioteca*/
-$router->addGet('/biblioteca','Biblioteca::consultar');
-$router->addPost(
-    '/biblioteca/editar/{0-9}',
-    [
-        'controller' => 'biblioteca',
-        'action'     => 'editar',
-        'id'     => 3
-    ]);
-
-/*routing libro*/
-$router->addGet('/libro','Libro::consultar');
 /*rutas formatos*/
 $router->addPost('/formato','Formato::index');
 // $router->addPost('/formato','Formato::crear'); //Crear Formato

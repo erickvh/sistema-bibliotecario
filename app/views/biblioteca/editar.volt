@@ -1,10 +1,14 @@
 {% extends 'layouts/bibliotecario.volt' %} 
-{% block titulo %} Editar Biblioteca {{biblioteca.id}} {% endblock %} 
+{% block titulo %} Editar Biblioteca {{biblioteca.id}} {% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-building"></i>Biblioteca</h1>
+<p></p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">
         <div class="col">
-            <h3 class="text-center">Editar Biblioteca</h3>
+            <h3 class="text-center">Editar</h3>
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
