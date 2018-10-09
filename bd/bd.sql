@@ -54,9 +54,10 @@ CREATE TABLE autores(
     nacionalidad VARCHAR(50) NOT NULL,
     fechaNacimiento DATE,
     sexo VARCHAR(1) NOT NULL,
-
-    CONSTRAINT pk_autores PRIMARY KEY (id)
-    
+    idBiblioteca SMALLINT,
+    CONSTRAINT pk_autores PRIMARY KEY (id),
+    CONSTRAINT fk_autores_bibliotecas FOREIGN KEY (idBiblioteca)
+    REFERENCES bibliotecas(id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
 -- con dependencias
 CREATE TABLE users(

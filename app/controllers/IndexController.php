@@ -27,17 +27,19 @@ class IndexController extends ControllerBase
                 $this->session->set("id", $user->id);
                 $this->session->set("username",$user->username);
               
-                if($user->roles->nombre='Administrador')
+                if($user->roles->nombre=='Administrador')
                     $this->response->redirect('/administrador');
 
-                elseif($user->roles->nombre='Bibliotecario')
+                elseif($user->roles->nombre=='Bibliotecario')
                     $this->response->redirect('/bibliotecario');   
                            
-        }
-        else{
+                                                                    }
+                    else{ //ninguno de los casos
             return $this->response->redirect('/');
-        }
+                        }
 
+                        }else{
+                     return $this->response->redirect('/');//solo usuario digitado
     }
 }
 }

@@ -1,3 +1,5 @@
 vendor/
 .env
 .phalcon/
+.phpintel/
+.vscode/
