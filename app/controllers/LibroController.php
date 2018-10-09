@@ -42,11 +42,8 @@ class LibroController extends \Phalcon\Mvc\Controller
 
     public function crearAction()
     {
-        $subcategorias= Subcategorias::find();
-        $autores = Autores::find();
+        
         $this->view->pick('libro/crear');
-        $this->view->subcategorias = $subcategorias;
-        $this->view->autores = $autores;
 
         $idusuario = $this->session->get('id');
         $bibliotecario = Bibliotecarios::findFirst([
@@ -56,6 +53,13 @@ class LibroController extends \Phalcon\Mvc\Controller
                     1 => $idusuario,
                 ]
         ]);
+
+        $subcategorias= Subcategorias::find();
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        
+        $this->view->subcategorias = $subcategorias;
+        $this->view->autores = $autores;
+
 
         $libro=new Libros;
         $material=new Materialesbibliograficos;
@@ -117,12 +121,20 @@ class LibroController extends \Phalcon\Mvc\Controller
     public function editarAction()
     {
         $this->view->pick('libro/editar');
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
         $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
         $libro = Libros::findFirst($id);
         $unidades = Unidades::findFirst("idmaterial='".$libro->idmaterial."'");
         $categorias= Categorias::find();
         $subcategorias= Subcategorias::find();
-        $autores = Autores::find();
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
         $MatAut = MaterialesAutores::find("idmaterial='".$libro->idmaterial."'");
         $this->view->libro = $libro;
         $this->view->unidades = $unidades;
