@@ -14,7 +14,7 @@ $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
 /*routing biblioteca*/
-$router->addGet('/biblioteca','Biblioteca::consultar');
+$router->addGet('/biblioteca','Biblioteca::index');
 $router->addPost(
     '/biblioteca/editar/{0-9}',
     [
@@ -24,7 +24,24 @@ $router->addPost(
     ]);
 
 /*routing libro*/
-$router->addGet('/libro','Libro::consultar');
+$router->addGet('/libro','Libro::index');
+$router->addPost(
+    '/libro/editar/{0-9}',
+    [
+        'controller' => 'libro',
+        'action'     => 'editar',
+        'id'     => 3
+    ]);
+$router->addPost('/libro/crear','Libro::crear');
+$router->addPost(
+    '/:int',
+    [
+        'controller' => 'libro',
+        'action'     => 'eliminar',
+        'id'     => 3
+    ]);
+    
+
 /*rutas formatos*/
 $router->addPost('/formato','Formato::index');
 // $router->addPost('/formato','Formato::crear'); //Crear Formato
