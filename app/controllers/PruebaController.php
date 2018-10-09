@@ -8,7 +8,7 @@ class PruebaController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-        $this->view->pick('prueba/prueba');
+        $this->view->pick('error/error');
 
     }
 

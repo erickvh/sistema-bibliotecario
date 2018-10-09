@@ -1,6 +1,7 @@
 <?php
 
-$router = $di->getRouter();
+$router = $di->getRouter(false);
+
 /* routing login */
 
 $router->addGet('/','Index::index');

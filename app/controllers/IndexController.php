@@ -35,11 +35,19 @@ class IndexController extends ControllerBase
                            
                                                                     }
                     else{ //ninguno de los casos
+
             return $this->response->redirect('/');
                         }
 
-                        }else{
-                     return $this->response->redirect('/');//solo usuario digitado
+                 }else{
+
+             return $this->response->redirect('/');//solo usuario digitado
     }
+}
+
+public function logoutAction(){
+    $this->session->destroy();
+    $this->flash->success('Adios');
+    $this->response->redirect('/');
 }
 }
