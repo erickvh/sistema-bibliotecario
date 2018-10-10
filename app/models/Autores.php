@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Models;
-
 class Autores extends \Phalcon\Mvc\Model
 {
 
@@ -36,13 +35,20 @@ class Autores extends \Phalcon\Mvc\Model
     public $sexo;
 
     /**
+     *
+     * @var integer
+     */
+    public $idbiblioteca;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
         $this->setSource("autores");
-        $this->hasMany('id', 'App\Models\MaterialesAutores', 'idautor', ['alias' => 'MaterialesAutores']);
+        $this->hasMany('id', 'a\MaterialesAutores', 'idautor', ['alias' => 'MaterialesAutores']);
+        $this->belongsTo('idbiblioteca', 'a\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
     }
 
     /**

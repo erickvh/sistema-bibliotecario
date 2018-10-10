@@ -1,5 +1,5 @@
 {% extends 'layouts/bibliotecario.volt' %}
-{% block titulo %} Formato
+{% block titulo %} Autores
 {% endblock %}
 {% block extraCSS %}
 <style>
@@ -20,7 +20,7 @@
                 <table id="tabFormato" class="table table-bordered">
                     <thead class="bg-primary">
                         <th>Nombre</th>
-                        <th>Descripcion</th>
+                        <th>Nacionalidad</th>
                         <th>Acción</th>
                     </thead>
                     <tbody>
@@ -30,6 +30,7 @@
                             <td>{{autor.nacionalidad}}</td>
                             <td>
                                 <a href="{{url('autor/editar/'~ autor.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+                                <a href="{{url('autor/show/'~ autor.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver </a>
                                 <a onclick="return abrir_modal()" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                             </td>
                         </tr>
@@ -55,18 +56,18 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/autor" method="post">
+                <form action="/autor" method="post" autocomplete='off'>
                     <div class="form-group">
                         <label class="control-label">Nombre de autor</label>
-                        <input name="nombre" class="form-control" type="text" placeholder="Formato" required>
+                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nacionalidad</label>
-                        <input name="nacionalidad" class="form-control" type="text" placeholder="Formato" required>
+                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha Nacimiento</label>
-                        <input class="form-control" id="fechanacimiento" type="text" placeholder="seleccionar fecha">
+                        <input class="form-control" id="fechanacimiento" name="fechanacimiento" type="text" placeholder="Seleccionar fecha">
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo</label>
