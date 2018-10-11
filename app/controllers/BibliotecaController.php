@@ -5,7 +5,7 @@ use Phalcon\Http\Response;
 
 class BibliotecaController extends \Phalcon\Mvc\Controller
 {
-    public function consultarAction()
+    public function indexAction()
     {
         $bibliotecas=Bibliotecas::find();
         $this->view->pick('biblioteca/consultar');

@@ -42,6 +42,7 @@
                 <div class="col-md-12">
                     <div class="tile">
                         <div class="tile-body">
+                            {{ flashSession.output() }}
                             {% block contenido %} conenido principal {% endblock %}
                         </div>
                     </div>

@@ -18,6 +18,7 @@
       <div class="logo">
         <h1>Sistema bibliotecario</h1>
       </div>
+      {{ flash.output() }}
       <div class="login-box">
         <form class="login-form" action="/" METHOD='post'>
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Iniciar Sesión</h3>

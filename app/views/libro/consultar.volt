@@ -10,10 +10,10 @@
 
 {% block contenido %}
   <div style="padding-left: 90%;">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
+    <a type="button" class="btn btn-primary" href="libro/crear" >
       <i class="fa fa-plus-circle" aria-hidden="true"></i>
       Agregar
-    </button>
+    </a>
   </div>
   <br>
                       
@@ -38,15 +38,18 @@
             <td>{{ libro.editorial}}</td>
             <td>{{ libro.Materialesbibliograficos.Subcategorias.nombre}}</td>
             <td>
-              <a href="#" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
-              <a onclick="" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+              <a href="{{url('libro/editar/'~ libro.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+              <a onclick="return abrir_modal('{{url('libro/eliminar/'~ libro.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
             </td>
           </tr>
          {% endif %}
         {% endfor %}
       </tbody>
     </table>
-        
+      
+    <!-- Modal Eliminar -->
+<div id="eliminarLibro" class="modal fade" role="dialog">
+</div>
 
 {% endblock %}
 
@@ -54,4 +57,19 @@
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">$('#sampleTable').DataTable({'language': {'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'}});</script>
+<script type="text/javascript">
+  var modal;
+  
+  function abrir_modal(url) {
+      $('#eliminarLibro').load(url, function() {
+          $(this).modal('show');
+      });
+      return false;
+  }
+  
+  function cerrar_modal() {
+      $('#eliminarLibro').modal('hide');
+      return false;
+  }
+  </script>
 {% endblock %}
