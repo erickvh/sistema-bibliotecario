@@ -55,7 +55,7 @@ class AutorController extends \Phalcon\Mvc\Controller
 
     public function editAction(){
 
-        $id=$this->dispatcher->getParam('int');
+        $id=$this->dispatcher->getParam('id');
         $autor=Autores::findFirst($id);
         $this->view->pick('autor/editar');
         $this->view->autor=$autor;
@@ -68,7 +68,7 @@ class AutorController extends \Phalcon\Mvc\Controller
         $nacionalidad=$this->request->getPost('nacionalidad');
         $fechanacimiento=$this->request->getPost('fechanacimiento');
         $sexo=$this->request->getPost('sexo');
-        $id=$this->dispatcher->getParam('int');
+        $id=$this->dispatcher->getParam('id');
 
         $autor=Autores::findFirst($id);
         $autor->nombre=$nombre;
@@ -76,23 +76,33 @@ class AutorController extends \Phalcon\Mvc\Controller
         $autor->fechanacimiento=$fechanacimiento;
         $autor->sexo=$sexo;
         $autor->save();
-        $this->dispatcher->forward(['action' => 'edit']);
+        $this->dispatcher->forward(['action' => 'index']);
     }
 
     public function showAction(){
-        $id=$this->dispatcher->getParam('int');
+        
+        $id=$this->dispatcher->getParam('id');
         $autor=Autores::findFirst($id);
+     
         $this->view->pick('autor/show');
         $this->view->autor=$autor;
     }
 
     public function deleteAction(){
-        $this->view->disable();
-        $id=$this->dispatcher->getParam('id');
-        $autor=Autores::findFirst($id);
-        $autor->delete();
-        $this->response->redirect("/autor");
 
+        $this->view->pick('/autor/eliminar');
+        $id=$this->dispatcher->getParam('id');
+        $autor=Autores::findFirst($id);     
+        $this->view->autor=$autor;
+        
+        if($this->request->isPost()){
+
+                $this->view->disable();
+                $autor->delete();
+
+                $this->response->redirect("/autor");
+            
+            }
     }
 }
 

@@ -7,7 +7,7 @@
         <!-- User Menu-->
         <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
           <ul class="dropdown-menu settings-menu dropdown-menu-right">
-            <li><a class="dropdown-item" href="page-user.html"><i class="fa fa-user fa-lg"></i> Perfil</a></li>
+            <li><a class="dropdown-item" href="/perfil"><i class="fa fa-user fa-lg"></i> Perfil</a></li>
             <li><a class="dropdown-item" href="/logout"><i class="fa fa-sign-out fa-lg"></i>Cerrar Sesión</a></li>
           </ul>
         </li>
@@ -19,9 +19,9 @@
     <aside class="app-sidebar">
     
       <ul class="app-menu">
-        <li><a class="app-menu__item" href="index.html"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
-        <li><a class="app-menu__item" href="biblioteca"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">Gestionar Bibliotecas</span></a></li>
-        <li><a class="app-menu__item" href="charts.html"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Gestionar Bibliotecarios</span></a></li>
+        <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
+        <li><a class="app-menu__item" href="/biblioteca"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">Gestionar Bibliotecas</span></a></li>
+        <li><a class="app-menu__item" href="/bibliotecarios"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Gestionar Bibliotecarios</span></a></li>
       </ul>
     </aside>
 {% endblock %}

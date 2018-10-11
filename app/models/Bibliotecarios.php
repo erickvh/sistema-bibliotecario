@@ -25,6 +25,12 @@ class Bibliotecarios extends \Phalcon\Mvc\Model
 
     /**
      *
+     * @var string
+     */
+    public $habilitado;
+
+    /**
+     *
      * @var integer
      */
     public $iduser;

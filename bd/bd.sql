@@ -7,14 +7,6 @@ CREATE TABLE roles(
     
     CONSTRAINT pk_roles PRIMARY KEY (id)
 );
-CREATE TABLE permisos(
-    id smallserial,
-    tipo VARCHAR(50) NOT NULL,
-    descripcion TEXT,
-
-    CONSTRAINT pk_permisos PRIMARY KEY (id)
-
-);
 
 CREATE TABLE bibliotecas(
     id smallserial,
@@ -22,6 +14,7 @@ CREATE TABLE bibliotecas(
     ubicacion VARCHAR(300) NOT NULL,
     telefono VARCHAR(9) NOT NULL,
     clasificacion VARCHAR(120),
+    habilitado boolean DEFAULT true,
     logoUrl VARCHAR(254),
     nombreLogo VARCHAR(50),
     email VARCHAR(254) UNIQUE,
@@ -79,6 +72,7 @@ CREATE TABLE bibliotecarios(
     id serial,
     dui VARCHAR(9) NOT NULL,
     telefono VARCHAR(9),
+    habilitado boolean DEFAULT true,
     idUser INTEGER,
     idBiblioteca INTEGER NOT NULL,
 
@@ -94,20 +88,7 @@ CREATE TABLE bibliotecarios(
       
 );
 
-CREATE TABLE roles_permisos(
-    id SERIAL,
-    idRol INTEGER NOT NULL,
-    idPermiso INTEGER NOT NULL,
 
-    CONSTRAINT pk_roles_permisos PRIMARY KEY (id),
-    
-    CONSTRAINT fk_roles_permisos_roles FOREIGN KEY (idRol)
-    REFERENCES roles(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
-    
-    CONSTRAINT fk_roles_permisos_permisos FOREIGN KEY (idPermiso)
-    REFERENCES permisos(id) ON UPDATE RESTRICT ON DELETE RESTRICT
-
-    );
 
 
 

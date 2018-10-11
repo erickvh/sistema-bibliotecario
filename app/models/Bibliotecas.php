@@ -42,6 +42,12 @@ class Bibliotecas extends \Phalcon\Mvc\Model
      *
      * @var string
      */
+    public $habilitado;
+
+    /**
+     *
+     * @var string
+     */
     public $logourl;
 
     /**
@@ -85,6 +91,7 @@ class Bibliotecas extends \Phalcon\Mvc\Model
     {
         $this->setSchema("public");
         $this->setSource("bibliotecas");
+        $this->hasMany('id', 'App\Models\Autores', 'idbiblioteca', ['alias' => 'Autores']);
         $this->hasMany('id', 'App\Models\Bibliotecarios', 'idbiblioteca', ['alias' => 'Bibliotecarios']);
         $this->hasMany('id', 'App\Models\Materialesbibliograficos', 'idbiblioteca', ['alias' => 'Materialesbibliograficos']);
     }

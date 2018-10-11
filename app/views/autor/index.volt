@@ -31,10 +31,10 @@
                             <td>
                                 <a href="{{url('autor/editar/'~ autor.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
                                 <a href="{{url('autor/show/'~ autor.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver </a>
-                                <a onclick="return abrir_modal()" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                <a onclick="return abrir_modal('{{url('autor/borrar/'~ autor.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                             </td>
                         </tr>
-                        {%endfor%}
+                        {% endfor %}
                     </tbody>
                 </table>
                 <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#crearAutorModal">
@@ -85,38 +85,15 @@
         </div>
     </div>
 </div>
+
 <!-- Modal Eliminar -->
 <div id="popup" class="modal fade" role="dialog">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-header">
-            <h5 class="modal-title">Eliminar Autor</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-        <div class="modal-body">
-            <div class="col-lg-12">
-                <p> ¿Desea eliminar autor <strong>{{autor.nombre}}</strong>? </p>
-            </div>
-        </div>
-        <div class="modal-footer">
-            <div class="col-lg-12 text-right">
-                <form role="form" action="{{url('autor/borrar/'~ autor.id)}}" method="post">
-                    <input type="submit" class="btn btn-danger" id="despedir" value="Si">
-                    <button type="button" class="btn btn-secondary" onclick="return cerrar_modal()"> No </button>
-                </form>
-            </div>
-        </div>
-    </div>
 </div>
-</div>
+
 {% endblock %}
 {% block extraJS %}
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
-<script type="text/javascript" src="/js/plugins/bootstrap-datepicker.min.js"></script>
-
 <script type="text/javascript">
 $('#tabFormato').DataTable({
     'language': {
@@ -127,9 +104,10 @@ $('#tabFormato').DataTable({
 <script type="text/javascript">
 var modal;
 
-function abrir_modal() {
-
-    $('#popup').modal('show');
+function abrir_modal(url) {
+    $('#popup').load(url, function() {
+        $(this).modal('show');
+    });
     return false;
 }
 
@@ -137,10 +115,5 @@ function cerrar_modal() {
     $('#popup').modal('hide');
     return false;
 }
-      $('#fechanacimiento').datepicker({
-      	format: "dd/mm/yyyy",
-      	autoclose: true,
-      	todayHighlight: true
-      });
 </script>
 {% endblock %}

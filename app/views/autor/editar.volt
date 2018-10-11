@@ -12,7 +12,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nacionalidad</label>
-                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad}}"required>
+                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad }}"required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha Nacimiento</label>
