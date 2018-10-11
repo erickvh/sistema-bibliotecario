@@ -1,6 +1,6 @@
 <?php
 
-$router = $di->getRouter(false);
+$router = $di->getRouter();
 
 /* routing login */
 
@@ -14,37 +14,7 @@ $router->addGet('/prueba/prueba','Prueba::index'); //ruta para pruebas con contr
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
 
-/*rutas formatos*/
-$router->addPost('/formato','Formato::index');
-// $router->addPost('/formato','Formato::crear'); //Crear Formato
-$router->addPost(
-    '/formato/editar/{0-9}',
-    [
-        'controller' => 'formato',
-        'action'     => 'editar',
-        'id'     => 3
-    ]); // Ruta Editar formato
-$router->addPost(
-    '/:int',
-    [
-        'controller' => 'formato',
-        'action'     => 'eliminar',
-        'id'     => 3
-    ]); // Ruta Eliminar formato    
-
-/*rutas recursos*/
-$router->addPost('/recurso','Recurso::index');
-
-$router->addPost(
-    '/recurso/editar/{0-9}',
-    [
-        'controller' => 'recurso',
-        'action'     => 'editar',
-        'id'     => 3
-    ]); // Ruta Editar formato
-
-
-    
+  
 // se integraran despues para evitar conflictos
 
 require_once('rutas_erick.php'); 

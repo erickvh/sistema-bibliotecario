@@ -18,7 +18,8 @@
         <li><a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
         <li><a class="app-menu__item" href="/libro"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Gestionar Libros</span></a></li>
         <li><a class="app-menu__item" href="/recurso"><i class="app-menu__icon fa fa-paperclip"></i><span class="app-menu__label">Gestionar recursos</span></a></li>
-        <li><a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-list-ul"></i><span class="app-menu__label">Gestionar categorias </span></a></li>
+        <li><a class="app-menu__item" href="/categoria"><i class="app-menu__icon fa fa-list-ul"></i><span class="app-menu__label">Gestionar categorias </span></a></li>
+        <li><a class="app-menu__item" href="/subcategoria"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Gestionar Subcategorias </span></a></li>
         <li><a class="app-menu__item" href="/autor"><i class="app-menu__icon fa fa-user-circle"></i><span class="app-menu__label">Gestionar Autores</span></a></li>
         <li><a class="app-menu__item" href="/formato"><i class="app-menu__icon fa fa-cubes"></i><span class="app-menu__label">Gestionar Formatos</span></a></li>
     </ul>
