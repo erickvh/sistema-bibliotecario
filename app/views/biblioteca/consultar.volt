@@ -9,10 +9,10 @@
 
 {% block contenido %}
   <div style="padding-left: 90%;">
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#">
-      <i class="fa fa-plus-circle" aria-hidden="true"></i>
-      Agregar
-    </button>
+    <!-- <button type="button" class="btn btn-primary" data-toggle="modal" href="{{url(biblioteca/crear)}}">    </button>-->
+    <a href="{{url('biblioteca/crear')}}" class="btn btn-primary"><i class="fa fa-plus-circle" aria-hidden="true"></i>Agregar</a>
+
+ 
   </div>
   <br>
                       
