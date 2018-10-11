@@ -44,4 +44,39 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         }
     }
 
+    
+    public function crearAction(){
+        $this->view->pick('biblioteca/crear');
+        $biblioteca= new Bibliotecas;
+
+        $nombre = $this->request->getPost('nombreBiblioteca');
+        $ubicacion = $this->request->getPost('ubicacionBiblioteca');
+        $telefono = $this->request->getPost('telefonoBiblioteca');
+        $clasificacion = $this->request->getPost('clasBiblioteca');
+        $logourl = $this->request->getPost('logourlBiblioteca');
+        $nombrelogo = $this->request->getPost('nomlogoBiblioteca');
+        $email = $this->request->getPost('emailBiblioteca');
+
+        //guardando los datos en el nuevo objeto de tipo biblioteca
+
+        $biblioteca->nombre= $nombre;
+        $biblioteca->ubicacion = $ubicacion ;   
+        $biblioteca->telefono = $telefono ;   
+        $biblioteca->clasificacion =$clasificacion;   
+        $biblioteca->logourl =  $logourl ;   
+        $biblioteca->nombrelogo =  $nombrelogo ;   
+        $biblioteca->email =  $email;  
+        $guardado = $biblioteca->save();
+        
+        if($guardado == true){
+             $this->response->redirect('/biblioteca');
+        }
+     //   $response = new Response();
+      //  $response->redirect('/biblioteca'); //Retornar a biblioteca
+      //  return $response;       
+    //   
+
+         
+    }
+
 }
