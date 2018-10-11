@@ -18,16 +18,22 @@ $router->addPost(
     ]); // Ruta Eliminar formato    
 
 /*rutas recursos*/
-$router->addPost('/recurso','Recurso::index');
-
+$router->add('/recurso','Recurso::index');
+$router->addPost('/recurso/crear','Recurso::crear');
 $router->addPost(
     '/:int',
     [
         'controller' => 'recurso',
         'action'     => 'editar',
         'id'     => 3
-    ]); // Ruta Editar formato
-
+    ]);
+$router->addPost(
+    '/:int',
+    [
+        'controller' => 'recurso',
+        'action'     => 'eliminar',
+        'id'     => 3
+    ]);
 
 //Categoria
 $router->add('/categoria','Categoria::index');

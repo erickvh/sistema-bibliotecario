@@ -2,23 +2,29 @@
 use App\Models\Recursos;
 use App\Models\Formatos;
 use App\Models\Materialesbibliograficos;
+use App\Models\MaterialesAutores;
 use App\Models\Subcategorias;
 use App\Models\Unidades;
 use App\Models\Bibliotecarios;
+use App\Models\Autores;
 use Phalcon\Http\Response;
 class RecursoController extends \Phalcon\Mvc\Controller
 {
 
     public function indexAction()
     {
-    	$this->view->pick('recurso/recurso');
-    	$recursos = Recursos::find();
-    	$formatos = Formatos::find();
-    	$materiales = Materialesbibliograficos::find();
-    	$subcategorias = Subcategorias::find();
+    	$this->view->pick('recurso/consultar');
+        $materiales = Materialesbibliograficos::find();
+        $this->view->setVar('materiales', $materiales);
+    }
+
+    public function crearAction()
+    {
+        $recursos = Recursos::find();
+        $formatos = Formatos::find();        
+        $subcategorias = Subcategorias::find();
         $this->view->setVar('recursos', $recursos);
-        $this->view->setVar('formatos', $formatos);
-        $this->view->setVar('materiales', $materiales); 
+        $this->view->setVar('formatos', $formatos);         
         $this->view->setVar('sub', $subcategorias); 
         $this->view->setVar('error', false);
         $idusuario = $this->session->get('id');
@@ -28,7 +34,9 @@ class RecursoController extends \Phalcon\Mvc\Controller
             'bind'       => [
                     1 => $idusuario,
                 ]
-        ]);        
+        ]);
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $this->view->autores = $autores;        
         if ($this->request->isPost()) {
             $material = new Materialesbibliograficos;
             $recurso = new Recursos;
@@ -58,6 +66,12 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 $subcategoria = Subcategorias::findFirst("nombre='".$sub."'");
                 $material->idsubcategoria = $subcategoria->id;
                 $material->save();
+                foreach ($this->request->getPost('autoresRecurso') as $aut){
+                        $MaterialAutor = new MaterialesAutores;
+                        $MaterialAutor->idautor=$aut;
+                        $MaterialAutor->idmaterial=$material->id;
+                        $MaterialAutor->save();
+                }
                 $formId = Formatos::findFirst("tipoformato='".$formato."'");
                 $recurso->idformato = $formId->id;
                 $recurso->idmaterial = $material->id;
@@ -87,11 +101,11 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $formatoActual = Formatos::findFirst("id='".$recursoActual->idformato."'");
         $subcategorias = Subcategorias::find();
         $subCatActual = Subcategorias::findFirst($material->idsubcategoria);
-        $unidadesExis = Unidades::findFirst("idmaterial='".$material->id."'");
+        $unidadesExis = Unidades::findFirst("idmaterial='".$material->id."'");        
         $this->view->material = $material;
         $this->view->setVar('formatos', $formatos);
         $this->view->setVar('sub', $subcategorias);
-        $this->view->setVar('formatoActual', $formatoActual);
+        $this->view->setVar('recursoActual', $recursoActual);
         $this->view->setVar('subActual', $subCatActual);
         $this->view->setVar('unidades', $unidadesExis);
 
@@ -104,6 +118,10 @@ class RecursoController extends \Phalcon\Mvc\Controller
                     1 => $idusuario,
                 ]
         ]);
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
+        $this->view->autores = $autores;
+        $this->view->mataut = $MatAut;
         if ($this->request->isPost()) {            
             $nomMaterial = $this->request->getPost('nombreMaterial');
             $formato = $this->request->getPost('tipoFormato');
@@ -125,6 +143,27 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 {
                     $material->esexterno = false;
                 }
+                foreach ($MatAut as $autmat){
+                    $i=0;
+                    foreach ($this->request->getPost('autoresRecurso') as $aut){
+                        if($aut==$autmat->idautor){
+                            $i++;
+                        }
+                    }
+                    if($i==0){
+                        $autmat->delete();
+                    }
+                }
+                
+                foreach ($this->request->getPost('autoresRecurso') as $aut){
+                    
+                    if (count(MaterialesAutores::find("idmaterial = '".$material->id."' and idautor = '".$aut."'"))==0){
+                        $MaterialAutor = new MaterialesAutores;
+                        $MaterialAutor->idautor=$aut;
+                        $MaterialAutor->idmaterial=$material->id;
+                        $MaterialAutor->save();
+                    }
+                }
                 $sub = $this->request->getPost('subMaterial');
                 $subcategoria = Subcategorias::findFirst("nombre='".$sub."'");
                 $material->idsubcategoria = $subcategoria->id;
@@ -143,6 +182,29 @@ class RecursoController extends \Phalcon\Mvc\Controller
             }
         }
     }
+
+    public function eliminarAction()
+    {
+        $this->view->pick('recurso/eliminar');
+        $id = $this->dispatcher->getParams();
+        $material = Materialesbibliograficos::findFirst($id);
+        $unidades = Unidades::findFirst("idmaterial='".$material->id."'");
+        $recurso = Recursos::findFirst("idmaterial='".$material->id."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
+        $this->view->material = $material;        
+        if ($this->request->isPost()) 
+        { 
+            $unidades->delete();            
+            $recurso->delete();            
+            foreach ($MatAut as $autmat){
+                $autmat->delete();
+            }
+            $material->delete();
+            $response = new Response();
+            $response->redirect('/recurso'); //Retornar al index formato
+            return $response;
+        }     
+    }   
 
 }
 
