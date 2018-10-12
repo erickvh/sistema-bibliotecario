@@ -46,3 +46,7 @@ $router->add('/subcategoria/','Subcategoria::index');
 $router->addPost('/subcategoria/crear','Subcategoria::crear');
 $router->addPost('/subcategoria/editar/:int','Subcategoria::editar');
 $router->addPost('/subcategoria/eliminar/:int','Subcategoria::eliminar');
+
+//Perfil
+$router->add('/perfil/','Perfil::index');
+$router->addPost('/perfil/cambiar','Perfil::cambiar');
