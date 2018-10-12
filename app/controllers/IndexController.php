@@ -31,7 +31,7 @@ class IndexController extends ControllerBase
     }
 
     public function loginAction(){
-        $this->view->disable();
+
 
         $name=$this->request->getPost('username');
         $password=$this->request->getPost('password');
@@ -43,35 +43,62 @@ class IndexController extends ControllerBase
             if($this->security->checkHash($password,$user->password)){
                // creando session id and username
 
-                $this->session->set("id", $user->id);
-                $this->session->set("username",$user->username);
-         
+                        /**
+                         * Se crea session media vez cumpla los parametros
+                         */
                         if($user->roles->nombre=='Administrador')
-                        {       
-                            $this->flashSession->success('Bienvenido '.$user->username );
+                        {     
+                            $this->session->set("id", $user->id);
+                            $this->session->set("username",$user->username);              
+                            $this->flashSession->success('Bienvenido '.$user->nombre );
                             $this->response->redirect('/administrador');
                         }
-                        elseif($user->roles->nombre=='Bibliotecario'){
-                            $this->flashSession->success('Bienvenido '.$user->username);
+                        /**
+                         * Restriccion cuando son deshabilitados
+                         */
+                        elseif($user->roles->nombre=='Bibliotecario' && $user->bibliotecarios[0]->habilitado
+                        &&$user->bibliotecarios[0]->bibliotecas->habilitado){
+
+                            $this->session->set("id", $user->id);
+                            $this->session->set("username",$user->username);
+                            $this->flashSession->success('Bienvenido '.$user->nombre );
                             $this->response->redirect('/bibliotecario');  
-                        }     
+                        } 
+                        /**
+                         * Cuando el usuario si esta deshabilitado
+                         */
+                        else{
+                            /**
+                             * concatena posiblidades de deshabilitacion
+                             */
+                            $userNot='Usuario '.$user->nombre.' deshabilitado';
+                            $biblioNot='Biblioteca "'.$user->bibliotecarios[0]->bibliotecas->nombre.'" deshabilitada';
+
+                            $this->flashSession->error($user->bibliotecarios[0]->bibliotecas->habilitado? $userNot:$biblioNot );
+                            $this->response->redirect('/');
+                        }    
                                 
-                                                                            }
-                            else{ //ninguno de los casos
-                            
-                    return $this->response->redirect('/');
+            }  
+
+            /**
+             * Contraseña no comparada igual
+             */
+                            else{ 
+                                $this->flashSession->warning('Contraseña incorrecta!' );
+                                return $this->response->redirect('/');
                                 }
 
             }
+            /**usuario no encontrado atravez del find */
             else{
-                
+             $this->flashSession->error('Usuario no encontrado en nuestros registros' );
              return $this->response->redirect('/');//solo usuario digitado
                 }
 }
 
 public function logoutAction(){
+    $this->flashSession->success('Adios, hasta luego');
     $this->session->destroy();
-    $this->flashSession->success('Adios');
     $this->response->redirect('/');
 }
 }

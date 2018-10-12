@@ -2,10 +2,10 @@
 
 {%  block titulo %} Biblioteca {% endblock %}
 
- {% block iconActual %}
-<h1><i class="fa fa-th-list"></i>Bibliotecas</h1>
-<p></p>
-{% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-book"></i> Libros </h1>
+<p>Sección de gestion de libros</p>
+{% endblock %} 
 
 {% block contenido %}
   <div style="padding-left: 90%;">
@@ -36,14 +36,21 @@
             <td>{{ biblioteca.clasificacion}}</td>
             <td>{{ biblioteca.email}}</td>
             <td>
+            {% if biblioteca.habilitado %}
               <a href="{{url('biblioteca/editar/'~ biblioteca.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
-              <a onclick="" class="btn btn-info"><i class="fa fa-cog" aria-hidden="true"></i>Desactivar</a>
+              <a onclick="return abrir_modal('{{url('biblioteca/deshabilitar/'~ biblioteca.id)}}')" class="btn btn-warning"><i class="fa fa-lock" aria-hidden="true"></i>Deshabilitar</a>
+            {% else %}
+               <a onclick="return abrir_modal('{{url('biblioteca/deshabilitar/'~ biblioteca.id)}}')" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i>Habilitar</a>
+            {% endif %}
             </td>
           </tr>
         {% endfor %}
       </tbody>
     </table>
-        
+        <!-- Modal Eliminar -->
+<div id="popup" class="modal fade" role="dialog">
+</div>
+
 
 {% endblock %}
 
@@ -51,4 +58,21 @@
 <script type="text/javascript" src="js/plugins/jquery.dataTables.min.js"></script>
 <script type="text/javascript" src="js/plugins/dataTables.bootstrap.min.js"></script>
 <script type="text/javascript">$('#sampleTable').DataTable({'language': {'url': '//cdn.datatables.net/plug-ins/9dcbecd42ad/i18n/Spanish.json'}});</script>
+
+</script>
+<script type="text/javascript">
+var modal;
+
+function abrir_modal(url) {
+    $('#popup').load(url, function() {
+        $(this).modal('show');
+    });
+    return false;
+}
+
+function cerrar_modal() {
+    $('#popup').modal('hide');
+    return false;
+}
+</script>
 {% endblock %}

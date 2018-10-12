@@ -44,7 +44,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     public function editarAction()
     {
     	$this->view->pick('subcategoria/editar');
-        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $subcategoria = Subcategorias::findFirst($id);
         $this->view->subcategoria = $subcategoria;
         $this->view->categoria = Categorias::find();
@@ -74,7 +74,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     public function eliminarAction()
  	{
  		$this->view->pick('subcategoria/eliminar');
- 		$id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+ 		$id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
  		$subcategoria = Subcategorias::findFirst($id);
  		$this->view->subcategoria = $subcategoria;
  		if ($this->request->isPost()) {

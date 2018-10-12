@@ -8,9 +8,43 @@ use App\Models\Unidades;
 use App\Models\Bibliotecarios;
 use App\Models\Autores;
 use Phalcon\Http\Response;
+use App\Models\Users;
 class RecursoController extends \Phalcon\Mvc\Controller
 {
+    protected $idSesion;
+    protected $user;
+    protected $rol;
 
+    //esta ruta se ejecuta antes de cada funcion en el controlador
+    public function initialize()
+    {
+        
+
+        if($this->session->has('id'))
+        {
+            //crea la busqueda si existe id
+        $this->idSesion = $this->session->get('id');
+        $this->user=Users::findFirst($this->idSesion);
+        $this->rol=$this->user->roles->nombre;
+        
+        // redirige si el rol cargado es diferente
+            switch($this->rol){
+                case 'Administrador': 
+                case 'Prestamista':
+                $this->response->redirect('/401');
+                break;
+                case 'Bibliotecario':
+                break;
+                            }
+        }
+        else
+        {
+            $this->response->redirect('/401');
+        }
+  
+
+    }
+    
     public function indexAction()
     {
     	$this->view->pick('recurso/consultar');
@@ -92,7 +126,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
     public function editarAction()
     {
         $this->view->pick('recurso/editar');
-        $id = $this->dispatcher->getParams(); //Obtener parametros de la url
+        $id = $this->dispatcher->getParam('id'); //Obtener parametros de la url
         /* Para llenar el formulario
         con sus datos Actuales */
         $material = Materialesbibliograficos::findFirst($id);
@@ -186,7 +220,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
     public function eliminarAction()
     {
         $this->view->pick('recurso/eliminar');
-        $id = $this->dispatcher->getParams();
+        $id = $this->dispatcher->getParam('id');
         $material = Materialesbibliograficos::findFirst($id);
         $unidades = Unidades::findFirst("idmaterial='".$material->id."'");
         $recurso = Recursos::findFirst("idmaterial='".$material->id."'");

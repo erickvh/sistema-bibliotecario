@@ -6,6 +6,39 @@ use App\Models\Bibliotecas;
 
 class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
 {
+    protected $idSesion;
+    protected $user;
+    protected $rol;
+
+    //esta ruta se ejecuta antes de cada funcion en el controlador
+    public function initialize()
+    {
+        
+
+        if($this->session->has('id'))
+        {
+            //crea la busqueda si existe id
+        $this->idSesion = $this->session->get('id');
+        $this->user=Users::findFirst($this->idSesion);
+        $this->rol=$this->user->roles->nombre;
+        
+        // redirige si el rol cargado es diferente
+            switch($this->rol){
+                case 'Bibliotecario': 
+                case 'Prestamista':
+                $this->response->redirect('/401');
+                break;
+                case 'Administrador':
+                break;
+                            }
+        }
+        else
+        {
+            $this->response->redirect('/401');
+        }
+  
+
+    }
 
     public function indexAction()
     {   
@@ -40,13 +73,15 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
         $user->nombre=$nombre;
         $user->sexo=$sexo;
         $user->idrol=$idrol;
-
+        $user->save();
 
         $bibliotecario->dui=$dui;
         $bibliotecario->telefono=$telefono;
         $bibliotecario->iduser=$user->id;
         $bibliotecario->idbiblioteca=$bibliotecaid;
         $bibliotecario->save();
+        $this->flashSession->success('Bibliotecario almacenado corectamente! Contraseña temporal: '.$password);
+
         $this->response->redirect('bibliotecarios');
     }
 

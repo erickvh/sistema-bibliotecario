@@ -94,6 +94,14 @@ $di->setShared('modelsMetadata', function () {
 /**
  * Register the session flash service with the Twitter Bootstrap classes
  */
+$di->set('flashSession', function () {
+    return new Phalcon\Flash\Session([
+        'error'   => 'alert alert-danger',
+        'success' => 'alert alert-success',
+        'notice'  => 'alert alert-info',
+        'warning' => 'alert alert-warning'
+    ]);
+});
 $di->set('flash', function () {
     return new Flash([
         'error'   => 'alert alert-danger',
@@ -102,7 +110,6 @@ $di->set('flash', function () {
         'warning' => 'alert alert-warning'
     ]);
 });
-
 /**
  * Start the session the first time some component request the session service
  */

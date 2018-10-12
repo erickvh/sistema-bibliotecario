@@ -1,8 +1,41 @@
 <?php
 use App\Models\Categorias;
 use Phalcon\Http\Response;
+use App\Models\Users;
 class CategoriaController extends \Phalcon\Mvc\Controller
-{
+{    protected $idSesion;
+    protected $user;
+    protected $rol;
+
+    //esta ruta se ejecuta antes de cada funcion en el controlador
+    public function initialize()
+    {
+        
+
+        if($this->session->has('id'))
+        {
+            //crea la busqueda si existe id
+        $this->idSesion = $this->session->get('id');
+        $this->user=Users::findFirst($this->idSesion);
+        $this->rol=$this->user->roles->nombre;
+        
+        // redirige si el rol cargado es diferente
+            switch($this->rol){
+                case 'Administrador': 
+                case 'Prestamista':
+                $this->response->redirect('/401');
+                break;
+                case 'Bibliotecario':
+                break;
+                            }
+        }
+        else
+        {
+            $this->response->redirect('/401');
+        }
+  
+
+    }
 
     public function indexAction()
     {
@@ -38,7 +71,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
     public function editarAction()
     {
     	$this->view->pick('categoria/editar');
-        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $categoria = Categorias::findFirst($id);
         $this->view->categoria = $categoria;
         $this->view->setVar('error', false);
@@ -64,7 +97,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
  	public function eliminarAction()
  	{
  		$this->view->pick('categoria/eliminar');
- 		$id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+ 		$id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
  		$categoria = Categorias::findFirst($id);
  		$this->view->categoria = $categoria;
  		if ($this->request->isPost()) {

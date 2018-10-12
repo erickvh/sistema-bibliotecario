@@ -2,10 +2,7 @@
 
 {%  block titulo %} Biblioteca {% endblock %}
 
- {% block iconActual %}
-<h1><i class="fa fa-th-list"></i>Bibliotecas</h1>
-<p></p>
-{% endblock %}
+
 
 {% block contenido %}
   <div class="row">

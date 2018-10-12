@@ -18,15 +18,17 @@
       <div class="logo">
         <h1>Sistema bibliotecario</h1>
       </div>
-      {{ flash.output() }}
+                     {{ flashSession.output() }}
       <div class="login-box">
         <form class="login-form" action="/" METHOD='post'>
           <h3 class="login-head"><i class="fa fa-lg fa-fw fa-user"></i>Iniciar Sesión</h3>
           <div class="form-group">
+
             <label class="control-label">Nombre Usuario</label>
             <input class="form-control" type="text" name='username' placeholder="nombre de usuario" autofocus>
           </div>
           <div class="form-group">
+
             <label class="control-label">Contraseña</label>
             <input class="form-control" type="password" name='password'  placeholder="contraseña">
           </div>
@@ -35,7 +37,9 @@
             <button class="btn btn-primary btn-block"><i class="fa fa-sign-in fa-lg fa-fw"></i>Iniciar Sesión</button>
           </div>
         </form>
+
         </div>
+
     </section>
     <!-- Essential javascripts for application to work-->
     <script src="js/jquery-3.2.1.min.js"></script>

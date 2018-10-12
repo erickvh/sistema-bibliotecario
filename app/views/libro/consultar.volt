@@ -2,10 +2,10 @@
 
 {%  block titulo %} Libro {% endblock %}
 
- {% block iconActual %}
-<h1><i class="fa fa-th-list"></i>Libros</h1>
-<p></p>
-{% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-book"></i> Libros </h1>
+<p>Sección de gestion de libros</p>
+{% endblock %} 
 
 
 {% block contenido %}

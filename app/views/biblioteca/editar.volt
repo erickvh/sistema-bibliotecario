@@ -1,4 +1,4 @@
-{% extends 'layouts/bibliotecario.volt' %} 
+{% extends 'layouts/admin.volt' %} 
 {% block titulo %} Editar Biblioteca {{biblioteca.id}} {% endblock %}
 {% block iconActual %}
 <h1><i class="fa fa-building"></i>Biblioteca</h1>

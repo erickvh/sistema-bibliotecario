@@ -2,9 +2,40 @@
 
 use App\Models\Bibliotecas;
 use Phalcon\Http\Response;
+use App\Models\Users;
 
 class BibliotecaController extends \Phalcon\Mvc\Controller
 {
+        //esta ruta se ejecuta antes de cada funcion en el controlador
+        public function initialize()
+        {
+            
+    
+            if($this->session->has('id'))
+            {
+                //crea la busqueda si existe id
+            $this->idSesion = $this->session->get('id');
+            $this->user=Users::findFirst($this->idSesion);
+            $this->rol=$this->user->roles->nombre;
+            
+            // redirige si el rol cargado es diferente
+                switch($this->rol){
+                    case 'Bibliotecario': 
+                    case 'Prestamista':
+                    $this->response->redirect('/401');
+                    break;
+                    case 'Administrador':
+                    break;
+                                }
+            }
+            else
+            {
+                $this->response->redirect('/401');
+            }
+      
+    
+        }
+    
     public function indexAction()
     {
         $bibliotecas=Bibliotecas::find();
@@ -13,10 +44,26 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
 
     }
 
+    public function deshabilitarAction(){
+
+
+        $id=$this->dispatcher->getParam('id');
+        $biblioteca=Bibliotecas::findFirst($id);
+        $this->view->pick('biblioteca/deshabilitar');
+        $this->view->biblioteca=$biblioteca;
+        if($this->request->isPost()){
+
+            $biblioteca->habilitado=$biblioteca->habilitado? false:true;
+            $biblioteca->save();
+            $this->response->redirect('biblioteca');
+
+        }
+    }
+
     public function editarAction()
     {
         $this->view->pick('biblioteca/editar');
-        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
         $this->view->biblioteca = $biblioteca;
         if ($this->request->isPost()) {

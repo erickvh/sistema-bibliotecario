@@ -17,6 +17,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
+            {{ flashSession.output() }}
                 <table id="tabFormato" class="table table-bordered">
                     <thead class="bg-primary">
                         <th>Nombre</th>
@@ -56,7 +57,7 @@
     </div>
 </div>
 
-<!-- Modal Eliminar -->
+<!-- Modal deshabilitar -->
 <div id="popup" class="modal fade" role="dialog">
 </div>
 

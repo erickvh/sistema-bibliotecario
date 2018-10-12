@@ -1,10 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %} 
 {% block titulo %} Crear Libro {% endblock %}
 {% block iconActual %}
-<h1><i class="fa fa-book"></i>Libro</h1>
-<p></p>
-{% endblock %}
-
+<h1><i class="fa fa-book"></i> Crear Libro </h1>
+<p>Registrar un libro</p>
+{% endblock %} 
 
 {% block contenido %}
 <div class="container">

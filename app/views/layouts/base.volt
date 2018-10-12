@@ -1,8 +1,8 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
-    <meta name="description" content="Vali is a responsive and free admin theme built with Bootstrap 4, SASS and PUG.js. It's fully customizable and modular.">
+    <meta name="description" content="Sistema bibliotecario">
 
     <title>{% block titulo %} Escoja un titulo {% endblock %}</title>
     <meta charset="utf-8">
@@ -18,7 +18,7 @@
 
 <body class="app sidebar-mini rtl">
 
-    <header class="app-header"><a class="app-header__logo" href="index.html">Biblioteca</a>
+    <header class="app-header"><a class="app-header__logo" href="/">Sistema bibliotecario</a>
         <!-- Sidebar toggle button-->
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->
@@ -42,6 +42,7 @@
                 <div class="col-md-12">
                     <div class="tile">
                         <div class="tile-body">
+                        
                             {{ flashSession.output() }}
                             {% block contenido %} conenido principal {% endblock %}
                         </div>

@@ -1,6 +1,6 @@
 <?php
 /*rutas formatos*/
-$router->addPost('/formato','Formato::index');
+$router->add('/formato','Formato::index');
 // $router->addPost('/formato','Formato::crear'); //Crear Formato
 $router->addPost(
     '/:int',
@@ -19,16 +19,16 @@ $router->addPost(
 
 /*rutas recursos*/
 $router->add('/recurso','Recurso::index');
-$router->addPost('/recurso/crear','Recurso::crear');
-$router->addPost(
-    '/:int',
+$router->add('/recurso/crear','Recurso::crear');
+$router->add(
+    '/recurso/editar/:int',
     [
         'controller' => 'recurso',
         'action'     => 'editar',
         'id'     => 3
     ]);
-$router->addPost(
-    '/:int',
+$router->add(
+    '/recurso/eliminar/:int',
     [
         'controller' => 'recurso',
         'action'     => 'eliminar',
@@ -37,16 +37,32 @@ $router->addPost(
 
 //Categoria
 $router->add('/categoria','Categoria::index');
-$router->addPost('/categoria/crear','Categoria::crear');
-$router->addPost('/categoria/editar/:int','Categoria::editar');
-$router->addPost('/categoria/eliminar/:int','Categoria::eliminar');
+$router->add('/categoria/crear','Categoria::crear');
+$router->add('/categoria/editar/:int',[
+    'controller'=>'categoria',
+    'action'=>'editar',
+    'id'=>1
+]);
+$router->add('/categoria/eliminar/:int',[
+    'controller'=>'categoria',
+    'action'=>'eliminar',
+    'id'=>1
+]);
 
 //Subcategoria
-$router->add('/subcategoria/','Subcategoria::index');
-$router->addPost('/subcategoria/crear','Subcategoria::crear');
-$router->addPost('/subcategoria/editar/:int','Subcategoria::editar');
-$router->addPost('/subcategoria/eliminar/:int','Subcategoria::eliminar');
+$router->add('/subcategoria','Subcategoria::index');
+$router->add('/subcategoria/crear','Subcategoria::crear');
+$router->add('/subcategoria/editar/:int',[
+    'controller'=>'subcategoria',
+    'action'=>'editar',
+    'id'=>1
+]);
+$router->add('/subcategoria/eliminar/:int',[
+    'controller'=>'subcategoria',
+    'action'=>'eliminar',
+    'id'=>1
+]);
 
 //Perfil
-$router->add('/perfil/','Perfil::index');
-$router->addPost('/perfil/cambiar','Perfil::cambiar');
+$router->add('/perfil','Perfil::index');
+$router->add('/perfil/cambiar','Perfil::cambiar');
