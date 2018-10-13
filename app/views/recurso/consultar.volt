@@ -30,15 +30,17 @@
                         <th>Acción</th>
                     </thead>
                     <tbody>
-                        {% for mat in materiales %}
+                        {% for mat in recursos %}
+                        {% if mat.Materialesbibliograficos.idbiblioteca == idbiblioteca %}
                         <tr>
-                            <td> {{mat.nombre}}</td>
-                            <td>{{mat.descripcion}}</td>
+                            <td> {{mat.Materialesbibliograficos.nombre}}</td>
+                            <td>{{mat.Materialesbibliograficos.descripcion}}</td>
                             <td>
-                                <a href="{{url('recurso/editar/'~ mat.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
-                                <a onclick="return abrir_modal('{{url('recurso/eliminar/'~ mat.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                <a href="{{url('recurso/editar/'~ mat.Materialesbibliograficos.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+                                <a onclick="return abrir_modal('{{url('recurso/eliminar/'~ mat.Materialesbibliograficos.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                             </td>
                         </tr>
+                        {%endif%}
                         {%endfor%}
                     </tbody>
                 </table>

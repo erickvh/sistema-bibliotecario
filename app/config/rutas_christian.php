@@ -7,14 +7,14 @@ $router->addPost(
     [
         'controller' => 'formato',
         'action'     => 'editar',
-        'id'     => 3
+        'id'     => 1
     ]); // Ruta Editar formato
 $router->addPost(
     '/:int',
     [
         'controller' => 'formato',
         'action'     => 'eliminar',
-        'id'     => 3
+        'id'     => 1
     ]); // Ruta Eliminar formato    
 
 /*rutas recursos*/
@@ -25,14 +25,14 @@ $router->add(
     [
         'controller' => 'recurso',
         'action'     => 'editar',
-        'id'     => 3
+        'id'     => 1
     ]);
 $router->add(
     '/recurso/eliminar/:int',
     [
         'controller' => 'recurso',
         'action'     => 'eliminar',
-        'id'     => 3
+        'id'     => 1
     ]);
 
 //Categoria

@@ -49,9 +49,18 @@ class RecursoController extends \Phalcon\Mvc\Controller
     
     public function indexAction()
     {
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
     	$this->view->pick('recurso/consultar');
-        $materiales = Materialesbibliograficos::find();
-        $this->view->setVar('materiales', $materiales);
+        $recursos = Recursos::find();
+        $this->view->setVar('recursos', $recursos);
+        $this->view->idbiblioteca = $bibliotecario->idbiblioteca;
     }
 
     public function crearAction()

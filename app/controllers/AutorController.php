@@ -43,7 +43,7 @@ class AutorController extends \Phalcon\Mvc\Controller
     
     public function indexAction()
     {
-        if($biblioteca){
+        if($this->biblioteca){
         $autores=Autores::find('idbiblioteca ='.$this->biblioteca->id);
          }
         $this->view->pick('autor/index');
