@@ -1,6 +1,10 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Formato
 {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-cubes"></i> Formatos </h1>
+<p>Sección de  gestion de formatos </p>
+{% endblock %} 
 {% block extraCSS %}
 <style>
     table th {

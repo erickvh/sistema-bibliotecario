@@ -30,6 +30,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
                 break;
                 case 'Bibliotecario':
                 $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+                $this->view->biblioteca=$this->biblioteca;
                 break;
                             }
         }
@@ -44,7 +45,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
     public function indexAction()
     {
     	$this->view->pick('categoria/consultar');
-    	$categorias = Categorias::find();
+    	$categorias = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('categoria', $categorias);        
     }
 
@@ -61,6 +62,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
                 $categoria->nombre = $nombre;
                 $categoria->descripcion = $desc;
                 $categoria->codigo = $codigo;
+                $categoria->idbiblioteca=$this->biblioteca->id;
                 $categoria->save();
                 $response = new Response();
                 $response->redirect('/categoria'); //Retornar al index formato

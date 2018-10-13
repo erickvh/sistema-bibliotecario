@@ -11,6 +11,12 @@
     <!-- Main CSS-->
     <link rel="stylesheet" type="text/css" href="/css/main.css">
     <!-- custom css -->
+    <style>
+    .app-header__logo{
+        padding:0;
+    }
+
+    </style>
     {% block extraCSS %} {% endblock %}
     <!-- Font-icon css-->
     <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -18,7 +24,8 @@
 
 <body class="app sidebar-mini rtl">
 
-    <header class="app-header"><a class="app-header__logo" href="/">Sistema bibliotecario</a>
+    <header class="app-header"><a class="app-header__logo"  style='font-size: 24px'href="/">{% block biblioteca %}Sistema Bibliotecario{% endblock %} </a>
+    {% block logo %}  {% endblock %}   
         <!-- Sidebar toggle button-->
         <a class="app-sidebar__toggle" href="#" data-toggle="sidebar" aria-label="Hide Sidebar"></a>
         <!-- Navbar Right Menu-->

@@ -30,6 +30,12 @@ class Categorias extends \Phalcon\Mvc\Model
     public $codigo;
 
     /**
+     *
+     * @var integer
+     */
+    public $idbiblioteca;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -37,6 +43,7 @@ class Categorias extends \Phalcon\Mvc\Model
         $this->setSchema("public");
         $this->setSource("categorias");
         $this->hasMany('id', 'App\Models\Subcategorias', 'idcategoria', ['alias' => 'Subcategorias']);
+        $this->belongsTo('idbiblioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
     }
 
     /**

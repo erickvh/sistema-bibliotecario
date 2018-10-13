@@ -1,5 +1,9 @@
 {% extends 'layouts/admin.volt' %} 
 {% block titulo %} Editar Bibliotecario {{ bibliotecario.id }} {% endblock %} 
+{% block iconActual %}
+<h1><i class="fa fa-users"></i> Bibliotecarios </h1>
+<p>editar bibliotecario</p>
+{% endblock %} 
 {% block contenido %}
 <form action="/bibliotecarios/{{bibliotecario.id}}" method="post" autocomplete='off'>
                  <div class="form-group">

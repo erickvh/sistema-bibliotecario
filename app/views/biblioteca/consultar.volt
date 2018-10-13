@@ -3,8 +3,8 @@
 {%  block titulo %} Biblioteca {% endblock %}
 
 {% block iconActual %}
-<h1><i class="fa fa-book"></i> Libros </h1>
-<p>Sección de gestion de libros</p>
+<h1><i class="fa fa-cog"></i> Biblioteca </h1>
+<p>Sección para configurar bibliotecas</p>
 {% endblock %} 
 
 {% block contenido %}

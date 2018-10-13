@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Crear Sub Categoria {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-list-alt"></i> Crear subcategoria </h1>
+<p>Registrar una subcategoria </p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">

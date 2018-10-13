@@ -19,13 +19,13 @@ VALUES(default,'bib3','$2a$08$zEAVp2Ei086gZXWwqNri2eY0WbBY0YWrz.Sn2TFkvHJKxs53ka
 
 -- Biblioteca y bibliotecario ejemplo
 INSERT INTO bibliotecas(id,nombre,ubicacion,telefono,clasificacion,logourl,nombrelogo,email)
-VALUES (default,'Biblioteca el universitario','San Salvador','7812-1231','Publica','https://dinaryok','logoBonito','esbib@ues.edu.sv');
+VALUES (default,'Biblioteca el universitario','San Salvador','7812-1231','Publica','https://res.cloudinary.com/demo/image/upload/w_32,h_32,c_scale/turtles.jpg','logoBonito','esbib@ues.edu.sv');
 
 INSERT INTO bibliotecas(id,nombre,ubicacion,telefono,clasificacion,logourl,nombrelogo,email)
-VALUES (default,'Biblioteca el jocote','San Marcos','7412-1231','Privada','https://diasok','logoFEO','esbib@priv.edu.sv');
+VALUES (default,'Biblioteca el jocote','San Marcos','7412-1231','Privada','https://res.cloudinary.com/demo/image/upload/w_32,h_32,c_scale/balloons.jpg','logoFEO','esbib@priv.edu.sv');
 
 INSERT INTO bibliotecas(id,nombre,ubicacion,telefono,clasificacion,logourl,nombrelogo,email)
-VALUES (default,'Biblioteca el zapote','San Martin','7312-1231','Privada','https://diasoask','logoRegular','esbibib@priv.edu.sv');
+VALUES (default,'Biblioteca el zapote','San Martin','7312-1231','Privada','https://res.cloudinary.com/demo/image/upload/w_32,h_32,c_scale/turtles.jpg','logoRegular','esbibib@priv.edu.sv');
 
 INSERT INTO bibliotecarios(id,dui,telefono,idUser,idbiblioteca) VALUES (default,'01212-123','7612-1231',2,1);
 INSERT INTO bibliotecarios(id,dui,telefono,idUser,idbiblioteca) VALUES (default,'01212-123','7612-1231',3,2);

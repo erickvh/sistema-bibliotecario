@@ -1,6 +1,11 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Recurso
 {% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-paperclip"></i> Recursos </h1>
+<p>Sección de gestion de recursos</p>
+{% endblock %} 
+
 {% block extraCSS %}
 <style>
     table th {

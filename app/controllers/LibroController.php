@@ -39,6 +39,7 @@ class LibroController extends \Phalcon\Mvc\Controller
                 break;
                 case 'Bibliotecario':
                 $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+                $this->view->biblioteca=$this->biblioteca;
                 break;
                             }
         }

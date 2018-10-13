@@ -1,15 +1,15 @@
 {% extends 'layouts/admin.volt' %} 
 {% block titulo %} Editar Biblioteca {{biblioteca.id}} {% endblock %}
 {% block iconActual %}
-<h1><i class="fa fa-building"></i>Biblioteca</h1>
-<p></p>
+<h1><i class="fa fa-cog"></i> Biblioteca </h1>
+<p>Editar biblioteca</p>
 {% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">
         <div class="col">
             <h3 class="text-center">Editar</h3>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Nombre" value="{{biblioteca.nombre}}" required>
@@ -26,10 +26,10 @@
                     <label class="control-label">Clasificación</label>
                     <input name="clasBiblioteca" class="form-control" type="text" placeholder="Clasificación" value="{{biblioteca.clasificacion}}">
                 </div>  
-                 <div class="form-group">
-                    <label class="control-label">URL de logo</label>
-                    <input name="logourlBiblioteca" class="form-control" type="text" placeholder="URL" value="{{biblioteca.logourl}}">
-                </div> 
+                <div class="form-group">
+                    <label for="imagen">Imagen</label>
+                    <input name="imagenbiblioteca" class="form-control-file" id="imagenLibro" type="file" aria-describedby="fileHelp"><small class="form-text text-muted" id="fileHelp">Selecciona logo de biblioteca.</small>
+                  </div>
                  <div class="form-group">
                     <label class="control-label">Nombre de logo</label>
                     <input name="nomlogoBiblioteca" class="form-control" type="text" placeholder="Nombre del logo" value="{{biblioteca.nombrelogo}}">

@@ -2,7 +2,10 @@
 
 {%  block titulo %} Biblioteca {% endblock %}
 
-
+{% block iconActual %}
+<h1><i class="fa fa-cog"></i> Biblioteca </h1>
+<p>Registrar bibliotecas</p>
+{% endblock %} 
 
 {% block contenido %}
   <div class="row">
@@ -12,7 +15,7 @@
         <h3 class="tile-title">Formulario de registro de Bibliotecas</h3>
         </center>
         <div class="tile-body">
-             <form action="" method="post">
+             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Ingrese el Nombre de la Biblioteca" required>
@@ -29,10 +32,10 @@
                     <label class="control-label">Clasificación</label>
                     <input name="clasBiblioteca" class="form-control" type="text" placeholder="Clasificación">
                 </div>  
-                 <div class="form-group">
-                    <label class="control-label">URL de logo</label>
-                    <input name="logourlBiblioteca" class="form-control" type="text" placeholder="URL">
-                </div> 
+                <div class="form-group">
+                    <label for="imagenBiblioteca">Imagen</label>
+                    <input name="imagenbiblioteca" class="form-control-file" id="imagenLibro" type="file" aria-describedby="fileHelp"><small class="form-text text-muted" id="fileHelp">Seleccione un logo para la biblioteca.</small>
+                  </div>
                  <div class="form-group">
                     <label class="control-label">Nombre de logo</label>
                     <input name="nomlogoBiblioteca" class="form-control" type="text" placeholder="Nombre del logo">

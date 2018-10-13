@@ -1,6 +1,10 @@
 {% extends 'layouts/admin.volt' %}
 {% block titulo %} bibliotecarios
 {% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-users"></i> Bibliotecarios </h1>
+<p>Registrar bibliotecario</p>
+{% endblock %} 
 {% block contenido %}
                 <form action="/bibliotecarios" method="post" autocomplete='off'>
                  <div class="form-group">

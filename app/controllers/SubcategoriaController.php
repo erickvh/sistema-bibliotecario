@@ -22,6 +22,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
         $this->idSesion = $this->session->get('id');
         $this->user=Users::findFirst($this->idSesion);
         $this->rol=$this->user->roles->nombre;
+        
 
         
         // redirige si el rol cargado es diferente
@@ -32,6 +33,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
                 break;
                 case 'Bibliotecario':
                 $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+                $this->view->biblioteca=$this->biblioteca;
                 break;
                             }
         }
@@ -45,15 +47,35 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     
 	public function indexAction()
     {
+
     	$this->view->pick('subcategoria/consultar');
-    	$subcategorias = Subcategorias::find();
+/**
+ * Obtiene todos las subcategorias
+ * crea un arreglo vacio
+ * un indice que inicia desde cero
+ */
+        $subcategoriasGeneral = Subcategorias::find();    
+        $subcategorias=[];
+        $i=0;
+    /**
+     * recorre todas las subcategorias
+     * las filtra si equivale con su padre categoria con id de la biblioteca
+     */
+            foreach ($subcategoriasGeneral as $sub) {
+                if($sub->categorias->bibliotecas->id==$this->biblioteca->id)
+                {  
+                    $subcategorias[$i]= $sub;
+                    ++$i;
+                }
+            }
+ 
         $this->view->setVar('subcategoria', $subcategorias);        
     } 
 
     public function crearAction()
     {
     	$this->view->pick('subcategoria/crear');
-    	$categorias = Categorias::find();
+    	$categorias = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('categoria', $categorias);    	
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
@@ -85,7 +107,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $subcategoria = Subcategorias::findFirst($id);
         $this->view->subcategoria = $subcategoria;
-        $this->view->categoria = Categorias::find();
+        $this->view->categoria = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {            
             $nombre = $this->request->getPost('nombreCat');

@@ -10,7 +10,7 @@
     <div class="row">
         <div class="col">
             <h3 class="text-center">Crear</h3>
-            <form action="" method="post">
+            <form action="" method="post" enctype="multipart/form-data">
             
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
@@ -61,7 +61,7 @@
                     <label class="control-label">Subcategoria</label>
                     <select name="subLibro" id="subLibro" class="form-control">
                         {% for s in subcategorias %}
-                        <option value="{{s.id}}">{{s.nombre}}</option>
+                        <option value="{{s.id}}">{{s.categorias.nombre}} : {{s.nombre}}</option>
                         {% endfor %}
                     </select>
                 </div>

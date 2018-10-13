@@ -7,7 +7,7 @@ class MenuController extends \Phalcon\Mvc\Controller
     protected $idSesion;
     protected $user;
     protected $rol;
-    
+    protected $biblioteca;
     public function initialize(){
         /*comprueba id de sesion */
         if($this->session->has('id')) 
@@ -38,14 +38,20 @@ class MenuController extends \Phalcon\Mvc\Controller
 
     public function bibliotecarioAction()
     {
+
         switch($this->rol){
             case 'Prestamista':
             case 'Administrador': 
             $this->response->redirect('/401');
-
+            break;
+            case 'Bibliotecario':
+            $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas;
+            break;
         }
+
         $this->view->pick('layouts/bibliotecario');
-       
+        $this->view->biblioteca=$this->biblioteca;
+        
     }
 
 

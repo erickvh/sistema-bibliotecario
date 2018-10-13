@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %} 
 {% block titulo %} Editar Formato {{formato.id}} {% endblock %} 
+{% block iconActual%}
+<h1><i class="fa fa-cubes"></i> Editar formato </h1>
+<p>Editar un formato </p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">

@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Editar Categoria {{subcategoria.id}} {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-list-alt"></i> Editar subcategoria </h1>
+<p>Editar una subcategoria </p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">

@@ -1,6 +1,10 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Autores
 {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-user-circle"></i> Autores </h1>
+<p>Sección de  gestion de autores </p>
+{% endblock %} 
 {% block extraCSS %}
 <style>
     table th {
@@ -66,8 +70,8 @@
                         <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" required>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Fecha Nacimiento</label>
-                        <input class="form-control" id="fechanacimiento" name="fechanacimiento" type="text" placeholder="Seleccionar fecha">
+                        <label class="control-label">Fecha de Publicacion</label>
+                        <input name="fechanacimiento" type="date" class="form-control">
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo</label>

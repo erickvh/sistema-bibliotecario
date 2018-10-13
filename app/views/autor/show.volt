@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %} 
 {% block titulo %} Mostrar Autor {{autor.id}} {% endblock %} 
+{% block iconActual%}
+<h1><i class="fa fa-user-circle"></i> Mostrar autor  </h1>
+<p>Mostrar un autor</p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">

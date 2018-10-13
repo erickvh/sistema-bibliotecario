@@ -12,6 +12,10 @@
     }
 </style>
 {% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-users"></i> Bibliotecarios </h1>
+<p>Sección para gestionar bibliotecarios</p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="container">

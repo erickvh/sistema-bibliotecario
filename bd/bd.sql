@@ -27,8 +27,11 @@ CREATE TABLE categorias(
     nombre VARCHAR(50) NOT NULL,
     descripcion TEXT,
     codigo VARCHAR(8) UNIQUE,
+    idBiblioteca SMALLINT NOT NULL,
 
-    CONSTRAINT pk_categorias PRIMARY KEY (id)
+    CONSTRAINT pk_categorias PRIMARY KEY (id),
+    CONSTRAINT fk_categorias_biblioteca FOREIGN KEY (idBiblioteca)
+    REFERENCES bibliotecas(id) ON UPDATE RESTRICT ON DELETE RESTRICT
     
 );
 
@@ -36,8 +39,11 @@ CREATE TABLE formatos(
     id smallserial,
     tipoFormato VARCHAR(50) NOT NULL,
     descripcion TEXT,
+    idBiblioteca SMALLINT NOT NULL,
    
-    CONSTRAINT pk_formatos PRIMARY KEY (id)
+    CONSTRAINT pk_formatos PRIMARY KEY (id),
+    CONSTRAINT fk_formatos_bibliotecas FOREIGN KEY (idBiblioteca)
+    REFERENCES bibliotecas(id) ON UPDATE RESTRICT ON DELETE RESTRICT
    
 );
 
@@ -47,7 +53,7 @@ CREATE TABLE autores(
     nacionalidad VARCHAR(50) NOT NULL,
     fechaNacimiento DATE,
     sexo VARCHAR(1) NOT NULL,
-    idBiblioteca SMALLINT,
+    idBiblioteca SMALLINT NOT NULL,
     CONSTRAINT pk_autores PRIMARY KEY (id),
     CONSTRAINT fk_autores_bibliotecas FOREIGN KEY (idBiblioteca)
     REFERENCES bibliotecas(id) ON UPDATE RESTRICT ON DELETE RESTRICT
@@ -74,7 +80,7 @@ CREATE TABLE bibliotecarios(
     telefono VARCHAR(9),
     habilitado boolean DEFAULT true,
     idUser INTEGER,
-    idBiblioteca INTEGER NOT NULL,
+    idBiblioteca SMALLINT NOT NULL,
 
     CONSTRAINT pk_bibliotecarios PRIMARY KEY (id),
     -- Solo un usuario puede ser 1 un o muchos bibliotecarios
@@ -119,7 +125,7 @@ CREATE TABLE materialesBibliograficos(
     nombreImagen VARCHAR(50),
     fechaPublicacion DATE,
     esExterno BOOLEAN NOT NULL,
-    idBiblioteca INTEGER NOT NULL,
+    idBiblioteca SMALLINT NOT NULL,
     idSubcategoria INTEGER,
 
     CONSTRAINT pk_materiales PRIMARY KEY (id),

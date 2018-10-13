@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Crear Categoria {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-list-ul"></i> Crear categoria </h1>
+<p>Registrar una categoria </p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">

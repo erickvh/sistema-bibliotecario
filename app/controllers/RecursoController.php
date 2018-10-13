@@ -36,6 +36,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 break;
                 case 'Bibliotecario':
                 $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+                $this->view->biblioteca=$this->biblioteca;
                 break;
                             }
         }
@@ -66,7 +67,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
     public function crearAction()
     {
         $recursos = Recursos::find();
-        $formatos = Formatos::find();        
+        $formatos = Formatos::find('idbiblioteca ='.$this->biblioteca->id);        
         $subcategorias = Subcategorias::find();
         $this->view->setVar('recursos', $recursos);
         $this->view->setVar('formatos', $formatos);         

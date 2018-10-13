@@ -31,6 +31,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
                 break;
                 case 'Bibliotecario':
                 $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+                $this->view->biblioteca=$this->biblioteca;
                 break;
                             }
         }
@@ -45,7 +46,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
     public function indexAction()
     {
         $this->view->pick('formato/formato');
-        $formatos = Formatos::find();
+        $formatos = Formatos::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('formato', $formatos); 
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {
@@ -53,6 +54,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
             $tipo = $this->request->getPost('tipoFormato');
             $desc = $this->request->getPost('descFormato');
             if($tipo){
+                $formato->idbiblioteca=$this->biblioteca->id;
                 $formato->tipoformato = $tipo;
                 $formato->descripcion = $desc;
                 $formato->save();
@@ -77,6 +79,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
             $tipo = $this->request->getPost('tipoFormato');
             $desc = $this->request->getPost('descFormato');
             if($tipo){
+                $formato->idbiblioteca=$this->biblioteca->id;
                 $formato->tipoformato = $tipo;
                 $formato->descripcion = $desc;
                 $formato->save();

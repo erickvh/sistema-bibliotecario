@@ -1,6 +1,10 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Categoria
 {% endblock %}
+{% block iconActual %}
+<h1><i class="fa fa-list-ul"></i> Categorias </h1>
+<p>Sección para gestión de categorias </p>
+{% endblock %} 
 {% block extraCSS %}
 <style>
     table th {

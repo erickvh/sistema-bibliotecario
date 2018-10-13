@@ -1,4 +1,17 @@
-{% extends 'layouts/base.volt' %} {% block titulo %} Panel Bibliotecario {% endblock %} {% block navegacion %}
+{% extends 'layouts/base.volt' %} {% block titulo %} Panel Bibliotecario {% endblock %} 
+{% block biblioteca %}
+{{biblioteca.nombre}}
+{% endblock %}
+
+{% block logo %} 
+{% if biblioteca.logourl %}
+<img src='{{biblioteca.logourl}}' {{biblioteca.nombrelogo ? "alt='"~biblioteca.nombrelogo~"'":'no disponible'}} />
+{% else %}
+<img src='https://via.placeholder.com/32x32' alt='logo no disponible'/> 
+{% endif %}
+{% endblock %}   
+
+{% block navegacion %}
 <ul class="app-nav">
     <!-- User Menu-->
     <li class="dropdown"><a class="app-nav__item" href="#" data-toggle="dropdown" aria-label="Open Profile Menu"><i class="fa fa-user fa-lg"></i></a>
@@ -19,7 +32,7 @@
         <li><a class="app-menu__item" href="/libro"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Gestionar Libros</span></a></li>
         <li><a class="app-menu__item" href="/recurso"><i class="app-menu__icon fa fa-paperclip"></i><span class="app-menu__label">Gestionar recursos</span></a></li>
         <li><a class="app-menu__item" href="/categoria"><i class="app-menu__icon fa fa-list-ul"></i><span class="app-menu__label">Gestionar categorias </span></a></li>
-        <li><a class="app-menu__item" href="/subcategoria"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Gestionar Subcategorias </span></a></li>
+        <li><a class="app-menu__item" href="/subcategoria"><i class="app-menu__icon fa fa-list-alt"></i><span class="app-menu__label">Gestionar Subcategorias </span></a></li>
         <li><a class="app-menu__item" href="/autor"><i class="app-menu__icon fa fa-user-circle"></i><span class="app-menu__label">Gestionar Autores</span></a></li>
         <li><a class="app-menu__item" href="/formato"><i class="app-menu__icon fa fa-cubes"></i><span class="app-menu__label">Gestionar Formatos</span></a></li>
     </ul>

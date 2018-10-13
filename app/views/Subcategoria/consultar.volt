@@ -1,6 +1,10 @@
 {% extends 'layouts/bibliotecario.volt' %}
 {% block titulo %} Sub Categoria
 {% endblock %}
+{% block iconActual%}
+<h1><i class="fa fa-list-alt"></i> Subcategorias </h1>
+<p>Sección para gestión de subcategorias </p>
+{% endblock %} 
 {% block extraCSS %}
 <style>
     table th {

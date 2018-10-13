@@ -24,6 +24,12 @@ class Formatos extends \Phalcon\Mvc\Model
     public $descripcion;
 
     /**
+     *
+     * @var integer
+     */
+    public $idbiblioteca;
+
+    /**
      * Initialize method for model.
      */
     public function initialize()
@@ -31,6 +37,7 @@ class Formatos extends \Phalcon\Mvc\Model
         $this->setSchema("public");
         $this->setSource("formatos");
         $this->hasMany('id', 'App\Models\Recursos', 'idformato', ['alias' => 'Recursos']);
+        $this->belongsTo('idbiblioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
     }
 
     /**

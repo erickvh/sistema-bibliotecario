@@ -72,7 +72,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
             $telefono = $this->request->getPost('telefonoBiblioteca');
             $clasificacion = $this->request->getPost('clasBiblioteca');
-            $logourl = $this->request->getPost('logourlBiblioteca');
+            $logourl = $this->request->getPost('imagenbiblioteca'); //esto debe ser traido por cloud dinary
             $nombrelogo = $this->request->getPost('nomlogoBiblioteca');
             $email = $this->request->getPost('emailBiblioteca');
             if($nombre and $ubicacion and $telefono){
@@ -100,7 +100,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $ubicacion = $this->request->getPost('ubicacionBiblioteca');
         $telefono = $this->request->getPost('telefonoBiblioteca');
         $clasificacion = $this->request->getPost('clasBiblioteca');
-        $logourl = $this->request->getPost('logourlBiblioteca');
+        $logourl = $this->request->getPost('imagenbiblioteca'); //esto debe ser traido por cloud dinary
         $nombrelogo = $this->request->getPost('nomlogoBiblioteca');
         $email = $this->request->getPost('emailBiblioteca');
 

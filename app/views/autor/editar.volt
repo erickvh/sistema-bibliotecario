@@ -1,5 +1,9 @@
 {% extends 'layouts/bibliotecario.volt' %} 
 {% block titulo %} Editar Autor {{autor.id}} {% endblock %} 
+{% block iconActual%}
+<h1><i class="fa fa-user-circle"></i> Editar autor  </h1>
+<p>Editar un autor</p>
+{% endblock %} 
 {% block contenido %}
 <div class="container">
     <div class="row">
@@ -15,8 +19,8 @@
                         <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad }}"required>
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Fecha Nacimiento</label>
-                        <input type='date' class="form-control" id="fechanacimiento" name="fechanacimiento" type="text" value="{{ autor.fechanacimiento }}" placeholder="Seleccionar fecha">
+                        <label class="control-label">Fecha de Publicacion</label>
+                        <input name="fechaMaterial" type="date" value="{{autor.fechanacimiento}}"class="form-control">
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo</label>

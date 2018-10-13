@@ -1,6 +1,14 @@
 {% extends 'layouts/admin.volt' %} 
 {% block titulo %} Mostrar Bibliotecario {{bibliotecario.id}} {% endblock %} 
+
+{% block iconActual %}
+<h1><i class="fa fa-users"></i> Bibliotecarios </h1>
+<p>información bibliotecario</p>
+{% endblock %} 
 {% block contenido %}
+
+
+
 <div class="container">
     <div class="row">
         <div class="col">
