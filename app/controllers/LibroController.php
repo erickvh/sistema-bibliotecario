@@ -17,14 +17,15 @@ class LibroController extends \Phalcon\Mvc\Controller
     protected $idSesion;
     protected $user;
     protected $rol;
+    protected $biblioteca;
 
     //esta ruta se ejecuta antes de cada funcion en el controlador
     public function initialize()
     {
         
-
         if($this->session->has('id'))
-        {
+        {  
+
             //crea la busqueda si existe id
         $this->idSesion = $this->session->get('id');
         $this->user=Users::findFirst($this->idSesion);
@@ -37,6 +38,7 @@ class LibroController extends \Phalcon\Mvc\Controller
                 $this->response->redirect('/401');
                 break;
                 case 'Bibliotecario':
+                $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
                 break;
                             }
         }

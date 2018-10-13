@@ -8,19 +8,20 @@ class AutorController extends \Phalcon\Mvc\Controller
     protected $idSesion;
     protected $user;
     protected $rol;
+    protected $biblioteca;
 
     //esta ruta se ejecuta antes de cada funcion en el controlador
     public function initialize()
     {
         
-
         if($this->session->has('id'))
-        {
+        {  
+
             //crea la busqueda si existe id
         $this->idSesion = $this->session->get('id');
         $this->user=Users::findFirst($this->idSesion);
         $this->rol=$this->user->roles->nombre;
-        
+
         // redirige si el rol cargado es diferente
             switch($this->rol){
                 case 'Administrador': 
@@ -28,6 +29,7 @@ class AutorController extends \Phalcon\Mvc\Controller
                 $this->response->redirect('/401');
                 break;
                 case 'Bibliotecario':
+                $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
                 break;
                             }
         }
@@ -41,10 +43,11 @@ class AutorController extends \Phalcon\Mvc\Controller
     
     public function indexAction()
     {
-
-        $autores=Autores::find();
-        
+        if($biblioteca){
+        $autores=Autores::find('idbiblioteca ='.$this->biblioteca->id);
+         }
         $this->view->pick('autor/index');
+    
         $this->view->autores=$autores;
 
     }
