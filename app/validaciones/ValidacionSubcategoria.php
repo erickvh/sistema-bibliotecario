@@ -8,7 +8,7 @@ use Phalcon\Validation\Validator\Date as DateValidator;
 use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\StringLength as StringLength;
 
-class ValidacionCategoria extends Validation
+class ValidacionSubcategoria extends Validation
 {
 
     public function initialize()
@@ -24,8 +24,8 @@ class ValidacionCategoria extends Validation
                 'message'=>'La descripción debe ser alfa numerica']));
      
         $this->add('codCat', new Regex([
-                        'pattern'=>'/^[0-9]{1}00$/',
-                        'message'=>'El codigo categoria, formato ejemplo 100,200,300',
+                        'pattern'=>'/^[0-9]{3}$/',
+                        'message'=>'El codigo subcategoria, formato ejemplo 112,231,999',
                         'allowEmpty' => true]));
 
         //tamaño de cadenas
@@ -33,8 +33,8 @@ class ValidacionCategoria extends Validation
                                 [
                                     "max"            => 50,
                                     "min"            => 4,
-                                    "messageMaximum" => "categoria no debe contener mas de 50 caracteres",
-                                    "messageMinimum" => "categoria requiere mas de 4 caracteres",
+                                    "messageMaximum" => "subcategoria no debe contener mas de 50 caracteres",
+                                    "messageMinimum" => "subcategoria requiere mas de 4 caracteres",
                                     'allowEmpty' => true
                                 ]
                             )
@@ -45,7 +45,7 @@ class ValidacionCategoria extends Validation
     /**campos obligatorios */
         $this->add('nombreCat',new PresenceOf(['message' => 'El nombre de la categoria es requerido']));
         $this->add('codCat',new PresenceOf(['message' => 'El codigo de la categoria es requerido']));
-    
+        $this->add('categoria', new PresenceOf(['message'=>'La categoria es requerida']));
     }
 
 }

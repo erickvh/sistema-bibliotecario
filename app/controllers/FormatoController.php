@@ -2,6 +2,7 @@
 use App\Models\Formatos;
 use Phalcon\Http\Response;
 use App\Models\Users;
+use App\Validations\ValidacionFormato;
 class FormatoController extends \Phalcon\Mvc\Controller
 {
 
@@ -50,23 +51,51 @@ class FormatoController extends \Phalcon\Mvc\Controller
         $this->view->setVar('formato', $formatos); 
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {
-            $formato = new Formatos;
-            $tipo = $this->request->getPost('tipoFormato');
-            $desc = $this->request->getPost('descFormato');
-            if($tipo){
+            
+            $validacion= new ValidacionFormato;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha guardado el formato, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/formato');
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+                $formato = new Formatos;
+                
+                $tipo = $this->request->getPost('tipoFormato');
+                $desc = $this->request->getPost('descFormato');
+
                 $formato->idbiblioteca=$this->biblioteca->id;
                 $formato->tipoformato = $tipo;
                 $formato->descripcion = $desc;
                 $formato->save();
                 $response = new Response();
+                $this->flashSession->success('El formato ha sido almacenado con exito');
                 $response->redirect('/formato'); //Retornar al index formato
                 return $response;
+
             }
-            else{
-                $this->view->setVar('error', true); 
-            }
-        }
     }
+}
 
     public function editarAction()
     {
@@ -76,20 +105,47 @@ class FormatoController extends \Phalcon\Mvc\Controller
         $this->view->formato = $formato;
         if ($this->request->isPost()) {
             // Accedemos a los datos POST            
+            $validacion= new ValidacionFormato;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha actualizado el formato, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/formato/editar/'.$id);
+                
+            }
+            else
+            {//VALIDACION CON EXITO
             $tipo = $this->request->getPost('tipoFormato');
             $desc = $this->request->getPost('descFormato');
-            if($tipo){
+  
                 $formato->idbiblioteca=$this->biblioteca->id;
                 $formato->tipoformato = $tipo;
                 $formato->descripcion = $desc;
                 $formato->save();
-            }
             $response = new Response();
+            $this->flashSession->success('Formato actualizado con exito');
             $response->redirect('/formato'); //Retornar al index formato
             return $response;          
         }
     }
-
+}
     public function eliminarAction()
     {
         $this->view->pick('formato/eliminar');

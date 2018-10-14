@@ -11,15 +11,15 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreSubCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"  >
+                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
-                    <textarea name="descSubCat" class="form-control" rows="4" placeholder="Ingrese la descripción de la categoria"></textarea>
+                    <textarea name="descCat" class="form-control" rows="4" placeholder="Ingrese la descripción de la categoria"></textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Codigo</label>
-                    <input name="codSubCat" class="form-control" type="text" placeholder="Codigo de la categoria"    >
+                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria"    >
                 </div>
                 <div class="form-group">
                         <label class="control-label">Categoria</label>

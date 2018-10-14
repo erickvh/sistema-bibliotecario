@@ -2,6 +2,7 @@
 
 use App\Models\Autores;
 use App\Models\Users;
+use App\Validations\ValidacionAutor;
 
 class AutorController extends \Phalcon\Mvc\Controller
 {   
@@ -55,22 +56,58 @@ class AutorController extends \Phalcon\Mvc\Controller
 
     public function storeAction(){
         $this->view->disable();
+
+     
+        $validacion= new ValidacionAutor;
+        $mensajes=[];
+
+        $messages = $validacion->validate($_POST); //recoge las variables globales post
+        
+        //captura mensajes que son al respecto de los campos encontrados
+        foreach ($messages as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+        
+        if(!empty($mensajes))
+        {   
+            $this->flashSession->error('No se ha actualizado autor, algunos errores en los campos mencionados');
+            
+            //hace el bucle media vez halla capturado validaciones
+            foreach ($mensajes as $mensaje ) {
+                $this->flashSession->warning($mensaje);                
+                
+            }
+
+           //redirige al mismo formulario
+            $this->response->redirect('/autor'.$id);
+            
+        }
+        else
+        {//VALIDACION CON EXITO
         $autor= new Autores;
         
         $nombre=$this->request->getPost('nombre');
         $nacionalidad=$this->request->getPost('nacionalidad');
+        
         $fechanacimiento=$this->request->getPost('fechanacimiento');
+//entra si no es null
+        if($fechanacimiento)
+        {
+            $autor->fechanacimiento=$fechanacimiento;
+
+        }
         $sexo=$this->request->getPost('sexo');
 
         $autor->nombre=$nombre;
         $autor->nacionalidad=$nacionalidad;
-        $autor->fechanacimiento=$fechanacimiento;
         $autor->sexo=$sexo;
         $autor->idbiblioteca=$this->user->bibliotecarios[0]->idbiblioteca;
         $autor->save();
+        $this->flashSession->success('Autor guardado con exito');
         $this->response->redirect('/autor');
     }
-
+}
     public function editAction(){
 
         $id=$this->dispatcher->getParam('id');
@@ -80,21 +117,57 @@ class AutorController extends \Phalcon\Mvc\Controller
     }
 
     public function updateAction(){
- 
+        $id=$this->dispatcher->getParam('id');
+
+        $validacion= new ValidacionAutor;
+        $mensajes=[];
+
+        $messages = $validacion->validate($_POST); //recoge las variables globales post
+        
+        //captura mensajes que son al respecto de los campos encontrados
+        foreach ($messages as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+        
+        if(!empty($mensajes))
+        {   
+            $this->flashSession->error('No se ha actualizado autor, algunos errores en los campos mencionados');
+            
+            //hace el bucle media vez halla capturado validaciones
+            foreach ($mensajes as $mensaje ) {
+                $this->flashSession->warning($mensaje);                
+                
+            }
+
+           //redirige al mismo formulario
+            $this->response->redirect('/autor/editar/'.$id);
+            
+        }
+        else
+        {//VALIDACION CON EXITO
+
         //data from post
+        
         $nombre=$this->request->getPost('nombre');
         $nacionalidad=$this->request->getPost('nacionalidad');
         $fechanacimiento=$this->request->getPost('fechanacimiento');
         $sexo=$this->request->getPost('sexo');
-        $id=$this->dispatcher->getParam('id');
+        
+//entra si no es null
+        if($fechanacimiento)
+        {
+            $autor->fechanacimiento=$fechanacimiento;
 
+        }
         $autor=Autores::findFirst($id);
         $autor->nombre=$nombre;
         $autor->nacionalidad=$nacionalidad;
-        $autor->fechanacimiento=$fechanacimiento;
         $autor->sexo=$sexo;
         $autor->save();
-        $this->dispatcher->forward(['action' => 'index']);
+        $this->flashSession->success('Autor Actualizado con exito');
+        $this->response->redirect('/autor');
+        }
     }
 
     public function showAction(){

@@ -210,7 +210,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
             
             if(!empty($mensajes))
             {   
-                $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
+                $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
                 
                 //hace el bucle media vez halla capturado validaciones
                 foreach ($mensajes as $mensaje ) {
@@ -298,6 +298,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 $autmat->delete();
             }
             $material->delete();
+            $this->flashSession->success('Recurso eliminado con exito');
             $response = new Response();
             $response->redirect('/recurso'); //Retornar al index formato
             return $response;

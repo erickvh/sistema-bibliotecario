@@ -20,7 +20,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha de Publicacion</label>
-                        <input name="fechaMaterial" type="date" value="{{autor.fechanacimiento}}"class="form-control">
+                        <input name="fechanacimiento" type="date" value="{{autor.fechanacimiento}}"class="form-control">
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo</label>

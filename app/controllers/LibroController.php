@@ -218,7 +218,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             
             if(!empty($mensajes))
             {   
-                $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
+                $this->flashSession->error('No se ha guardado libro, algunos errores en los campos mencionados');
                 
                 //hace el bucle media vez halla capturado validaciones
                 foreach ($mensajes as $mensaje ) {
@@ -288,6 +288,7 @@ class LibroController extends \Phalcon\Mvc\Controller
                 $libro->save();
             }
             $response = new Response();
+            $this->flashSession->success('Libro actualizado con exito');
             $response->redirect('/libro'); //Retornar a libro
             return $response;          
         }
@@ -310,6 +311,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             }
             $material->delete();
             $response = new Response();
+            $this->flashSession->success('Libro eliminado con exito');
             $response->redirect('/libro'); //Retornar al index formato
             return $response;
         }     

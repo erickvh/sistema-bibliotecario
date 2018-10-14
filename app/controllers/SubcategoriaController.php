@@ -3,6 +3,7 @@ use App\Models\Subcategorias;
 use App\Models\Categorias;
 use Phalcon\Http\Response;
 use App\Models\Users;
+use App\Validations\ValidacionSubcategoria;
 
 class SubcategoriaController extends \Phalcon\Mvc\Controller
 {
@@ -79,28 +80,55 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
         $this->view->setVar('categoria', $categorias);    	
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
+            $this->view->disable();
+            $validacion= new ValidacionSubcategoria;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha guardado subcategoria, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/subcategoria/crear');
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+
             $subcategoria = new Subcategorias;
-            $nombre = $this->request->getPost('nombreSubCat');
-            $desc = $this->request->getPost('descSubCat');
-            $codigo = $this->request->getPost('codSubCat');
-            if($nombre && $desc && $codigo){
+            $nombre = $this->request->getPost('nombreCat');
+            $desc = $this->request->getPost('descCat');
+            $codigo = $this->request->getPost('codCat');
+            
                 $subcategoria->nombre = $nombre;
                 $subcategoria->descripcion = $desc;
                 $subcategoria->codigo = $codigo;
                 $cat = $this->request->getPost('categoria');
                 $categoria = Categorias::findFirst("nombre='".$cat."'");
                 $subcategoria->idcategoria = $categoria->id;
-                $subcategoria->save();
+                var_dump($subcategoria->save());
                 $response = new Response();
+                $this->flashSession->success('Subcategoria almacenada con exito');
                 $response->redirect('/subcategoria'); //Retornar al index formato
                 return $response;
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
+            
         }
     }
-
+}
     public function editarAction()
     {
     	$this->view->pick('subcategoria/editar');
@@ -109,28 +137,55 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
         $this->view->subcategoria = $subcategoria;
         $this->view->categoria = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('error', false);
-        if ($this->request->isPost()) {            
+        if ($this->request->isPost()) { 
+
+            $validacion= new ValidacionSubcategoria;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha actualizado subcategoria, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/subcategoria/editar/'.$id);
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
             $codigo = $this->request->getPost('codCat');
-            if($nombre && $desc && $codigo){
-                $subcategoria->nombre = $nombre;
-                $subcategoria->descripcion = $desc;
-                $subcategoria->codigo = $codigo;
-                $cat = $this->request->getPost('categoria');
-                $categoria = Categorias::findFirst("nombre='".$cat."'");
-                $subcategoria->idcategoria = $categoria->id;
-                $subcategoria->save();
-                $response = new Response();
-                $response->redirect('/subcategoria'); //Retornar al index formato
-                return $response;
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
+
+            $subcategoria->nombre = $nombre;
+            $subcategoria->descripcion = $desc;
+            $subcategoria->codigo = $codigo;
+            $cat = $this->request->getPost('categoria');
+            $categoria = Categorias::findFirst("nombre='".$cat."'");
+            $subcategoria->idcategoria = $categoria->id;
+            $subcategoria->save();
+            $response = new Response();
+            $this->flashSession->success('Subcategoria actualizada con exito');
+            $response->redirect('/subcategoria'); //Retornar al index formato
+            return $response;
+    
         }
     }
-
+    }
     public function eliminarAction()
  	{
  		$this->view->pick('subcategoria/eliminar');
