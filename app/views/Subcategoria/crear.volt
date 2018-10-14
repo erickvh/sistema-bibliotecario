@@ -23,7 +23,7 @@
                 </div>
                 <div class="form-group">
                         <label class="control-label">Categoria</label>
-                        <select name="categoria" id="categoria" class="form-control">
+                        <select name="categoria" id="categoria" class="form-control" required>
                             {% for c in categoria %}
                             <option value="{{c.nombre}}">{{c.nombre}}</option>
                             {% endfor %}
