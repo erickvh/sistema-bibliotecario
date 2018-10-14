@@ -3,6 +3,7 @@
 use App\Models\Bibliotecarios;
 use App\Models\Users;
 use App\Models\Bibliotecas;
+use App\Validations\ValidacionBibliotecario;
 
 class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
 {
@@ -50,7 +51,29 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
 
     public function storeAction()
     {
+        //validaciones correspondientes
+        $validacion= new ValidacionBibliotecario;
+        $mensajes=[];
 
+        $messages = $validacion->validate($_POST);
+        
+        if(!empty($messages))
+        {
+            $this->flashSession->error('Algunos errores');
+            foreach ($messages as  $m) 
+            {
+
+                $this->flashSession->warning($m->getMessage());
+                
+            }
+            //redirigir al mismo formulario
+            $this->response->redirect('/bibliotecarios/crear');
+            
+        }
+        else
+        {//VALIDACION CON EXITO
+
+        
         $user= new Users();
         $bibliotecario= new Bibliotecarios();
         /*requiriendo todos los parametros */
@@ -80,9 +103,10 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
         $bibliotecario->iduser=$user->id;
         $bibliotecario->idbiblioteca=$bibliotecaid;
         $bibliotecario->save();
+        
         $this->flashSession->success('Bibliotecario almacenado corectamente! Contraseña temporal: '.$password);
-
         $this->response->redirect('bibliotecarios');
+        }
     }
 
     //generador de password

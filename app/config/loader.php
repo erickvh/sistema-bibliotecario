@@ -8,6 +8,7 @@ $loader = new \Phalcon\Loader();
  */
 $loader->registerNamespaces(array(
     'App\Models' => BASE_PATH. '/app/models/',
+    'App\Validations' => BASE_PATH. '/app/validaciones/',
 ));
 $loader->registerDirs(
     [

@@ -70,8 +70,8 @@ class FormatoController extends \Phalcon\Mvc\Controller
 
     public function editarAction()
     {
-        $this->view->pick('formato/editar');
-        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+       $this->view->pick('formato/editar');
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $formato = Formatos::findFirst($id);
         $this->view->formato = $formato;
         if ($this->request->isPost()) {
@@ -93,14 +93,23 @@ class FormatoController extends \Phalcon\Mvc\Controller
     public function eliminarAction()
     {
         $this->view->pick('formato/eliminar');
-        $id = $this->dispatcher->getParams(); //Obtener el parametros de la Url
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $formato = Formatos::findFirst($id);
         $this->view->formato = $formato;
-        if ($this->request->isPost()) {
+
+             if ($this->request->isPost()) {
+            if(isset($formato->recursos[0]))
+            {
+                $this->flashSession->error('El formato no puede ser borrado, debido a que hay recursos/libros que hacen uso de este!');
+                $this->response->redirect('/formato');
+            }
+            else{
+
             $formato->delete();
             $response = new Response();
-            $response->redirect('/formato'); //Retornar al index formato
-            return $response;
+            $this->flashSession->success('El formato ha sido borrado con exito');
+            $this->response->redirect('/formato'); //Retornar al index formato
+               }
         }     
     }
 }

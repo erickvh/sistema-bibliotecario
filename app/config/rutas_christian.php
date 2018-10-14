@@ -2,15 +2,15 @@
 /*rutas formatos*/
 $router->add('/formato','Formato::index');
 // $router->addPost('/formato','Formato::crear'); //Crear Formato
-$router->addPost(
-    '/:int',
+$router->add(
+    '/formato/editar/:int',
     [
         'controller' => 'formato',
         'action'     => 'editar',
         'id'     => 1
     ]); // Ruta Editar formato
-$router->addPost(
-    '/:int',
+$router->add(
+    '/formato/eliminar/:int',
     [
         'controller' => 'formato',
         'action'     => 'eliminar',

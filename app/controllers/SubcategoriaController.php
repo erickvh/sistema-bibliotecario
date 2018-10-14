@@ -136,12 +136,23 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
  		$this->view->pick('subcategoria/eliminar');
  		$id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
  		$subcategoria = Subcategorias::findFirst($id);
- 		$this->view->subcategoria = $subcategoria;
- 		if ($this->request->isPost()) {
-            $subcategoria->delete();
-            $response = new Response();
-            $response->redirect('/subcategoria'); //Retornar al index formato
-            return $response;
+        $this->view->subcategoria = $subcategoria;
+         
+         if ($this->request->isPost()) 
+         {
+             if(isset($subcategoria->materialesbibliograficos[0]))
+             {
+                $this->flashSession->error('La subcategoria no se ha eliminado, debido a que existen recursos/libros asociados a ella');
+                $this->response->redirect('/subcategoria');
+             }
+             else
+             {
+                $this->flashSession->success('La subcategoria se ha borrado exitosamente');
+                $subcategoria->delete();
+                $response = new Response();
+                $response->redirect('/subcategoria'); //Retornar al index formato
+                return $response;
+            }
         }
  	}
 }

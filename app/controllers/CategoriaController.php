@@ -107,10 +107,20 @@ class CategoriaController extends \Phalcon\Mvc\Controller
  		$categoria = Categorias::findFirst($id);
  		$this->view->categoria = $categoria;
  		if ($this->request->isPost()) {
-            $categoria->delete();
-            $response = new Response();
-            $response->redirect('/categoria'); //Retornar al index formato
-            return $response;
+            if(isset($categoria->subcategorias[0]))
+            {   
+                $this->flashSession->error('La categoria no se ha podido eliminar debido a que posee subcategorias');
+                $this->response->redirect('/categoria');
+            }
+            else
+            {
+                $categoria->delete();
+                $response = new Response();
+                $this->flashSession->success('La categoria se ha borrado exitosamente');
+                $response->redirect('/categoria'); //Retornar al index formato
+                return $response;
+            }
+
         }
  	}
 

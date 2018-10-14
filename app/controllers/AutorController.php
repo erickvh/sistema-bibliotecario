@@ -114,11 +114,18 @@ class AutorController extends \Phalcon\Mvc\Controller
         $this->view->autor=$autor;
         
         if($this->request->isPost()){
-
+            if(isset($autor->materialesAutores[0]))
+            {
+                $this->flashSession->error('Autor no se ha eliminado, porque esta siendo utilizado en libros/recursos');
+                $this->response->redirect("/autor");
+            }
+            else
+            {
                 $this->view->disable();
                 $autor->delete();
-
+                $this->flashSession->success('Autor se ha eliminado con exito');
                 $this->response->redirect("/autor");
+            }
             
             }
     }

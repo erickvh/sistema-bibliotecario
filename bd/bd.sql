@@ -51,7 +51,7 @@ CREATE TABLE autores(
     id smallserial,
     nombre VARCHAR(120) NOT NULL,
     nacionalidad VARCHAR(50) NOT NULL,
-    fechaNacimiento DATE,
+    fechaNacimiento DATE DEFAULT NULL,
     sexo VARCHAR(1) NOT NULL,
     idBiblioteca SMALLINT NOT NULL,
     CONSTRAINT pk_autores PRIMARY KEY (id),

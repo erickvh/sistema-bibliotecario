@@ -19,11 +19,11 @@
                     <div class="form-group ">
                         <label class="control-label">Nombre de bibliotecario</label>
                         <input name="nombre" class="form-control" type="text" placeholder="Digite nombre completo bibliotecario" required>
-
+                        
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nombre usuario</label>
-                        <input name="username" class="form-control" type="text" placeholder="Digite username" required>
+                        <input name="username" class="form-control" type="text" placeholder="Digite username" >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Numero de DUI</label>

@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Models;
+
 class Autores extends \Phalcon\Mvc\Model
 {
 
@@ -47,8 +48,8 @@ class Autores extends \Phalcon\Mvc\Model
     {
         $this->setSchema("public");
         $this->setSource("autores");
-        $this->hasMany('id', 'a\MaterialesAutores', 'idautor', ['alias' => 'MaterialesAutores']);
-        $this->belongsTo('idbiblioteca', 'a\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
+        $this->hasMany('id', 'App\Models\MaterialesAutores', 'idautor', ['alias' => 'MaterialesAutores']);
+        $this->belongsTo('idbiblioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
     }
 
     /**
