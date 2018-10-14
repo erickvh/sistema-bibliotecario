@@ -12,11 +12,11 @@
             <form action="/autor/{{ autor.id }}" method="post" autocomplete="off">
                     <div class="form-group">
                         <label class="control-label">Nombre de autor</label>
-                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor" value="{{ autor.nombre}}" required>
+                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor" value="{{ autor.nombre}}"   >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nacionalidad</label>
-                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad }}"required>
+                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad }}"  >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha de Publicacion</label>

@@ -12,11 +12,11 @@
 
                     <div class="form-group">
                         <label class="control-label">Nombre de autor</label>
-                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor" value="{{ autor.nombre}}" readonly  required>
+                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor" value="{{ autor.nombre}}" readonly    >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nacionalidad</label>
-                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad}}" readonly required>
+                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad" value="{{ autor.nacionalidad}}" readonly   >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha Nacimiento</label>

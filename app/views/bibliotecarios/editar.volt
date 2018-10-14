@@ -18,16 +18,16 @@
                   </div>
                     <div class="form-group ">
                         <label class="control-label">Nombre de bibliotecario *</label>
-                        <input name="nombre" value='{{bibliotecario.users.nombre}}' class="form-control" type="text" placeholder="Digite nombre completo bibliotecario" required>
+                        <input name="nombre" value='{{bibliotecario.users.nombre}}' class="form-control" type="text" placeholder="Digite nombre completo bibliotecario"   >
 
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nombre usuario *</label>
-                        <input name="username"  value='{{bibliotecario.users.username}}'class="form-control" type="text" placeholder="Digite username" required>
+                        <input name="username"  value='{{bibliotecario.users.username}}'class="form-control" type="text" placeholder="Digite username"   >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Numero de DUI *</label>
-                        <input name="dui"  value='{{bibliotecario.dui}}'class="form-control" type="text" placeholder="Digite numero de DUI" required>
+                        <input name="dui"  value='{{bibliotecario.dui}}'class="form-control" type="text" placeholder="Digite numero de DUI"   >
                     </div>
   
                     <div class="form-group">
@@ -36,12 +36,12 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Email </label>
-                        <input name="email"  value='{{bibliotecario.users.email}}'class="form-control" type="email" placeholder="Digite email" required>
+                        <input name="email"  value='{{bibliotecario.users.email}}'class="form-control" type="email" placeholder="Digite email"   >
                     </div>
 
                     <div class="form-group">
                         <label class="control-label">Telefono </label>
-                        <input name="telefono"  value='{{bibliotecario.telefono}}'class="form-control" type="tel" placeholder="Telefono" required>
+                        <input name="telefono"  value='{{bibliotecario.telefono}}'class="form-control" type="tel" placeholder="Telefono"   >
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo *</label>

@@ -12,15 +12,15 @@
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Nombre" value="{{biblioteca.nombre}}" required>
+                    <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Nombre" value="{{biblioteca.nombre}}"   >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ubicación</label>
-                    <input name="ubicacionBiblioteca" class="form-control" type="text" placeholder="Ubicación" value="{{biblioteca.ubicacion}}" required>
+                    <input name="ubicacionBiblioteca" class="form-control" type="text" placeholder="Ubicación" value="{{biblioteca.ubicacion}}"   >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Teléfono</label>
-                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono" value="{{biblioteca.telefono}}" required>
+                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono" value="{{biblioteca.telefono}}"   >
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Clasificación</label>

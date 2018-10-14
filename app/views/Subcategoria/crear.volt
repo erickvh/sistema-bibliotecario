@@ -11,7 +11,7 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreSubCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria" required>
+                    <input name="nombreSubCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
@@ -19,11 +19,11 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Codigo</label>
-                    <input name="codSubCat" class="form-control" type="text" placeholder="Codigo de la categoria" required>
+                    <input name="codSubCat" class="form-control" type="text" placeholder="Codigo de la categoria"    >
                 </div>
                 <div class="form-group">
                         <label class="control-label">Categoria</label>
-                        <select name="categoria" id="categoria" class="form-control" required>
+                        <select name="categoria" id="categoria" class="form-control" >
                             {% for c in categoria %}
                             <option value="{{c.nombre}}">{{c.nombre}}</option>
                             {% endfor %}

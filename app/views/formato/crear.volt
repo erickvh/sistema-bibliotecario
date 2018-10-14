@@ -8,7 +8,7 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Tipo de Formato</label>
-                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" required>
+                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato"   >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>

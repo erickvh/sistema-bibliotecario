@@ -12,7 +12,7 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Tipo de Formato</label>
-                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" value="{{formato.tipoformato}}" required>
+                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" value="{{formato.tipoformato}}"   >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>

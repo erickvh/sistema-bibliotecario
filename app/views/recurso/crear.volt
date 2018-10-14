@@ -35,7 +35,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Formato</label>
-        <select name="tipoFormato" id="tipoFormato" class="form-control" required>
+        <select name="tipoFormato" id="tipoFormato" class="form-control"   >
             {% for f in formatos %}
             <option value="{{f.tipoformato}}">{{f.tipoformato}}</option>
             {% endfor %}
@@ -51,7 +51,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Subcategoria</label>
-        <select name="subMaterial" id="subMaterial" class="form-control" required>
+        <select name="subMaterial" id="subMaterial" class="form-control"   >
             {% for s in sub %}
             <option value="{{s.nombre}}">{{s.categorias.nombre}} : {{s.nombre}}</option>
             {% endfor %}
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Unidades Existentes</label>
-        <input type="number" name="cantidadMaterial" class="form-control" required>
+        <input type="number" name="cantidadMaterial" class="form-control"   >
     </div>
     <div class="form-group">        
         <button type="Submit" class="btn btn-primary">Crear</button>

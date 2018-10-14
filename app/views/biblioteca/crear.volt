@@ -18,15 +18,15 @@
              <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Ingrese el Nombre de la Biblioteca" required>
+                    <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Ingrese el Nombre de la Biblioteca"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Ubicación</label>
-                    <input name="ubicacionBiblioteca" class="form-control" type="text" placeholder="Ubicación" required>
+                    <input name="ubicacionBiblioteca" class="form-control" type="text" placeholder="Ubicación"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Teléfono</label>
-                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono" required>
+                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono"  >
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Clasificación</label>
