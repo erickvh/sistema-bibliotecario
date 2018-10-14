@@ -1,5 +1,10 @@
 {% extends 'layouts/admin.volt' %} 
 {% block titulo %} Perfil {% endblock %} 
+{% block iconActual %}
+<h1><i class="fa fa-user-secret" aria-hidden="true"></i>
+ Perfil </h1>
+<p>Sección para cambiar la contraseña del usuario </p>
+{% endblock %}
 {% block contenido %}
 	<div class="container">
 		<div class="row">
