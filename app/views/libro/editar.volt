@@ -15,7 +15,7 @@
             
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="{{libro.Materialesbibliograficos.nombre}}" required>
+                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="{{libro.Materialesbibliograficos.nombre}}"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripción</label>
@@ -50,14 +50,7 @@
                     <label for="imagenLibro">Imagen</label>
                     <input name="imagenLibro" class="form-control-file" id="imagenLibro" type="file" aria-describedby="fileHelp"><small class="form-text text-muted" id="fileHelp">Seleccione la imagen del libro.</small>
                   </div>
-                <!--<div class="form-group">
-                    <label class="control-label">Categoria</label>
-                    <select name="catLibro" id="catLibro" class="form-control">
-                        {% for c in categorias %}
-                        <option value="{{c.id}}" {% if libro.Materialesbibliograficos.Subcategorias.Categorias.id == c.id %} selected {% endif %}>{{c.nombre}}</option>
-                        {% endfor %}
-                    </select>
-                </div>-->
+
                 <div class="form-group">
                     <label class="control-label">Subcategoria</label>
                     <select name="subLibro" id="subLibro" class="form-control">

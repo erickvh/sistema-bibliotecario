@@ -11,7 +11,7 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria" required value="{{categoria.nombre}}">
+                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"    value="{{categoria.nombre}}">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Codigo</label>
-                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria" required value="{{categoria.codigo}}"> 
+                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria"    value="{{categoria.codigo}}"> 
                 </div>
                 <div class="form-group">                    
                     <button type="Submit" class="btn btn-primary">Guardar</button>

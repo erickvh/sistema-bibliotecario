@@ -13,7 +13,7 @@
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre recurso</label>
-                    <input type="text" name="nombreMaterial" class="form-control" value="{{material.nombre}}" required>
+                    <input type="text" name="nombreMaterial" class="form-control" value="{{material.nombre}}"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion recurso</label>

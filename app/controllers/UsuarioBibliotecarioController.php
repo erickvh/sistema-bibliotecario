@@ -51,22 +51,30 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
 
     public function storeAction()
     {
+        $this->view->disable();
         //validaciones correspondientes
         $validacion= new ValidacionBibliotecario;
         $mensajes=[];
 
-        $messages = $validacion->validate($_POST);
+        $messages = $validacion->validate($_POST); //recoge las variables globales post
         
-        if(!empty($messages))
+        //captura mensajes que son al respecto de los campos encontrados
+        foreach ($messages as  $m) 
         {
-            $this->flashSession->error('Algunos errores');
-            foreach ($messages as  $m) 
-            {
-
-                $this->flashSession->warning($m->getMessage());
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+        
+        if(!empty($mensajes))
+        {   
+            $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
+            
+            //hace el bucle media vez halla capturado validaciones
+            foreach ($mensajes as $mensaje ) {
+                $this->flashSession->warning($mensaje);                
                 
             }
-            //redirigir al mismo formulario
+
+           //redirige al mismo formulario
             $this->response->redirect('/bibliotecarios/crear');
             
         }
@@ -139,7 +147,35 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
         $id=$this->dispatcher->getParam('id');
         
         $bibliotecario= Bibliotecarios::findFirst($id);
-        
+               //validaciones correspondientes
+               $validacion= new ValidacionBibliotecario;
+               $mensajes=[];
+       
+               $messages = $validacion->validate($_POST); //recoge las variables globales post
+               
+               //captura mensajes que son al respecto de los campos encontrados
+               foreach ($messages as  $m) 
+               {
+                   $mensajes[$m->getField()]=$m->getMessage();
+               }
+               
+               if(!empty($mensajes))
+               {   
+                   $this->flashSession->error('No se ha actualizado bibliotecario, algunos errores en los campos mencionados');
+                   
+                   //hace el bucle media vez halla capturado validaciones
+                   foreach ($mensajes as $mensaje ) {
+                       $this->flashSession->warning($mensaje);                
+                       
+                   }
+       
+                  //redirige al mismo formulario
+                   $this->response->redirect('/bibliotecarios/editar/'.$id);
+                   
+               }
+               else
+               {//VALIDACION CON EXITO
+       
         /*requiriendo todos los parametros */
         $username=$this->request->getPost('username');
         $email=$this->request->getPost('email');
@@ -164,8 +200,9 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
 
 
         $bibliotecario->save();
+        $this->flashSession->success('Bibliotecario actualizado con exito');
         $this->response->redirect('bibliotecarios');
-        
+            }
     }
 
     public function showAction(){

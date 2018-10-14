@@ -9,7 +9,7 @@
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label class="control-label">Nombre recurso</label>
-        <input type="text" name="nombreMaterial" class="form-control" required>
+        <input type="text" name="nombreMaterial" class="form-control"  >
     </div>
     <div class="form-group">
         <label class="control-label">Descripcion recurso</label>
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Autores</label>
-        <select name="autoresRecurso[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple" required>
+        <select name="autoresRecurso[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple"  >
             {% for a in autores %}
             <option value="{{a.id}}">{{a.nombre}}</option>
             {% endfor %}

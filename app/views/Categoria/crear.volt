@@ -11,7 +11,7 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria" required>
+                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"  >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
@@ -19,7 +19,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Codigo</label>
-                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria" required>
+                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria"  >
                 </div>
                 <div class="form-group">                    
                     <button type="Submit" class="btn btn-primary">Crear</button>

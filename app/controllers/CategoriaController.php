@@ -2,6 +2,7 @@
 use App\Models\Categorias;
 use Phalcon\Http\Response;
 use App\Models\Users;
+use App\Validations\ValidacionCategoria;
 class CategoriaController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
@@ -54,26 +55,54 @@ class CategoriaController extends \Phalcon\Mvc\Controller
     	$this->view->pick('categoria/crear');
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
+
+
+            $validacion= new ValidacionCategoria;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha guardado categoria, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/categoria/crear');
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+
+
             $categoria = new Categorias;
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
             $codigo = $this->request->getPost('codCat');
-            if($nombre && $desc && $codigo){
+
                 $categoria->nombre = $nombre;
                 $categoria->descripcion = $desc;
                 $categoria->codigo = $codigo;
                 $categoria->idbiblioteca=$this->biblioteca->id;
                 $categoria->save();
                 $response = new Response();
+                $this->flashSession->success('Categoria almacenada con exito');
                 $response->redirect('/categoria'); //Retornar al index formato
                 return $response;
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
         }
     }
-
+}
     public function editarAction()
     {
     	$this->view->pick('categoria/editar');
@@ -82,24 +111,50 @@ class CategoriaController extends \Phalcon\Mvc\Controller
         $this->view->categoria = $categoria;
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {            
+
+            $validacion= new ValidacionCategoria;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha actualizado categoria, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/categoria/editar/'.$id);
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
             $codigo = $this->request->getPost('codCat');
-            if($nombre && $desc && $codigo){
-                $categoria->nombre = $nombre;
-                $categoria->descripcion = $desc;
-                $categoria->codigo = $codigo;
-                $categoria->save();
-                $response = new Response();
-                $response->redirect('/categoria'); //Retornar al index formato
-                return $response;
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
+
+            $categoria->nombre = $nombre;
+            $categoria->descripcion = $desc;
+            $categoria->codigo = $codigo;
+            $categoria->save();
+            $response = new Response();
+            $this->flashSession->success('Categoria ha sido actualizada correctamente');
+            $response->redirect('/categoria'); //Retornar al index formato
+            return $response;
         }
     }
-  
+}
  	public function eliminarAction()
  	{
  		$this->view->pick('categoria/eliminar');

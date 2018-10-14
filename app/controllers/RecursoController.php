@@ -9,6 +9,7 @@ use App\Models\Bibliotecarios;
 use App\Models\Autores;
 use Phalcon\Http\Response;
 use App\Models\Users;
+use App\Validations\ValidacionRecurso;
 class RecursoController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
@@ -84,57 +85,84 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
         $this->view->autores = $autores;        
         if ($this->request->isPost()) {
+
+            $validacion= new ValidacionRecurso;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/recurso/crear');
+                
+            }
+            else
+            {//VALIDACION CON EXITO
+
             $material = new Materialesbibliograficos;
             $recurso = new Recursos;
             $unidad = new Unidades;
             $nomMaterial = $this->request->getPost('nombreMaterial');
             $formato = $this->request->getPost('tipoFormato');
-            if($nomMaterial && $formato){
-                $material->nombre = $nomMaterial;
-                $material->descripcion = $this->request->getPost('descMaterial');
-                $material->imagenurl = $this->request->getPost('imagenMaterial');
-                $material->nombreimagen = $this->request->getPost('nomImgMaterial');
-                if($this->request->getPost('fechaMaterial'))
-                {
-                    $material->fechapublicacion = $this->request->getPost('fechaMaterial');
-                }
-                
-                if($this->request->getPost('externoMaterial'))
-                {
-                    $material->esexterno = true;
-                }
-                else
-                {
-                    $material->esexterno = false;
-                }                
-                $material->idbiblioteca = $bibliotecario->idbiblioteca;
-                $sub = $this->request->getPost('subMaterial');
-                $subcategoria = Subcategorias::findFirst("nombre='".$sub."'");
-                $material->idsubcategoria = $subcategoria->id;
-                $material->save();
-                foreach ($this->request->getPost('autoresRecurso') as $aut){
-                        $MaterialAutor = new MaterialesAutores;
-                        $MaterialAutor->idautor=$aut;
-                        $MaterialAutor->idmaterial=$material->id;
-                        $MaterialAutor->save();
-                }
-                $formId = Formatos::findFirst("tipoformato='".$formato."'");
-                $recurso->idformato = $formId->id;
-                $recurso->idmaterial = $material->id;
-                $unidad->unidadesexistentes = $this->request->getPost('cantidadMaterial');
-                $unidad->idmaterial = $material->id;
-                $unidad->save();
-                $recurso->save();
-                $response = new Response();
-                $response->redirect('/recurso'); //Retornar al index recurso
-                return $response;
+           
+            $material->nombre = $nomMaterial;
+            $material->descripcion = $this->request->getPost('descMaterial');
+            $material->imagenurl = $this->request->getPost('imagenMaterial');
+            $material->nombreimagen = $this->request->getPost('nomImgMaterial');
+            if($this->request->getPost('fechaMaterial'))
+            {
+                $material->fechapublicacion = $this->request->getPost('fechaMaterial');
             }
-            else{
-                $this->view->setVar('error', true); 
+            
+            if($this->request->getPost('externoMaterial'))
+            {
+                $material->esexterno = true;
             }
+            else
+            {
+                $material->esexterno = false;
+            }                
+            $material->idbiblioteca = $bibliotecario->idbiblioteca;
+            $sub = $this->request->getPost('subMaterial');
+            $subcategoria = Subcategorias::findFirst("nombre='".$sub."'");
+            $material->idsubcategoria = $subcategoria->id;
+            $material->save();
+            foreach ($this->request->getPost('autoresRecurso') as $aut){
+                    $MaterialAutor = new MaterialesAutores;
+                    $MaterialAutor->idautor=$aut;
+                    $MaterialAutor->idmaterial=$material->id;
+                    $MaterialAutor->save();
+            }
+            $formId = Formatos::findFirst("tipoformato='".$formato."'");
+            $recurso->idformato = $formId->id;
+            $recurso->idmaterial = $material->id;
+            $unidad->unidadesexistentes = $this->request->getPost('cantidadMaterial');
+            $unidad->idmaterial = $material->id;
+            $unidad->save();
+            $recurso->save();
+            $response = new Response();
+            $this->flashSession->success('Recurso fue guardado correctamente');
+            $response->redirect('/recurso'); //Retornar al index recurso
+            return $response;
+           
         }
     }
-
+}
     public function editarAction()
     {
         $this->view->pick('recurso/editar');
@@ -168,10 +196,37 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
         $this->view->autores = $autores;
         $this->view->mataut = $MatAut;
-        if ($this->request->isPost()) {            
+        if ($this->request->isPost()) {
+            $validacion= new ValidacionRecurso;
+            $mensajes=[];
+    
+            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            
+            //captura mensajes que son al respecto de los campos encontrados
+            foreach ($messages as  $m) 
+            {
+                $mensajes[$m->getField()]=$m->getMessage();
+            }
+            
+            if(!empty($mensajes))
+            {   
+                $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
+                
+                //hace el bucle media vez halla capturado validaciones
+                foreach ($mensajes as $mensaje ) {
+                    $this->flashSession->warning($mensaje);                
+                    
+                }
+    
+               //redirige al mismo formulario
+                $this->response->redirect('/recurso/editar/'.$id);
+                
+            }
+            else
+            {//VALIDACION CON EXITO            
             $nomMaterial = $this->request->getPost('nombreMaterial');
             $formato = $this->request->getPost('tipoFormato');
-            if($nomMaterial && $formato){
+          
                 $material->nombre = $nomMaterial;
                 $material->descripcion = $this->request->getPost('descMaterial');
                 $material->imagenurl = $this->request->getPost('imagenMaterial');
@@ -220,15 +275,12 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 $recursoActual->idformato = $formId->id;
                 $recursoActual->save();
                 $response = new Response();
+                $this->flashSession->success('Recurso ha sido actualizado correctamente');
                 $response->redirect('/recurso'); //Retornar al index recurso
                 return $response;
-            }
-            else{
-                $this->view->setVar('error', true); 
-            }
-        }
+                  }
     }
-
+    }
     public function eliminarAction()
     {
         $this->view->pick('recurso/eliminar');

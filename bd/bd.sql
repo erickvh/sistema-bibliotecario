@@ -76,7 +76,7 @@ CREATE TABLE users(
 
 CREATE TABLE bibliotecarios(
     id serial,
-    dui VARCHAR(9) NOT NULL,
+    dui VARCHAR(10) NOT NULL,
     telefono VARCHAR(9),
     habilitado boolean DEFAULT true,
     idUser INTEGER,

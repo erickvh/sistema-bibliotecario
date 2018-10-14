@@ -14,7 +14,7 @@
             
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="" required>
+                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripción</label>
@@ -49,14 +49,7 @@
                     <label for="imagenLibro">Imagen</label>
                     <input name="imagenLibro" class="form-control-file" id="imagenLibro" type="file" aria-describedby="fileHelp"><small class="form-text text-muted" id="fileHelp">Seleccione la imagen del libro.</small>
                   </div>
-                <!--<div class="form-group">
-                    <label class="control-label">Categoria</label>
-                    <select name="catLibro" id="catLibro" class="form-control">
-                        {% for c in categorias %}
-                        <option value="{{c.id}}"></option>
-                        {% endfor %}
-                    </select>
-                </div>-->
+
                 <div class="form-group">
                     <label class="control-label">Subcategoria</label>
                     <select name="subLibro" id="subLibro" class="form-control">
@@ -67,7 +60,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Autores</label>
-                    <select  name="autoresLibro[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple" required>
+                    <select  name="autoresLibro[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple"  >
                         {% for a in autores %}
                         <option value="{{a.id}}">{{a.nombre}}</option>
                         {% endfor %}
@@ -75,7 +68,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Unidades Existentes</label>
-                    <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}" required>
+                    <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}"  >
                 </div>             
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
             </form>
