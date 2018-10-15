@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "1543ba09dbad9cfb5eef1576708d3b69",
+    "content-hash": "0ad281571036e718ccb4c0424affc1f8",
     "packages": [
         {
             "name": "cloudinary/cloudinary_php",
@@ -115,6 +115,8 @@
     "stability-flags": [],
     "prefer-stable": false,
     "prefer-lowest": false,
-    "platform": [],
+    "platform": {
+        "ext-phalcon": ">=1.3.0"
+    },
     "platform-dev": []
 }
