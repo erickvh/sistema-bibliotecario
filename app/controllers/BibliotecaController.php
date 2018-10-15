@@ -173,8 +173,11 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $biblioteca->telefono = $telefono ;   
         $biblioteca->clasificacion =$clasificacion;   
         $biblioteca->logourl =  $logourl ;   
-        $biblioteca->nombrelogo =  $nombrelogo ;   
+        $biblioteca->nombrelogo =  $nombrelogo ;  
+        if($email)
+        { 
         $biblioteca->email =  $email;  
+        }
         $guardado = $biblioteca->save();
         $this->flashSession->success('La biblioteca fue guardada con exito');
         $this->response->redirect('/biblioteca');
