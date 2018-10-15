@@ -13,7 +13,7 @@
             <form action="" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre recurso</label>
-                    <input type="text" name="nombreMaterial" class="form-control" value="{{material.nombre}}"  >
+                    <input type="text" name="nombreMaterial" class="form-control" value="{{material.nombre}}" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion recurso</label>
@@ -59,7 +59,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Autores</label>
-                    <select name="autoresRecurso[]" id="autoresRecurso" class="form-control select2-multiple" multiple="multiple">
+                    <select name="autoresRecurso[]" id="autoresRecurso" class="form-control select2-multiple" multiple="multiple" required>
                         {% for a in autores %}
                         <option value="{{a.id}}" {% for ma in mataut %} {% if ma.idautor==a.id %} selected {% endif %}{% endfor %}>{{a.nombre}}</option>
                         {% endfor %}
@@ -67,7 +67,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Unidades Existentes</label>
-                    <input type="number" name="cantidadMaterial" class="form-control" value="{{unidades.unidadesexistentes}}">
+                    <input type="number" name="cantidadMaterial" class="form-control" value="{{unidades.unidadesexistentes}}" min="1" step="1" required>
                 </div>
                 <button type="Submit" class="btn btn-primary">Guardar</button>
             </form>

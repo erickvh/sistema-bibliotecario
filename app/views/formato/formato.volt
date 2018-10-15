@@ -66,7 +66,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Descripcion</label>
-                        <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato"></textarea>
+                        <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato" required></textarea>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>

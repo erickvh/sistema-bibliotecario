@@ -15,7 +15,7 @@
             
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="{{libro.Materialesbibliograficos.nombre}}"  >
+                    <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="{{libro.Materialesbibliograficos.nombre}}"  required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripción</label>
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Autores</label>
-                    <select  name="autoresLibro[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple">
+                    <select  name="autoresLibro[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple" required>
                         {% for a in autores %}
                         <option value="{{a.id}}" {% for ma in mataut %} {% if ma.idautor == a.id %} selected {% endif %}{% endfor %}>{{a.nombre}}</option>
                         {% endfor %}
@@ -70,7 +70,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Unidades Existentes</label>
-                    <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}">
+                    <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}" required>
                 </div>             
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
             </form>

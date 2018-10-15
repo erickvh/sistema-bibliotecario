@@ -11,19 +11,19 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"     value="{{subcategoria.nombre}}">
+                    <input name="nombreCat" class="form-control" type="text" placeholder="Ingrese nombre de la categoria"     value="{{subcategoria.nombre}}" >
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
-                    <textarea name="descCat" class="form-control" rows="4" placeholder="Ingrese la descripción de la categoria">{{subcategoria.descripcion}}</textarea>
+                    <textarea name="descCat" class="form-control" rows="4" placeholder="Ingrese la descripción de la categoria" required>{{subcategoria.descripcion}}</textarea>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Codigo</label>
-                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria"     value="{{subcategoria.codigo}}">
+                    <input name="codCat" class="form-control" type="text" placeholder="Codigo de la categoria"     value="{{subcategoria.codigo}}" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Categoria</label>
-                    <select name="categoria" id="categoria" class="form-control"    >
+                    <select name="categoria" id="categoria" class="form-control"    required>
                         {% for c in categoria %}
                         <option value="{{c.nombre}}" 
                         {% if subcategoria.idcategoria == c.id %} selected {% endif %}>

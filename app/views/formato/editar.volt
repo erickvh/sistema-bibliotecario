@@ -12,11 +12,11 @@
             <form action="" method="post">
                 <div class="form-group">
                     <label class="control-label">Tipo de Formato</label>
-                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" value="{{formato.tipoformato}}"   >
+                    <input name="tipoFormato" class="form-control" type="text" placeholder="Formato" value="{{formato.tipoformato}}" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Descripcion</label>
-                    <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato">{{formato.descripcion}}</textarea>
+                    <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato" required>{{formato.descripcion}}</textarea>
                 </div>
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
             </form>

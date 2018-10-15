@@ -9,7 +9,7 @@
 <form action="" method="post" enctype="multipart/form-data">
     <div class="form-group">
         <label class="control-label">Nombre recurso</label>
-        <input type="text" name="nombreMaterial" class="form-control"  >
+        <input type="text" name="nombreMaterial" class="form-control" required>
     </div>
     <div class="form-group">
         <label class="control-label">Descripcion recurso</label>
@@ -35,7 +35,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Formato</label>
-        <select name="tipoFormato" id="tipoFormato" class="form-control"   >
+        <select name="tipoFormato" id="tipoFormato" class="form-control" required>
             {% for f in formatos %}
             <option value="{{f.tipoformato}}">{{f.tipoformato}}</option>
             {% endfor %}
@@ -43,7 +43,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Autores</label>
-        <select name="autoresRecurso[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple"  >
+        <select name="autoresRecurso[]" id="autoresLibro" class="form-control select2-multiple" multiple="multiple" required>
             {% for a in autores %}
             <option value="{{a.id}}">{{a.nombre}}</option>
             {% endfor %}
@@ -59,7 +59,7 @@
     </div>
     <div class="form-group">
         <label class="control-label">Unidades Existentes</label>
-        <input type="number" name="cantidadMaterial" class="form-control"   >
+        <input type="number" name="cantidadMaterial" class="form-control" min="1" step="1" required>
     </div>
     <div class="form-group">        
         <button type="Submit" class="btn btn-primary">Crear</button>

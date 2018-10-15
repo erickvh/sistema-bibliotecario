@@ -62,12 +62,12 @@
             <div class="modal-body">
                 <form action="/autor" method="post" autocomplete='off'>
                     <div class="form-group">
-                        <label class="control-label">Nombre de autor</label>
-                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor"  >
+                        <label class="control-label" >Nombre de autor</label>
+                        <input name="nombre" class="form-control" type="text" placeholder="Digite nombre de autor"  required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nacionalidad</label>
-                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad"  >
+                        <input name="nacionalidad" class="form-control" type="text" placeholder="Digite Nacionalidad"  required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha de Publicacion</label>
