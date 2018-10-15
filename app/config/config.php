@@ -17,10 +17,10 @@ defined('APP_PATH') || define('APP_PATH', BASE_PATH . '/app');
 return new \Phalcon\Config([
     'database' => [
         'adapter'     => 'Postgresql',
-        'host'        => getenv("HOST"),
-        'username'    => getenv("USER"),
-        'password'    => getenv("PASSWORD"),
-        'dbname'      => getenv("DB"),
+        'host'        => 'ec2-54-225-110-152.compute-1.amazonaws.com',
+        'username'    => 'lmbbsvewhapust',
+        'password'    => '5655bf18d98184fb2873e90dea7d0cc5a417070dded5d3a3bd3f49a057f50fad',
+        'dbname'      => 'dusvren3ai0nc',
         'schema' => 'public'
     ],
     'application' => [
