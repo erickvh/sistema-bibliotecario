@@ -49,7 +49,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
 	public function indexAction()
     {
 
-    	$this->view->pick('subcategoria/consultar');
+    	$this->view->pick('Subcategoria/consultar');
 /**
  * Obtiene todos las subcategorias
  * crea un arreglo vacio
@@ -75,7 +75,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
 
     public function crearAction()
     {
-    	$this->view->pick('subcategoria/crear');
+    	$this->view->pick('Subcategoria/crear');
     	$categorias = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('categoria', $categorias);    	
     	$this->view->setVar('error', false);
@@ -131,7 +131,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
 }
     public function editarAction()
     {
-    	$this->view->pick('subcategoria/editar');
+    	$this->view->pick('Subcategoria/editar');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $subcategoria = Subcategorias::findFirst($id);
         $this->view->subcategoria = $subcategoria;
@@ -188,7 +188,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     }
     public function eliminarAction()
  	{
- 		$this->view->pick('subcategoria/eliminar');
+ 		$this->view->pick('Subcategoria/eliminar');
  		$id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
  		$subcategoria = Subcategorias::findFirst($id);
         $this->view->subcategoria = $subcategoria;
