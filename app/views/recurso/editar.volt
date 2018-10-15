@@ -29,7 +29,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Fecha de Publicacion</label>
-                    <input name="fechaMaterial" type="date" class="form-control" value="{{material.fechapublicacion}}">
+                    <input name="fechaMaterial" type="date" class="form-control" value="{{material.fechapublicacion}}" min="1950-01-01">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Es externo</label>

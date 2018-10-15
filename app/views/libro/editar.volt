@@ -35,7 +35,7 @@
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Fecha de publicación</label>
-                    <input name="fpub" id="fpub" class="form-control" type="date" value="{{libro.Materialesbibliograficos.fechapublicacion}}">
+                    <input name="fpub" id="fpub" class="form-control" type="date" value="{{libro.Materialesbibliograficos.fechapublicacion}}" min="1700-01-01">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Es de consulta externa</label>

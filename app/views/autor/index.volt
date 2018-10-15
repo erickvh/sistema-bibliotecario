@@ -71,7 +71,7 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Fecha de Publicacion</label>
-                        <input name="fechanacimiento" type="date" class="form-control">
+                        <input name="fechanacimiento" type="date" class="form-control" min="1700-01-01">
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo</label>
