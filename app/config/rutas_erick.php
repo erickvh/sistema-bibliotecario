@@ -47,54 +47,31 @@ $router->add('/autor/borrar/:int',[
  * Rutas Bibliotecario
  */
 
-<<<<<<< HEAD
-$router->addGet('/bibliotecarios','UsuarioBibliotecario::index'); //muestra el datatable con ciertos atributos
-$router->addPost('/bibliotecarios','UsuarioBibliotecario::store'); //almacena por post un autor
-$router->addGet('/bibliotecarios/show/:int',[
-        'controller'=>'UsuarioBibliotecario',
-=======
 $router->addGet('/bibliotecarios','Bib::index'); //muestra el datatable con ciertos atributos
 $router->addPost('/bibliotecarios','Bib::store'); //almacena por post un autor
 $router->addGet('/bibliotecarios/show/:int',[
         'controller'=>'Bib',
->>>>>>> master
         'action'=>'show',
         'id'=>1
 ]);
 $router->addGet('/bibliotecarios/editar/:int',[
-<<<<<<< HEAD
-    'controller'=>'UsuarioBibliotecario',
-=======
     'controller'=>'Bib',
->>>>>>> master
     'action'=>'edit',
     'id'=>1
 ]); //vista de edicion para actualizar
 $router->addPost('/bibliotecarios/:int',[
-<<<<<<< HEAD
-    'controller'=>'UsuarioBibliotecario',
-=======
     'controller'=>'Bib',
->>>>>>> master
     'action'=>'update',
     'id'=>1
 
 ]);//actualiza por post
 $router->add('/bibliotecarios/deshabilitar/:int',[
-<<<<<<< HEAD
-    'controller'=>'UsuarioBibliotecario',
-=======
     'controller'=>'Bib',
->>>>>>> master
     'action'=>'deshabilitar',
     'id'=>1
 ]);//deshabilita el contenido
 
-<<<<<<< HEAD
-$router->addGet('/bibliotecarios/crear','UsuarioBibliotecario::create');
-=======
 $router->addGet('/bibliotecarios/crear','Bib::create');
->>>>>>> master
 
 /** 
  * Logica fuera de los controladores
