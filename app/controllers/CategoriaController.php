@@ -45,14 +45,14 @@ class CategoriaController extends \Phalcon\Mvc\Controller
 
     public function indexAction()
     {
-    	$this->view->pick('categoria/consultar');
+    	$this->view->pick('Categoria/consultar');
     	$categorias = Categorias::find('idbiblioteca ='.$this->biblioteca->id);
         $this->view->setVar('categoria', $categorias);        
     }
 
     public function crearAction()
     {
-    	$this->view->pick('categoria/crear');
+    	$this->view->pick('Categoria/crear');
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
 
@@ -105,7 +105,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
 }
     public function editarAction()
     {
-    	$this->view->pick('categoria/editar');
+    	$this->view->pick('Categoria/editar');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $categoria = Categorias::findFirst($id);
         $this->view->categoria = $categoria;
@@ -157,7 +157,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
 }
  	public function eliminarAction()
  	{
- 		$this->view->pick('categoria/eliminar');
+ 		$this->view->pick('Categoria/eliminar');
  		$id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
  		$categoria = Categorias::findFirst($id);
  		$this->view->categoria = $categoria;

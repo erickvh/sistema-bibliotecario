@@ -5,14 +5,14 @@ $router->add('/formato','Formato::index');
 $router->add(
     '/formato/editar/:int',
     [
-        'controller' => 'formato',
+        'controller' => 'Formato',
         'action'     => 'editar',
         'id'     => 1
     ]); // Ruta Editar formato
 $router->add(
     '/formato/eliminar/:int',
     [
-        'controller' => 'formato',
+        'controller' => 'Formato',
         'action'     => 'eliminar',
         'id'     => 1
     ]); // Ruta Eliminar formato    
@@ -23,14 +23,14 @@ $router->add('/recurso/crear','Recurso::crear');
 $router->add(
     '/recurso/editar/:int',
     [
-        'controller' => 'recurso',
+        'controller' => 'Recurso',
         'action'     => 'editar',
         'id'     => 1
     ]);
 $router->add(
     '/recurso/eliminar/:int',
     [
-        'controller' => 'recurso',
+        'controller' => 'Recurso',
         'action'     => 'eliminar',
         'id'     => 1
     ]);
@@ -39,12 +39,12 @@ $router->add(
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');
 $router->add('/categoria/editar/:int',[
-    'controller'=>'categoria',
+    'controller'=>'Categoria',
     'action'=>'editar',
     'id'=>1
 ]);
 $router->add('/categoria/eliminar/:int',[
-    'controller'=>'categoria',
+    'controller'=>'Categoria',
     'action'=>'eliminar',
     'id'=>1
 ]);
@@ -53,12 +53,12 @@ $router->add('/categoria/eliminar/:int',[
 $router->add('/subcategoria','Subcategoria::index');
 $router->add('/subcategoria/crear','Subcategoria::crear');
 $router->add('/subcategoria/editar/:int',[
-    'controller'=>'subcategoria',
+    'controller'=>'Subcategoria',
     'action'=>'editar',
     'id'=>1
 ]);
 $router->add('/subcategoria/eliminar/:int',[
-    'controller'=>'subcategoria',
+    'controller'=>'Subcategoria',
     'action'=>'eliminar',
     'id'=>1
 ]);

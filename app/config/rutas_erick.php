@@ -6,7 +6,7 @@
 
 $router->addGet('/','Index::index');
 $router->addPost('/','Index::login');
-$router->addGet('/logout','index::logout');
+$router->addGet('/logout','Index::logout');
 
 /**
  * Rutas menu
@@ -20,25 +20,25 @@ $router->addGet('/autor','Autor::index'); //muestra el datatable con ciertos atr
 $router->addPost('/autor','Autor::store'); //almacena por post un autor
 
 $router->addGet('/autor/show/:int',[
-    'controller'=>'autor',
+    'controller'=>'Autor',
     'action'=>'show',
     'id'=>1
 ]);
 
 $router->addGet('/autor/editar/:int',[
-    'controller'=>'autor',
+    'controller'=>'Autor',
     'action'=>'edit',
     'id'=>1
 ]); //vista de edicion para actualizar
 
 $router->addPost('/autor/:int',[
-    'controller'=>'autor',
+    'controller'=>'Autor',
     'action'=>'update',
     'id'=>1
 ]);//actualiza por post
 
 $router->add('/autor/borrar/:int',[
-    'controller'=>'autor',
+    'controller'=>'Autor',
     'action'=>'delete',
     'id'=>1
 ]);//borra el contenido
@@ -47,38 +47,38 @@ $router->add('/autor/borrar/:int',[
  * Rutas Bibliotecario
  */
 
-$router->addGet('/bibliotecarios','usuariobibliotecario::index'); //muestra el datatable con ciertos atributos
-$router->addPost('/bibliotecarios','usuariobibliotecario::store'); //almacena por post un autor
+$router->addGet('/bibliotecarios','Bib::index'); //muestra el datatable con ciertos atributos
+$router->addPost('/bibliotecarios','Bib::store'); //almacena por post un autor
 $router->addGet('/bibliotecarios/show/:int',[
-        'controller'=>'usuariobibliotecario',
+        'controller'=>'Bib',
         'action'=>'show',
         'id'=>1
 ]);
 $router->addGet('/bibliotecarios/editar/:int',[
-    'controller'=>'usuariobibliotecario',
+    'controller'=>'Bib',
     'action'=>'edit',
     'id'=>1
 ]); //vista de edicion para actualizar
 $router->addPost('/bibliotecarios/:int',[
-    'controller'=>'usuariobibliotecario',
+    'controller'=>'Bib',
     'action'=>'update',
     'id'=>1
 
 ]);//actualiza por post
 $router->add('/bibliotecarios/deshabilitar/:int',[
-    'controller'=>'usuariobibliotecario',
+    'controller'=>'Bib',
     'action'=>'deshabilitar',
     'id'=>1
 ]);//deshabilita el contenido
 
-$router->addGet('/bibliotecarios/crear','usuariobibliotecario::create');
+$router->addGet('/bibliotecarios/crear','Bib::create');
 
 /** 
  * Logica fuera de los controladores
  */
 $router->notFound([
-    'controller'=>'error',
+    'controller'=>'Error',
     'action'=>'mostrar404'
     ]);
     
-$router->addGet('/401','error::mostrar401');
+$router->addGet('/401','Error::mostrar401');
