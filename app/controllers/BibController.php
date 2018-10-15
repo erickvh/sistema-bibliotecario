@@ -5,7 +5,7 @@ use App\Models\Users;
 use App\Models\Bibliotecas;
 use App\Validations\ValidacionBibliotecario;
 
-class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
+class BibController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
     protected $user;
@@ -99,7 +99,10 @@ class UsuarioBibliotecarioController extends \Phalcon\Mvc\Controller
         
         $user->username=$username;
         $user->password=$this->security->hash($password);
-        $user->email=$email;
+        if($email)
+        {
+            $user->email=$email;
+        }   
         $user->fechanacimiento=$fechanacimiento;
         $user->nombre=$nombre;
         $user->sexo=$sexo;
