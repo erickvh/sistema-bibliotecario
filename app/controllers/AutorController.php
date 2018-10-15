@@ -181,7 +181,7 @@ class AutorController extends \Phalcon\Mvc\Controller
 
     public function deleteAction(){
 
-        $this->view->pick('/autor/eliminar');
+        $this->view->pick('autor/eliminar');
         $id=$this->dispatcher->getParam('id');
         $autor=Autores::findFirst($id);     
         $this->view->autor=$autor;
