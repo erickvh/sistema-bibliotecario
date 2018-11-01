@@ -181,9 +181,9 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $biblioteca->email =  $email;  
         }
         //preparando parametros para cloudinary
-        $cloud_name = getenv("CLOUDINARY_cloudName");
-        $api_key = getenv("CLOUDINARY_apiKey");
-        $api_secret = getenv("CLOUDINARY_apiSecret");
+        $cloud_name = "sistemabibliotecario" ;
+        $api_key ="475842337293294" ;
+        $api_secret = "NtibDeOCVqupbINO_RHmhkWNicA";
         $timestamp = time();
         $signature = sha1("timestamp=".(string)$timestamp.$api_secret);
         foreach ($logourl as $url){
