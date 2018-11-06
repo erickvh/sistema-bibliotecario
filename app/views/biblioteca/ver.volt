@@ -9,13 +9,13 @@
     <div class="row">
         <div class="col">
             <h3 class="text-center">Datos de Biblioteca</h3>
-                <!--<div align= "center">
+                <div align= "center">
                     {% if biblioteca.logourl %}
                     <img src='{{biblioteca.logourl}}' {{biblioteca.nombrelogo ? "alt='"~biblioteca.nombrelogo~"'":'no disponible'}} />
                     {% else %}
                     <img src='https://via.placeholder.com/140x140' alt='logo no disponible'/> 
                     {% endif %}
-                </div>-->
+                </div>
                 <br>
                 <div class="form-group">
                     <label class="control-label">Nombre</label>

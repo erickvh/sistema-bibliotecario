@@ -24,7 +24,7 @@
           <th>Télefono</th>
           <th>Clasificación</th>
           <th>Email</th>
-          <th width="26%">Acción</th>
+          <th width="30%">Acción</th>
         </tr>
      </thead>
      <tbody>

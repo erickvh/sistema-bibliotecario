@@ -25,7 +25,7 @@
           <th>Fecha de publicación</th>
           <th>Editorial</th>
           <th>Subcategoria</th>
-          <th width="25%">Acción</th>
+          <th width="28%">Acción</th>
         </tr>
      </thead>
      <tbody>
