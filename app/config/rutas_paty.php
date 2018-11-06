@@ -10,6 +10,12 @@ $router->add(
         'id'     => 1
     ]);
 
+$router->addGet('/biblioteca/ver/:int',[
+        'controller'=>'Biblioteca',
+        'action'=>'ver',
+        'id'=>1
+]);
+
 
 /*rutas libro*/
 $router->addGet('/libro','Libro::index');

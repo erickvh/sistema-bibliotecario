@@ -231,4 +231,12 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
          
     }
 
+    public function verAction()
+    {
+        $this->view->pick('biblioteca/ver');
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $biblioteca = Bibliotecas::findFirst($id);
+        $this->view->biblioteca = $biblioteca;
+    }
+
 }
