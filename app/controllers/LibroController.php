@@ -317,4 +317,30 @@ class LibroController extends \Phalcon\Mvc\Controller
         }     
     }
 
+    public function verAction(){
+        
+        $this->view->pick('libro/ver');
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $libro = Libros::findFirst($id);
+        $unidades = Unidades::findFirst("idmaterial='".$libro->idmaterial."'");
+        $categorias= Categorias::find();
+        $subcategorias= Subcategorias::find();
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$libro->idmaterial."'");
+        $this->view->libro = $libro;
+        $this->view->unidades = $unidades;
+        $this->view->categorias = $categorias;
+        $this->view->subcategorias = $subcategorias;
+        $this->view->autores = $autores;
+        $this->view->mataut = $MatAut;
+    }
+
 }

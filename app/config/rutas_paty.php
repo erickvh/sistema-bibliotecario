@@ -29,3 +29,9 @@ $router->add(
         'action'     => 'eliminar',
         'id'     => 1
     ]);
+
+$router->addGet('/libro/ver/:int',[
+        'controller'=>'Libro',
+        'action'=>'ver',
+        'id'=>1
+]);
