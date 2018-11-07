@@ -42,6 +42,7 @@
                             <td>{{mat.Materialesbibliograficos.descripcion}}</td>
                             <td>
                                 <a href="{{url('recurso/editar/'~ mat.Materialesbibliograficos.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+                                <a href="{{url('recurso/ver/'~ mat.Materialesbibliograficos.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i>Ver</a>
                                 <a onclick="return abrir_modal('{{url('recurso/eliminar/'~ mat.Materialesbibliograficos.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
                             </td>
                         </tr>

@@ -303,7 +303,38 @@ class RecursoController extends \Phalcon\Mvc\Controller
             $response->redirect('/recurso'); //Retornar al index formato
             return $response;
         }     
-    }   
+    }
+    
+    public function verAction()
+    {
+        $this->view->pick('recurso/ver');
+        $id = $this->dispatcher->getParam('id'); //Obtener parametros de la url
+        /* Para llenar el formulario
+        con sus datos Actuales */
+        /* Actualizar el formulario Recurso */
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
+        $material = Materialesbibliograficos::findFirst($id);
+        $formatos = Formatos::find();
+        $recursoActual = Recursos::findFirst("idmaterial='".$material->id."'");        
+        $subcategorias = Subcategorias::find();       
+        $unidadesExis = Unidades::findFirst("idmaterial='".$material->id."'");      
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
+        $this->view->autores = $autores;
+        $this->view->mataut = $MatAut;
+        $this->view->material = $material;
+        $this->view->setVar('formatos', $formatos);
+        $this->view->setVar('sub', $subcategorias);
+        $this->view->setVar('recursoActual', $recursoActual);        
+        $this->view->setVar('unidades', $unidadesExis);       
+    }
 
 }
 

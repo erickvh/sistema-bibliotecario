@@ -35,6 +35,14 @@ $router->add(
         'id'     => 1
     ]);
 
+$router->add(
+    '/recurso/ver/:int',
+    [
+        'controller'=>'Recurso',
+        'action'=>'ver',
+        'id'=>1
+]);
+
 //Categoria
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');
