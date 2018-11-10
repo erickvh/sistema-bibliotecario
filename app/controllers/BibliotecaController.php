@@ -111,7 +111,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
             $telefono = $this->request->getPost('telefonoBiblioteca');
             $clasificacion = $this->request->getPost('clasBiblioteca');
-            $logourl = $this->request->getPost('imagenbiblioteca'); //esto debe ser traido por cloud dinary
+            $logourl = $this->request->getUploadedFiles('imagenbiblioteca'); //esto debe ser traido por cloud dinary
             $nombrelogo = $this->request->getPost('nomlogoBiblioteca');
             $email = $this->request->getPost('emailBiblioteca');
                 
@@ -119,7 +119,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $biblioteca->ubicacion = $ubicacion;
             $biblioteca->telefono = $telefono;
             $biblioteca->clasificaion = $clasificacion;
-            $biblioteca->logourl = $logourl;
+            $biblioteca->logourl = $this->guardarCloudinary($logourl);
             $biblioteca->nombrelogo = $nombrelogo;
             $biblioteca->email = $email;
             $biblioteca->save();
@@ -128,7 +128,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $this->flashSession->success('La biblioteca fue actualizada con exito');
             $response->redirect('/biblioteca'); //Retornar a biblioteca
             return $response;          
-        }
+            }
         }
     }
 
@@ -180,6 +180,36 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         { 
         $biblioteca->email =  $email;  
         }
+        
+        //guardando los datos en el nuevo objeto de tipo biblioteca
+
+        $biblioteca->nombre= $nombre;
+        $biblioteca->ubicacion = $ubicacion ;   
+        $biblioteca->telefono = $telefono ;   
+        $biblioteca->clasificacion =$clasificacion;  
+
+        $biblioteca->logourl =  $this->guardarCloudinary($logourl);   
+        $biblioteca->nombrelogo =  $nombrelogo ;   
+        $biblioteca->email =  $email;  
+        $guardado = $biblioteca->save();
+        $this->flashSession->success('La biblioteca fue guardada con exito');
+        $this->response->redirect('/biblioteca');
+    
+            }
+    }
+}
+
+    public function verAction()
+    {
+        $this->view->pick('biblioteca/ver');
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $biblioteca = Bibliotecas::findFirst($id);
+        $this->view->biblioteca = $biblioteca;
+    }
+
+    // Funcion usada en crear y editar para guardar la imagen en cloudinary
+    public function guardarCloudinary($logourl){
+        
         //preparando parametros para cloudinary
         $cloud_name = getenv("CLOUDINARY_cloudName");
         $api_key = getenv("CLOUDINARY_apiKey");
@@ -195,13 +225,13 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         //POST a cloudinary
         $url="https://api.cloudinary.com/v1_1/".$cloud_name."/image/upload";
         $ch = curl_init($url);
-        
-           $jsonData = new jsonDataO;
-           $jsonData->file = $base64;
-           $jsonData->api_key = $api_key;
-           $jsonData->timestamp = $timestamp;
-           $jsonData->signature = $signature;
-           
+
+        $jsonData = new jsonDataO;
+        $jsonData->file = $base64;
+        $jsonData->api_key = $api_key;
+        $jsonData->timestamp = $timestamp;
+        $jsonData->signature = $signature;
+
         $payload = json_encode($jsonData);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -210,33 +240,8 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $url = json_decode($result);
-        
-        //guardando los datos en el nuevo objeto de tipo biblioteca
 
-        $biblioteca->nombre= $nombre;
-        $biblioteca->ubicacion = $ubicacion ;   
-        $biblioteca->telefono = $telefono ;   
-        $biblioteca->clasificacion =$clasificacion;  
-
-        $biblioteca->logourl =  $url->{'url'};   
-        $biblioteca->nombrelogo =  $nombrelogo ;   
-        $biblioteca->email =  $email;  
-        $guardado = $biblioteca->save();
-        $this->flashSession->success('La biblioteca fue guardada con exito');
-        $this->response->redirect('/biblioteca');
-    
-            }
-    }
-        
-         
-    }
-
-    public function verAction()
-    {
-        $this->view->pick('biblioteca/ver');
-        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
-        $biblioteca = Bibliotecas::findFirst($id);
-        $this->view->biblioteca = $biblioteca;
+        return $url->{'url'};              
     }
 
 }

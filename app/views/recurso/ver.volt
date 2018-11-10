@@ -10,6 +10,13 @@
     <div class="row">
         <div class="col">
             <h3 class="text-center">Datos del Recurso</h3>
+            <div align= "center">
+                {% if material.imagenurl %}
+                <img width="140px" height="140px" src='{{material.imagenurl}}' {{material.nombreimagen ? "alt='"~material.nombreimagen~"'":'no disponible'}} />
+                {% else %}
+                <img src='https://via.placeholder.com/140x140?text=No disponible' alt='logo no disponible'/> 
+                {% endif %}
+                </div>
             <form action="">
                 <div class="form-group">
                     <label class="control-label">Nombre recurso</label>
@@ -19,14 +26,14 @@
                     <label class="control-label">Descripcion recurso</label>
                     <textarea name="descMaterial" id="" cols="30" rows="3" class="form-control" readonly>{{material.descripcion}}</textarea>
                 </div>
-                <div class="form-group">
+                <!--<div class="form-group">
                     <label for="imagenLibro">Imagen</label>
                     <input name="imagenLibro" class="form-control-file" id="imagenLibro" type="file" aria-describedby="fileHelp"><small class="form-text text-muted" id="fileHelp">Seleccione la imagen del libro.</small>
                   </div>
                 <div class="form-group">
                     <label class="control-label">Nombre de la imagen</label>
                     <input name="nomImgMaterial" type="text" class="form-control" readonly>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="control-label">Fecha de Publicacion</label>
                     <input name="fechaMaterial" type="date" class="form-control" value="{{material.fechapublicacion}}" min="1950-01-01" readonly>

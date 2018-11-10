@@ -10,6 +10,17 @@ use App\Models\Autores;
 use Phalcon\Http\Response;
 use App\Models\Users;
 use App\Validations\ValidacionRecurso;
+
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
+$dotenv->load();
+
+class jsonDataO {
+    public $file = "";
+    public $api_key = "";
+    public $timestamp = "";
+    public $signature = "";
+}
+
 class RecursoController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
@@ -122,8 +133,13 @@ class RecursoController extends \Phalcon\Mvc\Controller
            
             $material->nombre = $nomMaterial;
             $material->descripcion = $this->request->getPost('descMaterial');
-            $material->imagenurl = $this->request->getPost('imagenMaterial');
             $material->nombreimagen = $this->request->getPost('nomImgMaterial');
+            
+            $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+
+            $material->imagenurl = $this->guardarCloudinary($logourl);
+
+
             if($this->request->getPost('fechaMaterial'))
             {
                 $material->fechapublicacion = $this->request->getPost('fechaMaterial');
@@ -229,7 +245,8 @@ class RecursoController extends \Phalcon\Mvc\Controller
           
                 $material->nombre = $nomMaterial;
                 $material->descripcion = $this->request->getPost('descMaterial');
-                $material->imagenurl = $this->request->getPost('imagenMaterial');
+                $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+                $material->imagenurl = $this->guardarCloudinary($logourl);
                 $material->nombreimagen = $this->request->getPost('nomImgMaterial');
                 if($this->request->getPost('fechaMaterial'))
                 {
@@ -334,6 +351,43 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $this->view->setVar('sub', $subcategorias);
         $this->view->setVar('recursoActual', $recursoActual);        
         $this->view->setVar('unidades', $unidadesExis);       
+    }
+
+    // Funcion usada en crear y editar para guardar la imagen en cloudinary
+    public function guardarCloudinary($logourl){
+        
+        //preparando parametros para cloudinary
+        $cloud_name = getenv("CLOUDINARY_cloudName");
+        $api_key = getenv("CLOUDINARY_apiKey");
+        $api_secret = getenv("CLOUDINARY_apiSecret");
+        $timestamp = time();
+        $signature = sha1("timestamp=".(string)$timestamp.$api_secret);
+        foreach ($logourl as $url){
+            $tmpDir=$url->getTempName();
+        }
+        //imagen a base64
+        $data = file_get_contents($tmpDir);
+        $base64 = 'data:image/jpeg;base64,' . base64_encode($data);
+        //POST a cloudinary
+        $url="https://api.cloudinary.com/v1_1/".$cloud_name."/image/upload";
+        $ch = curl_init($url);
+
+        $jsonData = new jsonDataO;
+        $jsonData->file = $base64;
+        $jsonData->api_key = $api_key;
+        $jsonData->timestamp = $timestamp;
+        $jsonData->signature = $signature;
+
+        $payload = json_encode($jsonData);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //$result = new jsonR;
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $url = json_decode($result);
+
+        return $url->{'url'};              
     }
 
 }

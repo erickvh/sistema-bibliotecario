@@ -11,12 +11,11 @@
             <h3 class="text-center">Datos de Biblioteca</h3>
                 <div align= "center">
                     {% if biblioteca.logourl %}
-                    <img src='{{biblioteca.logourl}}' {{biblioteca.nombrelogo ? "alt='"~biblioteca.nombrelogo~"'":'no disponible'}} />
+                    <img width="140px" height="140px" src='{{biblioteca.logourl}}' {{biblioteca.nombrelogo ? "alt='"~biblioteca.nombrelogo~"'":'no disponible'}} />
                     {% else %}
-                    <img src='https://via.placeholder.com/140x140' alt='logo no disponible'/> 
+                    <img src='https://via.placeholder.com/140x140?text=No disponible' alt='logo no disponible'/> 
                     {% endif %}
                 </div>
-                <br>
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Nombre" value="{{biblioteca.nombre}}"  readonly >

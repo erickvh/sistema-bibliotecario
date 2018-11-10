@@ -14,12 +14,11 @@
             
             <div align= "center">
             {% if libro.MaterialesBibliograficos.imagenurl %}
-            <img src='{{libro.MaterialesBibliograficos.imagenurl}}' {{libro.MaterialesBibliograficos.nombreimagen ? "alt='"~libro.MaterialesBibliograficos.nombreimagen~"'":'no disponible'}} />
+            <img width="140px" height="140px" src='{{libro.MaterialesBibliograficos.imagenurl}}' {{libro.MaterialesBibliograficos.nombreimagen ? "alt='"~libro.MaterialesBibliograficos.nombreimagen~"'":'no disponible'}} />
             {% else %}
-            <img src='https://via.placeholder.com/140x140' alt='logo no disponible'/> 
+            <img src='https://via.placeholder.com/140x140?text=No disponible' alt='logo no disponible'/> 
             {% endif %}
             </div>
-            <br>
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input name="nomLibro" class="form-control" type="text" placeholder="Nombre" value="{{libro.Materialesbibliograficos.nombre}}"  readonly>
