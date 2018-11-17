@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email as EmailValidator;
-
-class Users extends \Phalcon\Mvc\Model
+class Municipios extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -18,55 +15,23 @@ class Users extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $username;
-
-    /**
-     *
-     * @var string
-     */
-    public $password;
-
-    /**
-     *
-     * @var string
-     */
-    public $email;
-
-    /**
-     *
-     * @var string
-     */
-    public $fechanacimiento;
-
-    /**
-     *
-     * @var string
-     */
     public $nombre;
-
-    /**
-     *
-     * @var string
-     */
-    public $sexo;
 
     /**
      *
      * @var integer
      */
-    public $idrol;
+    public $iddepartamento;
 
-    
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("users");
-        $this->hasMany('id', 'App\Models\Bibliotecarios', 'iduser', ['alias' => 'Bibliotecarios']);
-        $this->hasMany('id','App\Models\Prestamistas','iduser',['alias'=>'Prestamistas']);
-        $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
+        $this->setSource("municipios");
+        $this->hasMany('id', 'App\Models\Prestamistas', 'idmunicipio', ['alias' => 'Prestamistas']);
+        $this->belongsTo('iddepartamento', 'App\Models\Departamentos', 'id', ['alias' => 'Departamentos']);
     }
 
     /**
@@ -76,14 +41,14 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'users';
+        return 'municipios';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Users[]|Users|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Municipios[]|Municipios|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -94,7 +59,7 @@ class Users extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Users|\Phalcon\Mvc\Model\ResultInterface
+     * @return Municipios|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

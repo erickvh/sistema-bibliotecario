@@ -2,7 +2,7 @@
 
 namespace App\Models;
 
-class Libros extends \Phalcon\Mvc\Model
+class Departamentos extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -15,31 +15,7 @@ class Libros extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $volumen;
-
-    /**
-     *
-     * @var string
-     */
-    public $editorial;
-
-    /**
-     *
-     * @var string
-     */
-    public $sinopsis;
-
-    /**
-     *
-     * @var string
-     */
-    public $isbn;
-
-    /**
-     *
-     * @var integer
-     */
-    public $idmaterial;
+    public $nombre;
 
     /**
      * Initialize method for model.
@@ -47,8 +23,8 @@ class Libros extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("libros");
-        $this->belongsTo('idmaterial', 'App\Models\Materialesbibliograficos', 'id', ['alias' => 'Materialesbibliograficos']);
+        $this->setSource("departamentos");
+        $this->hasMany('id', 'App\Models\Municipios', 'iddepartamento', ['alias' => 'Municipios']);
     }
 
     /**
@@ -58,14 +34,14 @@ class Libros extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'libros';
+        return 'departamentos';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Libros[]|Libros|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Departamentos[]|Departamentos|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -76,7 +52,7 @@ class Libros extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Libros|\Phalcon\Mvc\Model\ResultInterface
+     * @return Departamentos|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

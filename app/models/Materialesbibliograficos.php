@@ -70,6 +70,9 @@ class Materialesbibliograficos extends \Phalcon\Mvc\Model
         $this->hasMany('id', 'App\Models\MaterialesAutores', 'idmaterial', ['alias' => 'MaterialesAutores']);
         $this->hasMany('id', 'App\Models\Recursos', 'idmaterial', ['alias' => 'Recursos']);
         $this->hasMany('id', 'App\Models\Unidades', 'idmaterial', ['alias' => 'Unidades']);
+        $this->hasMany('id', 'App\Models\Prestamos', 'idmaterial', ['alias' => 'Prestamos']);
+        $this->hasMany('id', 'App\Models\Reservas', 'idmaterial', ['alias' => 'Reservas']);
+       
         $this->belongsTo('idbiblioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
         $this->belongsTo('idsubcategoria', 'App\Models\Subcategorias', 'id', ['alias' => 'Subcategorias']);
     }

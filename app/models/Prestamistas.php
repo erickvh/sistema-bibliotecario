@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email as EmailValidator;
-
-class Bibliotecas extends \Phalcon\Mvc\Model
+class Prestamistas extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -17,14 +14,39 @@ class Bibliotecas extends \Phalcon\Mvc\Model
     /**
      *
      * @var string
+     *
      */
-    public $nombre;
+    public $lugardeestudio;
 
     /**
      *
      * @var string
      */
-    public $ubicacion;
+    public $trabaja;
+
+    /**
+     *
+     * @var string
+     */
+    public $estudia;
+
+    /**
+     *
+     * @var string
+     */
+    public $direccion;
+
+    /**
+     *
+     * @var string
+     */
+    public $nombredepadre;
+
+    /**
+     *
+     * @var string
+     */
+    public $nombredemadre;
 
     /**
      *
@@ -36,33 +58,25 @@ class Bibliotecas extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $clasificacion;
+    public $activo;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $habilitado;
+    public $iduser;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $logourl;
+    public $idmunicipio;
 
     /**
      *
-     * @var string
+     * @var integer
      */
-    public $nombrelogo;
-
-    /**
-     *
-     * @var string
-     */
-    public $email;
-
-    
+    public $idbibilioteca;
 
     /**
      * Initialize method for model.
@@ -70,11 +84,12 @@ class Bibliotecas extends \Phalcon\Mvc\Model
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("bibliotecas");
-        $this->hasMany('id', 'App\Models\Autores', 'idbiblioteca', ['alias' => 'Autores']);
-        $this->hasMany('id', 'App\Models\Bibliotecarios', 'idbiblioteca', ['alias' => 'Bibliotecarios']);
-        $this->hasMany('id', 'App\Models\Prestamistas', 'idbiblioteca', ['alias' => 'Prestamistas']);
-        $this->hasMany('id', 'App\Models\Materialesbibliograficos', 'idbiblioteca', ['alias' => 'Materialesbibliograficos']);
+        $this->setSource("prestamistas");
+        $this->hasMany('id', 'App\Models\Prestamos', 'idprestamista', ['alias' => 'Prestamos']);
+        $this->hasMany('id', 'App\Models\Reservas', 'idprestamista', ['alias' => 'Reservas']);
+        $this->belongsTo('idbibilioteca', 'App\Models\Bibliotecas', 'id', ['alias' => 'Bibliotecas']);
+        $this->belongsTo('idmunicipio', 'App\Models\Municipios', 'id', ['alias' => 'Municipios']);
+        $this->belongsTo('iduser', 'App\Models\Users', 'id', ['alias' => 'Users']);
     }
 
     /**
@@ -84,14 +99,14 @@ class Bibliotecas extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'bibliotecas';
+        return 'prestamistas';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Bibliotecas[]|Bibliotecas|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Prestamistas[]|Prestamistas|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -102,7 +117,7 @@ class Bibliotecas extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Bibliotecas|\Phalcon\Mvc\Model\ResultInterface
+     * @return Prestamistas|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {

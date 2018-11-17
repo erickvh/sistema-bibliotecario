@@ -1,3 +1,8 @@
+DROP SCHEMA public CASCADE;
+CREATE SCHEMA public;
+GRANT ALL ON SCHEMA public TO postgres;
+GRANT ALL ON SCHEMA public TO public;
+COMMENT ON SCHEMA public IS 'Se borra esquema y se crea de nuevo';
 --TABLAS MENOS DEPENDIENTES 
 
 CREATE TABLE roles(
@@ -139,6 +144,8 @@ CREATE TABLE materialesBibliograficos(
 CREATE TABLE unidades(
     id serial,
     unidadesExistentes INTEGER NOT NULL,
+    unidadesPrestadas INTEGER DEFAULT 0,
+    unidadesReservadas INTEGER DEFAULT 0,
     idMaterial INTEGER,
 
     CONSTRAINT pk_unidades PRIMARY KEY (id),
@@ -170,6 +177,7 @@ CREATE TABLE libros(
     volumen VARCHAR(20),
     editorial VARCHAR(120),
     sinopsis TEXT,
+    isbn VARCHAR(10),
     idMaterial INTEGER UNIQUE,
    
     CONSTRAINT pk_libros PRIMARY KEY (id),
@@ -194,4 +202,89 @@ CREATE TABLE materiales_autores(
     CONSTRAINT fk_materiales_autores_autores FOREIGN KEY (idAutor)
     REFERENCES autores(id) ON UPDATE RESTRICT ON DELETE RESTRICT
 );
+
+-- TABLAS SEGUNDO SPRINT
+CREATE TABLE departamentos(
+    id serial,
+    nombre VARCHAR(40),
+   
+
+    CONSTRAINT pk_departamentos PRIMARY KEY (id)
+);
+
+CREATE TABLE municipios(
+    id serial,
+    nombre VARCHAR(40),
+    idDepartamento INTEGER,
+
+    CONSTRAINT pk_municipios PRIMARY KEY (id),
+
+    CONSTRAINT fk_municipios_departamentos FOREIGN KEY (idDepartamento)
+    REFERENCES departamentos(id) ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+CREATE TABLE prestamistas(
+    id serial,
+    lugarDeEstudio VARCHAR(60),
+    trabaja boolean,
+    estudia boolean,
+    direccion VARCHAR(60), -- direccion fisica
+    nombreDePadre VARCHAR(60),
+    nombreDeMadre VARCHAR(60),
+    telefono VARCHAR(9),
+    activo boolean,
+
+    idUser INTEGER,
+    idMunicipio INTEGER,
+    idBibilioteca INTEGER,
+
+    CONSTRAINT pk_prestamistas PRIMARY KEY (id),
+
+    CONSTRAINT fk_prestamistas_users FOREIGN KEY (idUser) REFERENCES 
+    users(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
+  
+    CONSTRAINT fk_prestamistas_municipios FOREIGN KEY (idMunicipio) REFERENCES 
+    municipios(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
+  
+    CONSTRAINT fk_prestamistas_bibliotecas FOREIGN KEY (idBibilioteca) REFERENCES 
+    bibliotecas(id) ON UPDATE RESTRICT ON DELETE RESTRICT
+);
+
+CREATE TABLE prestamos(
+    id serial,
+    fechaPrestamo DATE,
+    fechaDevolucion DATE DEFAULT NULL,
+    devuelto boolean,
+    diasAtrasado INTEGER,
+    idMaterial INTEGER,
+    idPrestamista INTEGER,
+
+    CONSTRAINT pk_prestamos PRIMARY KEY (id),
+
+    CONSTRAINT fk_prestamos_prestamistas FOREIGN KEY (idPrestamista)
+    REFERENCES prestamistas(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
+
+    CONSTRAINT fk_prestamos_materiales FOREIGN KEY (idMaterial) 
+    REFERENCES materialesBibliograficos(id) ON UPDATE RESTRICT ON DELETE RESTRICT
+
+
+);
+
+CREATE TABLE reservas(
+    id serial,
+    fechaReserva DATE,
+    fechaSolicitud DATE,
+    prestado boolean,
+    cancelado boolean,
+    idPrestamista INTEGER,
+    idMaterial INTEGER,
+
+    CONSTRAINT pk_reservas PRIMARY KEY (id),
+    CONSTRAINT fk_reservas_prestamistas FOREIGN KEY (idPrestamista)
+    REFERENCES prestamistas(id) ON UPDATE RESTRICT ON DELETE RESTRICT,
+
+    CONSTRAINT fk_reservas_material FOREIGN KEY (idMaterial)
+    REFERENCES materialesBibliograficos(id) ON UPDATE RESTRICT ON DELETE RESTRICT
+
+);
+
 

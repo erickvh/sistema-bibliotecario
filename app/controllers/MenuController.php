@@ -54,6 +54,24 @@ class MenuController extends \Phalcon\Mvc\Controller
         
     }
 
+    public function prestamistaAction()
+    {
+
+        switch($this->rol){
+            case 'Bibliotecario':
+            case 'Administrador': 
+            $this->response->redirect('/401');
+            break;
+            case 'Prestamista':
+            $this->biblioteca=$this->user->prestamistas[0]->bibliotecas;
+            break;
+        }
+
+
+        $this->view->pick('layouts/prestamista');
+        $this->view->biblioteca=$this->biblioteca;
+        
+    }
 
 }
 

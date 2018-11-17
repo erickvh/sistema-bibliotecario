@@ -2,10 +2,7 @@
 
 namespace App\Models;
 
-use Phalcon\Validation;
-use Phalcon\Validation\Validator\Email as EmailValidator;
-
-class Users extends \Phalcon\Mvc\Model
+class Reservas extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -18,55 +15,47 @@ class Users extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $username;
+    public $fechareserva;
 
     /**
      *
      * @var string
      */
-    public $password;
+    public $fechasolicitud;
 
     /**
      *
      * @var string
      */
-    public $email;
+    public $prestado;
 
     /**
      *
      * @var string
      */
-    public $fechanacimiento;
-
-    /**
-     *
-     * @var string
-     */
-    public $nombre;
-
-    /**
-     *
-     * @var string
-     */
-    public $sexo;
+    public $cancelado;
 
     /**
      *
      * @var integer
      */
-    public $idrol;
+    public $idprestamista;
 
-    
+    /**
+     *
+     * @var integer
+     */
+    public $idmaterial;
+
     /**
      * Initialize method for model.
      */
     public function initialize()
     {
         $this->setSchema("public");
-        $this->setSource("users");
-        $this->hasMany('id', 'App\Models\Bibliotecarios', 'iduser', ['alias' => 'Bibliotecarios']);
-        $this->hasMany('id','App\Models\Prestamistas','iduser',['alias'=>'Prestamistas']);
-        $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
+        $this->setSource("reservas");
+        $this->belongsTo('idmaterial', 'App\Models\Materialesbibliograficos', 'id', ['alias' => 'Materialesbibliograficos']);
+        $this->belongsTo('idprestamista', 'App\Models\Prestamistas', 'id', ['alias' => 'Prestamistas']);
     }
 
     /**
@@ -76,14 +65,14 @@ class Users extends \Phalcon\Mvc\Model
      */
     public function getSource()
     {
-        return 'users';
+        return 'reservas';
     }
 
     /**
      * Allows to query a set of records that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Users[]|Users|\Phalcon\Mvc\Model\ResultSetInterface
+     * @return Reservas[]|Reservas|\Phalcon\Mvc\Model\ResultSetInterface
      */
     public static function find($parameters = null)
     {
@@ -94,7 +83,7 @@ class Users extends \Phalcon\Mvc\Model
      * Allows to query the first record that match the specified conditions
      *
      * @param mixed $parameters
-     * @return Users|\Phalcon\Mvc\Model\ResultInterface
+     * @return Reservas|\Phalcon\Mvc\Model\ResultInterface
      */
     public static function findFirst($parameters = null)
     {
