@@ -43,6 +43,8 @@ $router->add(
         'id'=>1
 ]);
 
+$router->add('/recurso/grafico','Recurso::graficar');
+
 //Categoria
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');
