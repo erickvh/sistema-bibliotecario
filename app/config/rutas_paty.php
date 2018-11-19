@@ -41,3 +41,29 @@ $router->addGet('/libro/ver/:int',[
         'action'=>'ver',
         'id'=>1
 ]);
+
+/*rutas gestion de prestamos*/
+$router->addGet('/reserva','Prestamo::index');
+$router->addGet('/prestamo','Prestamo::consultarPrestamos');
+$router->add(
+    '/reserva/cancelar/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'cancelarReserva',
+        'id'     => 1
+    ]);
+$router->add(
+    '/reserva/prestar/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'prestar',
+        'id'     => 1
+    ]);
+    
+$router->add(
+    '/prestamo/devolver/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'devolver',
+        'id'     => 1
+    ]);
