@@ -45,6 +45,15 @@ $router->add(
 
 $router->add('/recurso/grafico','Recurso::graficar');
 
+//Estadistica
+$router->add('/estadistica','Estadistica::index');
+$router->add('/estadistica/categoria/:int/:int/:int',[
+    'controller'=>'Estadistica',
+    'action'=>'categoria',
+    'anio'=>1,
+    'mes_inicial'=>2,
+    'mes_final'=>3
+]); //ayudaaaaaa :C 
 //Categoria
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');
