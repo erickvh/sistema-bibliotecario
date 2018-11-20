@@ -42,47 +42,75 @@ class EstadisticaController extends \Phalcon\Mvc\Controller
     public function indexAction()
     {
         $this->view->pick('estadistica/index');
-        if ($this->request->isPost()) 
-        {
-
-        }
+        $categorias = Categorias::find("idbiblioteca ='".$this->biblioteca->id."'");
+        $this->view->categorias = $categorias;
     }
 
     public function categoriaAction()
     {
-        $anio = $this->dispatcher->getParam('anio');
-        $mes1 = $this->dispatcher->getParam('mes_inicial');
-        $mes2 = $this->dispatcher->getParam('mes_final');
-        $fechaInicial = "".$anio."-".$mes1."-01";
-        $fechaFinal = "".$anio."-".$mes2."-01";        
-        $this->view->pick('estadistica/graficas');
-        $subcategorias = Subcategorias::find(['order'=>'nombre']);
-        $categorias = Categorias::find("idbiblioteca ='".$this->biblioteca->id."'");
-        /* Arreglos a utilizar para graficar */
-        $subcat = array();
-        $numRecurso = array();
+        if ($this->request->getMethod(GET)) 
+        {              
+        $fechaInicial = $this->request->get('fecha_inicio');
+        $fechaFinal = $this->request->get('fecha_fin');                            
+        $this->view->pick('estadistica/categorias');        
+        /* Arreglos a utilizar para graficar */       
         $nomCategorias = array();
         $cantidad = array();   
-        /* Falta anidarle las fechas*/         
+        /* Consulta SQL para los prestamos y graficar entre las fechas*/         
         $sql="select categorias.nombre, count(*)  from Categorias inner join subcategorias on categorias.id = subcategorias.idcategoria 
         inner join materialesbibliograficos on materialesbibliograficos.idsubcategoria = subcategorias.id 
         inner join prestamos on prestamos.idmaterial = materialesbibliograficos.id 
-        WHERE categorias.idbiblioteca ='".$this->biblioteca->id."'AND prestamos.fechaprestamo BETWEEN '2018-10-16' AND '2018-11-18' group by categorias.nombre order by count(*) desc";
+        WHERE categorias.idbiblioteca ='".$this->biblioteca->id."'AND prestamos.fechaprestamo BETWEEN '".$fechaInicial."' AND '".$fechaFinal."' group by categorias.nombre order by count(*) desc FETCH FIRST 5 ROWS ONLY";
         $db = \Phalcon\Di::getDefault()->get('db');
-        $datos = $db->fetchAll($sql);
-        $i=0;
+        $datos = $db->fetchAll($sql);        
         foreach($datos as $dato)
         {
-            array_push($nomCategorias, $dato['nombre']); 
-            array_push($cantidad, $dato['count']);
-            $i++;
-            if($i==5)
-            {
-                break;
-            }
-        }
+            array_push($nomCategorias, $dato['nombre']);
+            array_push($cantidad, $dato['count']);            
+        }        
+        $this->view->fecha_inicio = $fechaInicial;
+        $this->view->fecha_fin = $fechaFinal;
         $this->view->cantidad = $cantidad; 
         $this->view->cat = $nomCategorias;
+        }
+        else
+        {
+            $this->view->pick('estadistica/categorias');
+        }
+    }
+
+    public function subcategoriaAction()
+    {
+        if ($this->request->getMethod(GET)) 
+        {              
+        $fechaInicial = $this->request->get('fecha_inicio');
+        $fechaFinal = $this->request->get('fecha_fin');
+        $id_categoria = $this->request->get('id_categoria');                           
+        $this->view->pick('estadistica/subcategoria');        
+        /* Arreglos a utilizar para graficar */       
+        $nomSubCategorias = array();
+        $cantidad = array();   
+        /* Consulta SQL para los prestamos y graficar entre las fechas*/         
+        $sql="select subcategorias.nombre, count(*)  from Categorias inner join subcategorias on categorias.id = subcategorias.idcategoria 
+        inner join materialesbibliograficos on materialesbibliograficos.idsubcategoria = subcategorias.id 
+        inner join prestamos on prestamos.idmaterial = materialesbibliograficos.id 
+        WHERE categorias.idbiblioteca ='".$this->biblioteca->id."'AND subcategorias.idcategoria ='".$id_categoria."' AND prestamos.fechaprestamo BETWEEN '".$fechaInicial."' AND '".$fechaFinal."' group by subcategorias.nombre order by count(*) desc FETCH FIRST 5 ROWS ONLY";
+        $db = \Phalcon\Di::getDefault()->get('db');
+        $datos = $db->fetchAll($sql);        
+        foreach($datos as $dato)
+        {
+            array_push($nomSubCategorias, $dato['nombre']);
+            array_push($cantidad, $dato['count']);            
+        }        
+        $this->view->fecha_inicio = $fechaInicial;
+        $this->view->fecha_fin = $fechaFinal;
+        $this->view->cantidad = $cantidad; 
+        $this->view->subcat = $nomSubCategorias;
+        }
+        else
+        {
+            $this->view->pick('estadistica/categorias');
+        }
     }
 
 }

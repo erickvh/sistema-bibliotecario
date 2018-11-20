@@ -5,7 +5,13 @@
 <h1> Ver Recurso </h1>
 <p>Detalles del Recurso</p>
 {% endblock %}
-
+{% block extraCSS %} 
+<style>
+    #mostrar_tipo #subcategoria{
+        display: none;
+    }
+</style>
+{% endblock %}
 {% block contenido %}
 <div class="row">
     <div class="col-4">
@@ -22,22 +28,53 @@
             <div class="container">
                 <div class="row">
                     <div class="col">
-                        <h3 class="text-center">Estadisticas por categoria </h3>
-                        <form action="" method="post">
-                            <div class="form-group">
-                                <label for="anio">Text</label>
-                                <input id="anio" class="form-control" type="numbre">
+                        <h3 class="text-center">Generador de Estadistica </h3>
+                        <div class="form-group">
+                            <label for="tipo">Seleccione el tipo de estadistica a generar</label>
+                            <select name="tipo" id="tipo" class="form-control">                                
+                                <option value="categoria">Categoria</option>
+                                <option value="subcategoria">subcategoria</option>
+                            </select>
+                        </div>
+                        <div id="mostrar_tipo">
+                            <div id="categoria">
+                            <h4 class="text-center">Estadistica por Categoría</h4>
+                            <form action="/estadistica/categoria" method="GET">                            
+                                <div class="form-group">
+                                    <label for="fechaInicio">Fecha de inicio </label>
+                                    <input id="fechaInicio" class="form-control" type="date" name="fecha_inicio">
+                                </div>
+                                <div class="form-group">
+                                    <label for="fechaFin">Fecha de Fin</label>
+                                    <input id="fechaFin" class="form-control" type="date" name="fecha_fin">
+                                </div>
+                                <button type="submit" class="btn btn-success">Generar Grafica</button>
+                            </form>
                             </div>
-                            <div class="form-group">
-                                <label for="fechaInicio">Mes de inicio </label>
-                                <input id="fechaInicio" class="form-control" type="number">
-                            </div>
-                            <div class="form-group">
-                                <label for="fechaFin">Mes de Fin</label>
-                                <input id="fechaFin" class="form-control" type="numbe">
-                            </div>
-                            <button type="submit" class="btn btn-success">Generar Grafica</button>
-                        </form>
+                            <div id="subcategoria">
+                                <h4 class="text-center">Estadistica por Subcategoría</h4>
+                                <form action="/estadistica/subcategoria" method="GET">                                                                        
+                                    <div class="form-group">
+                                        <label for="categoria">Categoria</label>
+                                        <select id="categoria" class="form-control" name="id_categoria">                                            
+                                                {% for c in categorias %}
+                                                <option value="{{c.id}}">{{c.nombre}}</option>
+                                                {% endfor %}                                              
+                                        </select>
+                                    </div>                                                              
+                                    <div class="form-group">
+                                        <label for="fechaInicio">Fecha de inicio </label>
+                                        <input id="fechaInicio" class="form-control" type="date" name="fecha_inicio">
+                                    </div>
+                                    <div class="form-group">
+                                        <label for="fechaFin">Fecha de Fin</label>
+                                        <input id="fechaFin" class="form-control" type="date" name="fecha_fin">
+                                    </div>
+                                    <button type="submit" class="btn btn-success">Generar Grafica</button>
+                                </form>
+                            </div>   
+                        </div>
+                                           
                     </div>
                 </div>
             </div>
@@ -49,4 +86,15 @@
     </div>
   </div>
 {% endblock  %}
+{% block extraJS %}
+<script>
+    $(document).ready(function(){
+        $('#tipo').on('change',function(){
+            var valor = $(this).val();
+            $('#mostrar_tipo').children('div').hide();
+            $('#mostrar_tipo').children('#'+valor).show();            
+        })
+    });
+</script>
+{% endblock %}
      
