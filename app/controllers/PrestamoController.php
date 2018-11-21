@@ -59,6 +59,7 @@ class PrestamoController extends \Phalcon\Mvc\Controller
                 }
             }
         }
+        
         $this->view->pick('prestamo/consultarReservas');
         $this->view->reservas=$reservas;
 
@@ -70,8 +71,10 @@ class PrestamoController extends \Phalcon\Mvc\Controller
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $reserva = Reservas::findFirst($id);
         $fechadevolucion=Carbon::now()->addDay(3)->format('d-m-Y');
+        $hoy=Carbon::now()->format('Y-m-d');
         $this->view->reserva = $reserva;
         $this->view->fechadevolucion=$fechadevolucion;
+        $this->view->hoy=$hoy;
         if ($this->request->isPost()) {
             $reserva->prestado='true';
             $reserva->save();
@@ -80,7 +83,7 @@ class PrestamoController extends \Phalcon\Mvc\Controller
             $prestamo->idprestamista=$reserva->idprestamista;
             $prestamo->devuelto='false';
             $prestamo->diasatrasado=0;
-            $prestamo-> 
+            $prestamo->fechaprestamo=Carbon::now()->format('Y-m-d');
             $prestamo->fechadevolucion=Carbon::now()->addDay(3)->format('Y-m-d');
             $prestamo->save();
             $unidades=Unidades::findFirst("idmaterial='".$reserva->idmaterial."'");
