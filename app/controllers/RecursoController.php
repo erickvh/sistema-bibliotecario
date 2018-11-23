@@ -4,6 +4,7 @@ use App\Models\Formatos;
 use App\Models\Materialesbibliograficos;
 use App\Models\MaterialesAutores;
 use App\Models\Subcategorias;
+use App\Models\Categorias;
 use App\Models\Unidades;
 use App\Models\Bibliotecarios;
 use App\Models\Autores;
@@ -81,9 +82,17 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $recursos = Recursos::find();
         $formatos = Formatos::find('idbiblioteca ='.$this->biblioteca->id);        
         $subcategorias = Subcategorias::find();
+        $subcat = array();
+        foreach ($subcategorias as $sub)
+        {
+            if($sub->categorias->idbiblioteca == $this->biblioteca->id)
+            {
+                array_push($subcat, $sub);
+            }
+        }
         $this->view->setVar('recursos', $recursos);
         $this->view->setVar('formatos', $formatos);         
-        $this->view->setVar('sub', $subcategorias); 
+        $this->view->setVar('sub', $subcat); 
         $this->view->setVar('error', false);
         $idusuario = $this->session->get('id');
         $bibliotecario = Bibliotecarios::findFirst([
@@ -320,6 +329,56 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $this->view->setVar('sub', $subcategorias);
         $this->view->setVar('recursoActual', $recursoActual);        
         $this->view->setVar('unidades', $unidadesExis);       
+    }
+
+    public function graficarAction()
+    {
+        $this->view->pick('recurso/graficas');
+        $subcategorias = Subcategorias::find(['order'=>'nombre']);
+        $categorias = Categorias::find("idbiblioteca= '".$this->biblioteca->id."'");
+        /* Arreglos a utilizar para graficar */
+        $subcat = array();
+        $numRecurso = array();
+        $nomCategorias = array();
+        $cantidad = array();
+        /* Para las categorias */
+        foreach($categorias as $cat)
+        {
+            array_push($nomCategorias,$cat->nombre);
+            $subs = Subcategorias::find("idcategoria='".$cat->id."'");
+            $i = 0;
+            foreach($subs as $sub)
+            {
+                $material = Materialesbibliograficos::find("idsubcategoria='".$sub->id."'");
+                if(count($material)>0)
+                {
+                    $i +=count($material);
+                }
+            }
+            array_push($cantidad, $i);                        
+        }
+        /* Para las subcategorias*/
+        foreach ($subcategorias as $sub)
+        {
+            if($sub->categorias->idbiblioteca == $this->biblioteca->id)
+            {
+                array_push($subcat, $sub->nombre); // llenando arreglo                
+                $recurso = Recursos::find();
+                $material = Materialesbibliograficos::find("idsubcategoria='".$sub->id."'");
+                array_push($numRecurso,count($material));  
+                foreach($recurso as $mat)
+                {
+                    $conteo = Materialesbibliograficos::find($mat->idmaterial);
+                    $mat->materialesbibliograficos;
+                    //array_push($numRecurso,count($mat));   
+                }                            
+            }
+        }
+        /* Variables en la vista */
+        $this->view->sub = $subcat;
+        $this->view->cantidad = $numRecurso; 
+        $this->view->cat = $nomCategorias;  
+        $this->view->canCat = $cantidad;      
     }
 
     // Funcion usada en crear y editar para guardar la imagen en cloudinary
