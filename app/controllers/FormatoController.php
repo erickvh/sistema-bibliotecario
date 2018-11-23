@@ -53,34 +53,19 @@ class FormatoController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
             
             $validacion= new ValidacionFormato;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes=$validacion->obtenerMensajes($_POST);
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado el formato, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/formato');
+                return $this->response->redirect('/formato');
                 
             }
-            else
-            {//VALIDACION CON EXITO
-                $formato = new Formatos;
-                
+
+                $formato = new Formatos;                
                 $tipo = $this->request->getPost('tipoFormato');
                 $desc = $this->request->getPost('descFormato');
 
@@ -95,7 +80,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
 
             }
     }
-}
+
 
     public function editarAction()
     {
@@ -106,32 +91,19 @@ class FormatoController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
             // Accedemos a los datos POST            
             $validacion= new ValidacionFormato;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
+            $mensajes= $validacion->obtenerMensajes($_POST);       
             //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+         
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha actualizado el formato, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/formato/editar/'.$id);
-                
+                return $this->response->redirect('/formato/editar/'.$id);                
             }
-            else
-            {//VALIDACION CON EXITO
+
             $tipo = $this->request->getPost('tipoFormato');
             $desc = $this->request->getPost('descFormato');
   
@@ -145,7 +117,7 @@ class FormatoController extends \Phalcon\Mvc\Controller
             return $response;          
         }
     }
-}
+
     public function eliminarAction()
     {
         $this->view->pick('formato/eliminar');

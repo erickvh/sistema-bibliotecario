@@ -110,33 +110,17 @@ class LibroController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
                 $validacion= new ValidacionLibro;
-                $mensajes=[];
-        
-                $messages = $validacion->validate($_POST); //recoge las variables globales post
-                
-                //captura mensajes que son al respecto de los campos encontrados
-                foreach ($messages as  $m) 
-                {
-                    $mensajes[$m->getField()]=$m->getMessage();
-                }
+                $mensajes= $validacion->obtenerMensajes($_POST);
+
                 
                 if(!empty($mensajes))
                 {   
                     $this->flashSession->error('No se ha guardado Libro, algunos errores en los campos mencionados');
-                    
-                    //hace el bucle media vez halla capturado validaciones
-                    foreach ($mensajes as $mensaje ) {
-                        $this->flashSession->warning($mensaje);                
-                        
-                    }
-        
+                    $validacion->gettingFlashMessages($mensajes);
                    //redirige al mismo formulario
-                    $this->response->redirect('/libro/crear');
-                    
+                    return $this->response->redirect('/libro/crear');
                 }
-                else
-                {//VALIDACION CON EXITO
-    
+ 
            
             $nombre = $this->request->getPost('nomLibro');
             $esexterno=$this->request->getPost('exLibro');
@@ -190,7 +174,7 @@ class LibroController extends \Phalcon\Mvc\Controller
         }
         
     }
-    }
+    
     public function editarAction()
     {
         $this->view->pick('libro/editar');
@@ -218,35 +202,17 @@ class LibroController extends \Phalcon\Mvc\Controller
 
         if ($this->request->isPost()) {
             $validacion= new ValidacionLibro;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes = $validacion->obtenerMensajes($_POST); //recoge las variables globales post
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado libro, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);    
                //redirige al mismo formulario
-                $this->response->redirect('/libro/editar/'.$id);
-                
+                return $this->response->redirect('/libro/editar/'.$id);
             }
-            else
-            {//VALIDACION CON EXITO
-
             
-            // Accedemos a los datos POST            
+           // Accedemos a los datos POST            
             $nombre = $this->request->getPost('nomLibro');
             $esexterno=$this->request->getPost('exLibro');
             if($nombre){
@@ -307,7 +273,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             return $response;          
         }
     }
-}
+
     public function eliminarAction()
     {
         $this->view->pick('libro/eliminar');

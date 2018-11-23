@@ -80,5 +80,34 @@ class ValidacionBiblioteca extends Validation
         $this->add('telefonoBiblioteca',new PresenceOf(['message' => 'El telefono biblioteca es requerido']));
     
     }
-
+    //get all the messages through of the validations, into an array with  one error for each post value
+    public function obtenerMensajes($post)
+    {
+        $mensajes=[];
+    
+        $messagesFromValidation=$this->validate($post);
+    
+        foreach ($messagesFromValidation as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+    
+        return $mensajes;
+    }
+    
+    //this print the flash values 
+    public function gettingFlashMessages($mensajes){   
+        if(!empty($mensajes))
+        {
+            foreach ($mensajes as $mensaje ) {
+            $this->flashSession->warning($mensaje);               
+            }
+        }
+    
+    }
+    
+    public function setUpdate($id){
+        $this->actualizar = true;
+        $this->idCategoria=$id;
+    }
 }

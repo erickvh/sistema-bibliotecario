@@ -23,17 +23,17 @@ class AutorController extends \Phalcon\Mvc\Controller
         $this->user=Users::findFirst($this->idSesion);
         $this->rol=$this->user->roles->nombre;
 
-        // redirige si el rol cargado es diferente
-            switch($this->rol){
-                case 'Administrador': 
-                case 'Prestamista':
-                $this->response->redirect('/401');
-                break;
-                case 'Bibliotecario':
-                $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
-                $this->view->biblioteca=$this->biblioteca;
-                break;
-                            }
+    // redirige si el rol cargado es diferente
+        switch($this->rol){
+            case 'Administrador': 
+            case 'Prestamista':
+            $this->response->redirect('/401');
+            break;
+            case 'Bibliotecario':
+            $this->biblioteca=$this->user->bibliotecarios[0]->bibliotecas; 
+            $this->view->biblioteca=$this->biblioteca;
+            break;
+                        }
         }
         else
         {
@@ -59,32 +59,19 @@ class AutorController extends \Phalcon\Mvc\Controller
 
      
         $validacion= new ValidacionAutor;
-        $mensajes=[];
-
-        $messages = $validacion->validate($_POST); //recoge las variables globales post
-        
-        //captura mensajes que son al respecto de los campos encontrados
-        foreach ($messages as  $m) 
-        {
-            $mensajes[$m->getField()]=$m->getMessage();
-        }
+        $mensajes= $validacion->obtenerMensajes($_POST);
+    
         
         if(!empty($mensajes))
         {   
             $this->flashSession->error('No se ha actualizado autor, algunos errores en los campos mencionados');
-            
-            //hace el bucle media vez halla capturado validaciones
-            foreach ($mensajes as $mensaje ) {
-                $this->flashSession->warning($mensaje);                
-                
-            }
+
+            $validacion->gettingFlashMessages($mensajes);
 
            //redirige al mismo formulario
-            $this->response->redirect('/autor'.$id);
-            
+           return $this->response->redirect('/autor'.$id);            
         }
-        else
-        {//VALIDACION CON EXITO
+
         $autor= new Autores;
         
         $nombre=$this->request->getPost('nombre');
@@ -95,7 +82,6 @@ class AutorController extends \Phalcon\Mvc\Controller
         if($fechanacimiento)
         {
             $autor->fechanacimiento=$fechanacimiento;
-
         }
         $sexo=$this->request->getPost('sexo');
 
@@ -107,7 +93,7 @@ class AutorController extends \Phalcon\Mvc\Controller
         $this->flashSession->success('Autor guardado con exito');
         $this->response->redirect('/autor');
     }
-}
+
     public function editAction(){
 
         $id=$this->dispatcher->getParam('id');
@@ -120,32 +106,19 @@ class AutorController extends \Phalcon\Mvc\Controller
         $id=$this->dispatcher->getParam('id');
 
         $validacion= new ValidacionAutor;
-        $mensajes=[];
-
-        $messages = $validacion->validate($_POST); //recoge las variables globales post
+        $mensajes= $validacion->obtenerMensajes($_POST); //recoge las variables globales post
         
-        //captura mensajes que son al respecto de los campos encontrados
-        foreach ($messages as  $m) 
-        {
-            $mensajes[$m->getField()]=$m->getMessage();
-        }
+
         
         if(!empty($mensajes))
         {   
             $this->flashSession->error('No se ha actualizado autor, algunos errores en los campos mencionados');
-            
-            //hace el bucle media vez halla capturado validaciones
-            foreach ($mensajes as $mensaje ) {
-                $this->flashSession->warning($mensaje);                
-                
-            }
-
+        
+            $validacion->gettingFlashMessages($mensajes);
            //redirige al mismo formulario
-            $this->response->redirect('/autor/editar/'.$id);
-            
+            return $this->response->redirect('/autor/editar/'.$id);            
         }
-        else
-        {//VALIDACION CON EXITO
+
 
         //data from post
         
@@ -158,7 +131,6 @@ class AutorController extends \Phalcon\Mvc\Controller
         if($fechanacimiento)
         {
             $autor->fechanacimiento=$fechanacimiento;
-
         }
         $autor=Autores::findFirst($id);
         $autor->nombre=$nombre;
@@ -167,7 +139,7 @@ class AutorController extends \Phalcon\Mvc\Controller
         $autor->save();
         $this->flashSession->success('Autor Actualizado con exito');
         $this->response->redirect('/autor');
-        }
+        
     }
 
     public function showAction(){

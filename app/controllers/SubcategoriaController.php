@@ -81,34 +81,20 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
             $this->view->disable();
-            $validacion= new ValidacionSubcategoria;
-            $mensajes=[];
     
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            $validacion= new ValidacionSubcategoria;
+            $mensajes = $validacion->obtener($_POST); //recoge las variables globales post
             
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+    
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado subcategoria, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/subcategoria/crear');
+                return $this->response->redirect('/subcategoria/crear');
                 
             }
-            else
-            {//VALIDACION CON EXITO
-
+            
             $subcategoria = new Subcategorias;
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
@@ -128,7 +114,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
             
         }
     }
-}
+
     public function editarAction()
     {
     	$this->view->pick('Subcategoria/editar');
@@ -140,32 +126,17 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) { 
 
             $validacion= new ValidacionSubcategoria;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+            $validacion->setUpdate($id);
+            $mensajes = $validacion->obtenerMensajes($_POST); //recoge las variables globales post
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha actualizado subcategoria, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/subcategoria/editar/'.$id);
-                
+                return $this->response->redirect('/subcategoria/editar/'.$id);
             }
-            else
-            {//VALIDACION CON EXITO
 
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
@@ -185,7 +156,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
     
         }
     }
-    }
+
     public function eliminarAction()
  	{
  		$this->view->pick('Subcategoria/eliminar');

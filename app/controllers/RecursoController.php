@@ -98,32 +98,15 @@ class RecursoController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
             $validacion= new ValidacionRecurso;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes= $validacion->obtenerMensajes($_POST);
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);                
                //redirige al mismo formulario
-                $this->response->redirect('/recurso/crear');
-                
+                return  $this->response->redirect('/recurso/crear');                
             }
-            else
-            {//VALIDACION CON EXITO
 
             $material = new Materialesbibliograficos;
             $recurso = new Recursos;
@@ -178,7 +161,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
            
         }
     }
-}
+
     public function editarAction()
     {
         $this->view->pick('recurso/editar');
@@ -212,56 +195,42 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
         $this->view->autores = $autores;
         $this->view->mataut = $MatAut;
+
         if ($this->request->isPost()) {
             $validacion= new ValidacionRecurso;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes=$validacion->obtenerMensajes($_POST);
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/recurso/editar/'.$id);
-                
+                return $this->response->redirect('/recurso/editar/'.$id);
             }
-            else
-            {//VALIDACION CON EXITO            
+                //seccion para almacenar
             $nomMaterial = $this->request->getPost('nombreMaterial');
             $formato = $this->request->getPost('tipoFormato');
-          
-                $material->nombre = $nomMaterial;
-                $material->descripcion = $this->request->getPost('descMaterial');
-                $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
-                $material->imagenurl = $this->guardarCloudinary($logourl);
-                $material->nombreimagen = $this->request->getPost('nomImgMaterial');
-                if($this->request->getPost('fechaMaterial'))
-                {
-                    $material->fechapublicacion = $this->request->getPost('fechaMaterial');
-                }
-                
-                if($this->request->getPost('externoMaterial'))
-                {
-                    $material->esexterno = true;
-                }
-                else
-                {
-                    $material->esexterno = false;
-                }
-                foreach ($MatAut as $autmat){
+            $material->nombre = $nomMaterial;
+            $material->descripcion = $this->request->getPost('descMaterial');
+            $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+            $material->imagenurl = $this->guardarCloudinary($logourl);
+            $material->nombreimagen = $this->request->getPost('nomImgMaterial');
+            
+            if($this->request->getPost('fechaMaterial'))
+            {
+                $material->fechapublicacion = $this->request->getPost('fechaMaterial');
+            }
+            
+            if($this->request->getPost('externoMaterial'))
+            {
+                $material->esexterno = true;
+            }
+            else
+            {
+                $material->esexterno = false;
+            }
+            foreach ($MatAut as $autmat){
                     $i=0;
                     foreach ($this->request->getPost('autoresRecurso') as $aut){
                         if($aut==$autmat->idautor){
@@ -297,7 +266,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 return $response;
                   }
     }
-    }
+    
     public function eliminarAction()
     {
         $this->view->pick('recurso/eliminar');
