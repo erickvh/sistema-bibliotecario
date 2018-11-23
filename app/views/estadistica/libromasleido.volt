@@ -37,15 +37,13 @@ canvas{
 {% block extraJS %}
 <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
 <script>
-    var cat = {{cat|json_encode}};
-    console.log(cat);
-    var canCat = {{cantidad|json_encode}};
-    console.log(canCat);
+    var libros = {{lib|json_encode}};    
+    var canLibros = {{cantidad|json_encode}};    
     var ctx = document.getElementById('myChart').getContext('2d');
     var chart = new Chart(ctx, {
     type: 'pie',
     data: {
-        labels: cat,
+        labels: libros,
         datasets: [{
             backgroundColor: [
                 'rgba(255, 99, 132, 0.5)',
@@ -76,7 +74,7 @@ canvas{
                 'rgba(255, 159, 64, 1)',
             ],
             borderWidth: 1,
-            data: canCat,
+            data: canLibros,
         }]
     },
     options:
@@ -89,7 +87,7 @@ canvas{
     var chart = new Chart(ctx, {
     type: 'bar',
     data: {
-        labels: cat,
+        labels: libros,
         datasets: [{
             label: 'cantidad',
             backgroundColor: [
@@ -121,7 +119,7 @@ canvas{
                 'rgba(255, 159, 64, 1)',
             ],
             borderWidth: 1,
-            data: canCat,
+            data: canLibros,
         }]
     },
     options:

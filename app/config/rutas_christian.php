@@ -55,6 +55,14 @@ $router->add('/estadistica/subcategoria',[
     'controller'=>'Estadistica',
     'action'=>'subcategoria',
 ]);
+$router->add('/estadistica/libros',[
+    'controller'=>'Estadistica',
+    'action'=>'libros',
+]);
+$router->add('/estadistica/zonageografica',[
+    'controller'=>'Estadistica',
+    'action'=>'zona',
+]);
 //Categoria
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');

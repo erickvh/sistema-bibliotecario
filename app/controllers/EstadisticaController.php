@@ -113,5 +113,72 @@ class EstadisticaController extends \Phalcon\Mvc\Controller
         }
     }
 
+    public function librosAction()
+    {
+        if ($this->request->getMethod(GET)) 
+        {  
+        $fechaInicial = $this->request->get('fecha_inicio');
+        $fechaFinal = $this->request->get('fecha_fin');
+        $id_categoria = $this->request->get('id_categoria');                           
+        $this->view->pick('estadistica/libromasleido');        
+        /* Arreglos a utilizar para graficar */       
+        $nomLibros = array();
+        $cantidad = array();   
+        /* Consulta SQL para los prestamos y graficar entre las fechas*/         
+        $sql="select materialesbibliograficos.nombre, count(*)  from prestamos
+        inner join materialesbibliograficos on prestamos.idmaterial = materialesbibliograficos.id 
+        inner join libros on materialesbibliograficos.id = libros.idmaterial
+        WHERE materialesbibliograficos.idbiblioteca ='".$this->biblioteca->id."'
+        AND prestamos.fechaprestamo BETWEEN '".$fechaInicial."' AND '".$fechaFinal."' group by materialesbibliograficos.nombre order by count(*) desc FETCH FIRST 5 ROWS ONLY";
+        $db = \Phalcon\Di::getDefault()->get('db');
+        $datos = $db->fetchAll($sql);        
+        foreach($datos as $dato)
+        {
+            array_push($nomLibros, $dato['nombre']);
+            array_push($cantidad, $dato['count']);            
+        }
+        $this->view->fecha_inicio = $fechaInicial;
+        $this->view->fecha_fin = $fechaFinal;
+        $this->view->cantidad = $cantidad; 
+        $this->view->lib = $nomLibros;
+        }
+        else{
+            $this->view->pick('estadistica/libromasleido'); 
+        }
+    }
+
+    public function zonaAction()
+    {
+        if ($this->request->getMethod(GET)) 
+        {  
+        $fechaInicial = $this->request->get('fecha_inicio');
+        $fechaFinal = $this->request->get('fecha_fin');
+        $id_categoria = $this->request->get('id_categoria');                           
+        $this->view->pick('estadistica/zonageografica');        
+        /* Arreglos a utilizar para graficar */       
+        $nomDep = array();
+        $cantidad = array();   
+        /* Consulta SQL para los prestamos y graficar entre las fechas*/         
+        $sql="select departamentos.nombre, count(*) from departamentos inner join municipios on municipios.iddepartamento = departamentos.id
+        inner join prestamistas on prestamistas.idmunicipio = municipios.id 
+        inner join prestamos on prestamos.idprestamista = prestamistas.id
+        where prestamistas.idbibilioteca ='".$this->biblioteca->id."' AND prestamos.fechaprestamo BETWEEN '".$fechaInicial."' AND '".$fechaFinal."' group by departamentos.nombre order by count(*) desc";
+        $db = \Phalcon\Di::getDefault()->get('db');
+        $datos = $db->fetchAll($sql);        
+        foreach($datos as $dato)
+        {
+            array_push($nomDep, $dato['nombre']);
+            array_push($cantidad, $dato['count']);            
+        }
+        $this->view->fecha_inicio = $fechaInicial;
+        $this->view->fecha_fin = $fechaFinal;
+        $this->view->cantidad = $cantidad; 
+        $this->view->dep = $nomDep;
+        }
+        else{
+            $this->view->pick('estadistica/zonageografica'); 
+        }
+    }
+
 }
 

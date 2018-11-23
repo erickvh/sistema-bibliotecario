@@ -26,8 +26,7 @@
       <div class="tab-content" id="nav-tabContent">
         <div class="tab-pane fade show active" id="list-categoria" role="tabpanel" aria-labelledby="list-home-list">
           <div class="container">
-            <div class="row">
-              <div id="mostrar_tipo">
+            <div class="row">              
                 <div id="categoria">
                   <h4 class="text-center">Estadistica por Categoría</h4>
                   <form action="/estadistica/categoria" method="GET">
@@ -42,15 +41,13 @@
                     <button type="submit" class="btn btn-success">Generar Grafica</button>
                   </form>
                 </div>
-              </div>
             </div>
           </div>
         </div>
 
         <div class="tab-pane fade" id="list-subcategoria" role="tabpanel" aria-labelledby="list-profile-list">
           <div class="container">
-            <div class="row">
-              <div id="mostrar_tipo">
+            <div class="row">              
                 <div id="subcategoria">
                   <h4 class="text-center">Estadistica por Subcategoría</h4>
                   <form action="/estadistica/subcategoria" method="GET">
@@ -73,8 +70,7 @@
                     <button type="submit" class="btn btn-success">Generar Grafica</button>
                   </form>
                 </div>
-              </div>
-            </div>
+              </div>            
           </div>
         </div>
         <div class="tab-pane fade" id="list-zona" role="tabpanel" aria-labelledby="list-messages-list">
@@ -83,7 +79,7 @@
               <div id="mostrar_tipo">
                 <div id="zona">
                   <h4 class="text-center">Estadistica por zona geográfica</h4>
-                  <form action="/estadistica/categoria" method="GET">
+                  <form action="/estadistica/zonageografica" method="GET">
                     <div class="form-group">
                       <label for="fechaInicio">Fecha de inicio:</label>
                       <input id="fechaInicio" class="form-control" type="date" name="fecha_inicio">
@@ -105,7 +101,7 @@
               <div id="mostrar_tipo">
                 <div id="librosleidos">
                   <h4 class="text-center">Estadistica por libros más leídos</h4>
-                  <form action="/estadistica/categoria" method="GET">
+                  <form action="/estadistica/libros" method="GET">
                     <div class="form-group">
                       <label for="fechaInicio">Fecha de inicio:</label>
                       <input id="fechaInicio" class="form-control" type="date" name="fecha_inicio">
@@ -124,28 +120,6 @@
     </div>
   </div>
 </div>
+
 {% endblock  %}
-<!-- Quité el mostrar_tipo porque dividí cada estadítica por separado, como lo entendí se generaban
-las estadísticas de categorías y subcategorías en una misma página con este método. De igual forma
-pondré el div abajo de esto como comentario por si lo querés volver a poner.
-{% block extraJS %}
-<<script>
-    $(document).ready(function(){
-        $('#tipo').on('change',function(){
-            var valor = $(this).val();
-            $('#mostrar_tipo').children('div').hide();
-            $('#mostrar_tipo').children('#'+valor).show();
-        })
-    });
-</script>
-{% endblock %}
--->
-<!--
-<div class="form-group">
-                            <label for="tipo">Seleccione el tipo de estadistica a generar</label>
-                            <select name="tipo" id="tipo" class="form-control">
-                                <option value="categoria">Categoria</option>
-                                <option value="subcategoria">subcategoria</option>
-                            </select>
-                        </div>
--->
+
