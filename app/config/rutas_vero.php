@@ -7,3 +7,13 @@ $router->add('/biblioteca/deshabilitar/:int',[
     'action'=>'deshabilitar',
     'id'=>1
 ]);
+
+$router->addGet('/lector','Lector::index');
+
+$router->add('/lector/crear','Lector::crear');
+
+$router->add('/lector/deshabilitar/:int',[
+    'controller'=>'Lector',
+    'action'=>'deshabilitar',
+    'id'=>1
+]);
