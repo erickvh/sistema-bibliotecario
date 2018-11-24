@@ -164,7 +164,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
         $notFoundMiddleware=new NoResulSetMiddleware;
-        $notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
+        //$notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
 
         $this->view->biblioteca = $biblioteca;
     }

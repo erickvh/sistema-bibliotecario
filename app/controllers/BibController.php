@@ -183,7 +183,7 @@ class BibController extends \Phalcon\Mvc\Controller
  
             $bibliotecario=Bibliotecarios::findFirst($id);
             $notFoundMiddleware=new NoResulSetMiddleware;
-            $notFoundMiddleware->middleware($bibliotecario,$this->dispatcher);
+   //         $notFoundMiddleware->middleware($bibliotecario,$this->dispatcher);
     
             $this->view->pick("bibliotecarios/show");
             $this->view->bibliotecario=$bibliotecario;
