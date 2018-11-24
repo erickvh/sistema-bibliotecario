@@ -258,8 +258,9 @@ class LibroController extends \Phalcon\Mvc\Controller
                 }
 
                 $logourl=$this->request->getUploadedFiles('imagenLibro'); //esto debe ser traido por cloud dinary
+                if($logourl){
                 $libro->MaterialesBibliograficos->imagenurl=$this->guardarCloudinary($logourl);
-
+                }
                 $libro->MaterialesBibliograficos->nombreimagen=$this->request->getPost('nomImgLibro');
                 $libro->Materialesbibliograficos->idsubcategoria = $this->request->getPost('subLibro');
                 $unidades->unidadesexistentes=$this->request->getPost('cantidadLibro');

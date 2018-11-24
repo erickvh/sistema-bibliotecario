@@ -71,6 +71,7 @@
                     <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}"  min="1" step="1" required>
                 </div>             
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
+                <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
             </form>
         </div>
     </div>

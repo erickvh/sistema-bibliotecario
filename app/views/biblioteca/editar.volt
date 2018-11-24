@@ -9,7 +9,7 @@
     <div class="row">
         <div class="col">
             <h3 class="text-center">Editar</h3>
-            <form action="" method="post" enctype="multipart/form-data">
+            <form action="/biblioteca/editar/{{biblioteca.id}}" method="post" enctype="multipart/form-data">
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
                     <input name="nombreBiblioteca" class="form-control" type="text" placeholder="Nombre" value="{{biblioteca.nombre}}"   >

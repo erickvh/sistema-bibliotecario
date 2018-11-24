@@ -223,7 +223,10 @@ class RecursoController extends \Phalcon\Mvc\Controller
             $material->nombre = $nomMaterial;
             $material->descripcion = $this->request->getPost('descMaterial');
             $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+            if($logourl)
+            {
             $material->imagenurl = $this->guardarCloudinary($logourl);
+            }
             $material->nombreimagen = $this->request->getPost('nomImgMaterial');
             
             if($this->request->getPost('fechaMaterial'))

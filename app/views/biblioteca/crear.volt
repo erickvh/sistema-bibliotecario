@@ -26,7 +26,7 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Teléfono</label>
-                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono"  >
+                    <input name="telefonoBiblioteca" class="form-control" type="text" placeholder="Teléfono 7777-7777"  >
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Clasificación</label>
@@ -45,6 +45,7 @@
                     <input name="emailBiblioteca" class="form-control" type="email" placeholder="Email">
                 </div>              
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
+                <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
             </form>
         </div>
        

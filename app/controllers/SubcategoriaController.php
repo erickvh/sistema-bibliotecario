@@ -83,7 +83,7 @@ class SubcategoriaController extends \Phalcon\Mvc\Controller
             $this->view->disable();
     
             $validacion= new ValidacionSubcategoria;
-            $mensajes = $validacion->obtener($_POST); //recoge las variables globales post
+            $mensajes = $validacion->obtenerMensajes($_POST); //recoge las variables globales post
             
     
             if(!empty($mensajes))
