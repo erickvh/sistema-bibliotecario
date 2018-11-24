@@ -36,7 +36,7 @@
                             <td> {{reserva.Prestamistas.Users.username}}</td>
                             <td> {{reserva.MaterialesBibliograficos.nombre}}</td>
                             <td> {{reserva.fechasolicitud}}</td>
-                            <td>                          
+                            <td>                        
                                 <a onclick="return abrir_modal('{{url('reserva/prestar/'~ reserva.id)}}')" class="btn btn-success">Prestar</a>
                                 <a onclick="return abrir_modal('{{url('reserva/cancelar/'~ reserva.id)}}')" class="btn btn-danger">Cancelar</a>
                             </td>

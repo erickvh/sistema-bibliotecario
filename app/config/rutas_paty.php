@@ -67,3 +67,24 @@ $router->add(
         'action'     => 'devolver',
         'id'     => 1
     ]);
+
+/*rutas de busqueda*/
+$router->add('/busqueda','Busqueda::index');
+
+$router->addGet('/busqueda/ver/:int',[
+    'controller'=>'busqueda',
+    'action'=>'verLibro',
+    'id'=>1
+]);
+
+$router->addGet('/busqueda/verRecurso/:int',[
+    'controller'=>'busqueda',
+    'action'=>'verRecurso',
+    'id'=>1
+]);
+
+$router->add('/busqueda/reservar/:int',[
+    'controller'=>'busqueda',
+    'action'=>'reservar',
+    'id'=>1
+]);
