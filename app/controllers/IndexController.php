@@ -25,7 +25,7 @@ class IndexController extends ControllerBase
                     $this->response->redirect('/bibliotecario');
                     break;
                 case 'Prestamista': 
-                    $this->response->redirect('/prestamista');
+                    $this->response->redirect('/user');
             }           
         }
     }
@@ -63,10 +63,21 @@ class IndexController extends ControllerBase
                             $this->session->set("username",$user->username);
                             $this->flashSession->success('Bienvenido '.$user->nombre );
                             $this->response->redirect('/bibliotecario');  
-                        } 
+                        }
+                        elseif($user->roles->nombre=='Prestamista' && $user->prestamistas[0]->activo
+                        &&$user->prestamistas[0]->bibliotecas->habilitado){
+                           
+                            $this->session->set("id", $user->id);
+                            $this->session->set("username",$user->username);
+                            $this->flashSession->success('Bienvenido '.$user->nombre );
+                            $this->response->redirect('/user');  
+                        
+                        
+                        }    
                         /**
                          * Cuando el usuario si esta deshabilitado
                          */
+
                         else{
                             /**
                              * concatena posiblidades de deshabilitacion

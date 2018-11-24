@@ -35,6 +35,34 @@ $router->add(
         'id'     => 1
     ]);
 
+$router->add(
+    '/recurso/ver/:int',
+    [
+        'controller'=>'Recurso',
+        'action'=>'ver',
+        'id'=>1
+]);
+
+$router->add('/recurso/grafico','Recurso::graficar');
+
+//Estadistica
+$router->add('/estadistica','Estadistica::index');
+$router->add('/estadistica/categoria',[
+    'controller'=>'Estadistica',
+    'action'=>'categoria',
+]);
+$router->add('/estadistica/subcategoria',[
+    'controller'=>'Estadistica',
+    'action'=>'subcategoria',
+]);
+$router->add('/estadistica/libros',[
+    'controller'=>'Estadistica',
+    'action'=>'libros',
+]);
+$router->add('/estadistica/zonageografica',[
+    'controller'=>'Estadistica',
+    'action'=>'zona',
+]);
 //Categoria
 $router->add('/categoria','Categoria::index');
 $router->add('/categoria/crear','Categoria::crear');

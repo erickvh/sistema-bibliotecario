@@ -7,6 +7,7 @@ use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Date as DateValidator;
 use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\StringLength as StringLength;
+use Phalcon\Validation\Validator\Between;
 
 class ValidacionLibro extends Validation
 {
@@ -47,6 +48,11 @@ class ValidacionLibro extends Validation
             'message'=>'nombre imagen libro debe ser alfanumerico',
             'allowEmpty'=>true]));
             
+            $this->add('cantidadLibro', new Between([
+                'minimum'=>0,
+                'maximum'=>1000,
+                'message'=>'Cantidad debe estar entre 0 y 1000'
+            ]));
          //tamaño de cadenas
          $this->add("nomLibro",new StringLength(
                                  [
@@ -97,5 +103,34 @@ class ValidacionLibro extends Validation
          $this->add('subLibro',new PresenceOf(['message' => 'EL libro debe contener subcategoria asociada']));
     
         }
-
+    //get all the messages through of the validations, into an array with  one error for each post value
+    public function obtenerMensajes($post)
+    {
+        $mensajes=[];
+    
+        $messagesFromValidation=$this->validate($post);
+    
+        foreach ($messagesFromValidation as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+    
+        return $mensajes;
+    }
+    
+    //this print the flash values 
+    public function gettingFlashMessages($mensajes){   
+        if(!empty($mensajes))
+        {
+            foreach ($mensajes as $mensaje ) {
+            $this->flashSession->warning($mensaje);               
+            }
+        }
+    
+    }
+    
+    public function setUpdate($id){
+        $this->actualizar = true;
+        $this->idCategoria=$id;
+    }
 }

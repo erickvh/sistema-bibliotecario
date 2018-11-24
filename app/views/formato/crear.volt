@@ -15,6 +15,7 @@
                     <textarea name="descFormato" class="form-control" rows="4" placeholder="Ingrese la descripción del formato"></textarea>
                 </div>
                 <input type="submit" class="text-center btn btn-primary" value="Crear">
+             
             </form>
         </div>
     </div>

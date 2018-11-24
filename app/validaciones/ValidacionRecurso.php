@@ -7,17 +7,13 @@ use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Date as DateValidator;
 use Phalcon\Validation\Validator\Regex;
 use Phalcon\Validation\Validator\StringLength as StringLength;
-
+use Phalcon\Validation\Validator\Between;
 class ValidacionRecurso extends Validation
 {
 
     public function initialize()
     {
-         /*Validacion especiales*/
-
-
- 
-
+         /*Validacion especiales*/ 
          $this->add('nombreMaterial', new Regex([
                  'pattern'=>'/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]*)*)+$/',
                  'message'=>'Nombre de recurso debe ser alfanumerico']));
@@ -56,9 +52,13 @@ class ValidacionRecurso extends Validation
             'allowEmpty' => true
         ]
     )
-);
-    
-     /**campos obligatorios */
+        );
+        $this->add('cantidadMaterial', new Between([
+            'minimum'=>0,
+            'maximum'=>1000,
+            'message'=>'Cantidad debe estar entre 0 y 1000'
+        ]));
+            /**campos obligatorios */
          $this->add('nombreMaterial',new PresenceOf(['message' => 'El nombre de recurso es requerido']));
          $this->add('cantidadMaterial',new PresenceOf(['message' => 'La cantidad es requerida']));
          $this->add('autoresRecurso',new PresenceOf(['message' => 'El recurso debe tener autores']));
@@ -66,5 +66,34 @@ class ValidacionRecurso extends Validation
          $this->add('subMaterial',new PresenceOf(['message' => 'El recurso debe tener asociada subcategoria']));
   
         }
-
+    //get all the messages through of the validations, into an array with  one error for each post value
+    public function obtenerMensajes($post)
+    {
+        $mensajes=[];
+    
+        $messagesFromValidation=$this->validate($post);
+    
+        foreach ($messagesFromValidation as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+    
+        return $mensajes;
+    }
+    
+    //this print the flash values 
+    public function gettingFlashMessages($mensajes){   
+        if(!empty($mensajes))
+        {
+            foreach ($mensajes as $mensaje ) {
+            $this->flashSession->warning($mensaje);               
+            }
+        }
+    
+    }
+    
+    public function setUpdate($id){
+        $this->actualizar = true;
+        $this->idCategoria=$id;
+    }
 }

@@ -25,7 +25,7 @@
           <th>Fecha de publicación</th>
           <th>Editorial</th>
           <th>Subcategoria</th>
-          <th width="21%">Acción</th>
+          <th width="28%">Acción</th>
         </tr>
      </thead>
      <tbody>
@@ -39,6 +39,7 @@
             <td>{{ libro.Materialesbibliograficos.Subcategorias.nombre}}</td>
             <td>
               <a href="{{url('libro/editar/'~ libro.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+              <a href="{{url('libro/ver/'~ libro.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver </a>
               <a onclick="return abrir_modal('{{url('libro/eliminar/'~ libro.id)}}')" class="btn btn-danger"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
             </td>
           </tr>

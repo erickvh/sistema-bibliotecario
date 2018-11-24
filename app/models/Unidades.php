@@ -21,6 +21,18 @@ class Unidades extends \Phalcon\Mvc\Model
      *
      * @var integer
      */
+    public $unidadesprestadas;
+
+    /**
+     *
+     * @var integer
+     */
+    public $unidadesreservadas;
+
+    /**
+     *
+     * @var integer
+     */
     public $idmaterial;
 
     /**

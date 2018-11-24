@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\Bibliotecas;
-use Phalcon\Http\Response;
 use App\Models\Users;
 use App\Validations\ValidacionBiblioteca;
-
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RolMiddleware;
+use App\Middlewares\NoResulSetMiddleware;
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
 $dotenv->load();
 
@@ -21,30 +22,17 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         public function initialize()
         {
             
-    
-            if($this->session->has('id'))
-            {
-                //crea la busqueda si existe id
+            //these middlewares will be apply in all the action of this controller
+            $AuthMiddleware= new AuthMiddleware;
+            $RolMiddleware = new RolMiddleware;
+
+            $AuthMiddleware->middleware($this->session,$this->response);
+            $RolMiddleware->middleware($this->session,$this->response,'Administrador'); 
+
+            //crea la busqueda si existe id
             $this->idSesion = $this->session->get('id');
             $this->user=Users::findFirst($this->idSesion);
             $this->rol=$this->user->roles->nombre;
-            
-            // redirige si el rol cargado es diferente
-                switch($this->rol){
-                    case 'Bibliotecario': 
-                    case 'Prestamista':
-                    $this->response->redirect('/401');
-                    break;
-                    case 'Administrador':
-                    break;
-                                }
-            }
-            else
-            {
-                $this->response->redirect('/401');
-            }
-      
-    
         }
     
     public function indexAction()
@@ -76,42 +64,28 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $this->view->pick('biblioteca/editar');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
+        $notFoundMiddleware=new NoResulSetMiddleware;
+        $notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
+
         $this->view->biblioteca = $biblioteca;
         if ($this->request->isPost()) {
             $validacion= new ValidacionBiblioteca;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+            $validacion->setUpdate($id);
+            $mensajes=$validacion->obtenerMensajes($_POST);
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado biblioteca, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
-               //redirige al mismo formulario
-                $this->response->redirect('/biblioteca/editar'.$id);
-                
+                $validacion->gettingFlashMessages($mensajes);
+                //redirige al mismo formulario
+                return $this->response->redirect('/biblioteca/editar/'.$id);   
             }
-            else
-            {//VALIDACION CON EXITO
-
 
             $nombre = $this->request->getPost('nombreBiblioteca');
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
             $telefono = $this->request->getPost('telefonoBiblioteca');
             $clasificacion = $this->request->getPost('clasBiblioteca');
-            $logourl = $this->request->getPost('imagenbiblioteca'); //esto debe ser traido por cloud dinary
+            $logourl = $this->request->getUploadedFiles('imagenbiblioteca'); //esto debe ser traido por cloud dinary
             $nombrelogo = $this->request->getPost('nomlogoBiblioteca');
             $email = $this->request->getPost('emailBiblioteca');
                 
@@ -119,18 +93,20 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $biblioteca->ubicacion = $ubicacion;
             $biblioteca->telefono = $telefono;
             $biblioteca->clasificaion = $clasificacion;
-            $biblioteca->logourl = $logourl;
+            if($logourl){
+            $biblioteca->logourl = $this->guardarCloudinary($logourl);
+                        }
             $biblioteca->nombrelogo = $nombrelogo;
             $biblioteca->email = $email;
             $biblioteca->save();
             
-            $response = new Response();
+
             $this->flashSession->success('La biblioteca fue actualizada con exito');
-            $response->redirect('/biblioteca'); //Retornar a biblioteca
+            $this->response->redirect('/biblioteca'); //Retornar a biblioteca
             return $response;          
+            }
         }
-        }
-    }
+    
 
     
     public function crearAction(){
@@ -140,33 +116,18 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
             $validacion= new ValidacionBiblioteca;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+            $mensajes=$validacion->obtenerMensajes($_POST);
+
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/biblioteca/crear');
-                
+                return $this->response->redirect('/biblioteca/crear');                
             }
-            else
-            {//VALIDACION CON EXITO
-    
+
             $nombre = $this->request->getPost('nombreBiblioteca');
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
             $telefono = $this->request->getPost('telefonoBiblioteca');
@@ -180,6 +141,37 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         { 
         $biblioteca->email =  $email;  
         }
+        
+        //guardando los datos en el nuevo objeto de tipo biblioteca
+
+        $biblioteca->nombre= $nombre;
+        $biblioteca->ubicacion = $ubicacion ;   
+        $biblioteca->telefono = $telefono ;   
+        $biblioteca->clasificacion =$clasificacion;  
+
+        $biblioteca->logourl =  $this->guardarCloudinary($logourl);   
+        $biblioteca->nombrelogo =  $nombrelogo ;   
+        $biblioteca->email =  $email;  
+        $guardado = $biblioteca->save();
+        $this->flashSession->success('La biblioteca fue guardada con exito');
+        $this->response->redirect('/biblioteca');
+    }
+}
+
+    public function verAction()
+    {
+        $this->view->pick('biblioteca/ver');
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $biblioteca = Bibliotecas::findFirst($id);
+        $notFoundMiddleware=new NoResulSetMiddleware;
+        $notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
+
+        $this->view->biblioteca = $biblioteca;
+    }
+
+    // Funcion usada en crear y editar para guardar la imagen en cloudinary
+    public function guardarCloudinary($logourl){
+        
         //preparando parametros para cloudinary
         $cloud_name = "sistemabibliotecario" ;
         $api_key ="475842337293294" ;
@@ -195,13 +187,13 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         //POST a cloudinary
         $url="https://api.cloudinary.com/v1_1/".$cloud_name."/image/upload";
         $ch = curl_init($url);
-        
-           $jsonData = new jsonDataO;
-           $jsonData->file = $base64;
-           $jsonData->api_key = $api_key;
-           $jsonData->timestamp = $timestamp;
-           $jsonData->signature = $signature;
-           
+
+        $jsonData = new jsonDataO;
+        $jsonData->file = $base64;
+        $jsonData->api_key = $api_key;
+        $jsonData->timestamp = $timestamp;
+        $jsonData->signature = $signature;
+
         $payload = json_encode($jsonData);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
         curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
@@ -210,25 +202,8 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $result = curl_exec($ch);
         curl_close($ch);
         $url = json_decode($result);
-        
-        //guardando los datos en el nuevo objeto de tipo biblioteca
 
-        $biblioteca->nombre= $nombre;
-        $biblioteca->ubicacion = $ubicacion ;   
-        $biblioteca->telefono = $telefono ;   
-        $biblioteca->clasificacion =$clasificacion;  
-
-        $biblioteca->logourl =  $url->{'url'};   
-        $biblioteca->nombrelogo =  $nombrelogo ;   
-        $biblioteca->email =  $email;  
-        $guardado = $biblioteca->save();
-        $this->flashSession->success('La biblioteca fue guardada con exito');
-        $this->response->redirect('/biblioteca');
-    
-            }
-    }
-        
-         
+        return $url->{'url'};              
     }
 
 }

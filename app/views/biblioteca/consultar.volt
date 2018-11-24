@@ -24,7 +24,7 @@
           <th>Télefono</th>
           <th>Clasificación</th>
           <th>Email</th>
-          <th width="22%">Acción</th>
+          <th width="30%">Acción</th>
         </tr>
      </thead>
      <tbody>
@@ -38,6 +38,7 @@
             <td>
             {% if biblioteca.habilitado %}
               <a href="{{url('biblioteca/editar/'~ biblioteca.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
+              <a href="{{url('biblioteca/ver/'~ biblioteca.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver </a>
               <a onclick="return abrir_modal('{{url('biblioteca/deshabilitar/'~ biblioteca.id)}}')" class="btn btn-warning"><i class="fa fa-lock" aria-hidden="true"></i>Deshabilitar</a>
             {% else %}
                <a onclick="return abrir_modal('{{url('biblioteca/deshabilitar/'~ biblioteca.id)}}')" class="btn btn-success"><i class="fa fa-unlock" aria-hidden="true"></i>Habilitar</a>

@@ -22,6 +22,7 @@
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
         <li><a class="app-menu__item" href="/biblioteca"><i class="app-menu__icon fa fa-cog"></i><span class="app-menu__label">Gestionar Bibliotecas</span></a></li>
         <li><a class="app-menu__item" href="/bibliotecarios"><i class="app-menu__icon fa fa-users"></i><span class="app-menu__label">Gestionar Bibliotecarios</span></a></li>
+        <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-pie-chart"></i><span class="app-menu__label">Estadisticas</span></a></li>
       </ul>
     </aside>
 {% endblock %}

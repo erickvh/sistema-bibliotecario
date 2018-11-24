@@ -6,10 +6,15 @@ use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Date as DateValidator;
 use Phalcon\Validation\Validator\Regex;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 use Phalcon\Validation\Validator\StringLength as StringLength;
+use App\Models\Bibliotecarios;
+use App\Models\Users;
 
 class ValidacionBibliotecario extends Validation{
 
+    protected $idBibliotecario;
+    protected $actualizar;
     public function initialize()
     {
     
@@ -67,5 +72,60 @@ class ValidacionBibliotecario extends Validation{
         $this->add('biblioteca',new PresenceOf(['message' => 'La biblioteca es requerida']));
     
     }
+    //get all the messages through of the validations, into an array with  one error for each post value
+    public function obtenerMensajes($post)
+    {
+                    //update validation is allowed, only when codigos are different db vs request
+                    if(!$this->actualizar){
+                        $this->add('email', new UniquenessValidator([
+                            "model"=> new Users,
+                            "attribute" => "email",
+                            'message'=> 'El Email ya existe'
+                            ]));
+                        $this->add('dui', new UniquenessValidator([
+                            "model"=> new Bibliotecarios,
+                            "attribute" => "dui",
+                            'message'=> 'El dui ya existe'
+                            ]));
+                        }
+                    else if(Bibliotecarios::findFirst($this->idBibliotecario)->users->email!=$this->request->getPost('email')
+                    ||Bibliotecarios::findFirst($this->idBibliotecario)->dui!=$this->request->getPost('dui'))
+                    {
+            
+                        $this->add('email', new UniquenessValidator([
+                            "model"=> new Bibliotecarios,
+                            "attribute" => "email",
+                            'message'=> 'El email ya existe en nuestros registros'
+                            ]));
+            
+                    }
 
+
+        $mensajes=[];
+    
+        $messagesFromValidation=$this->validate($post);
+    
+        foreach ($messagesFromValidation as  $m) 
+        {
+            $mensajes[$m->getField()]=$m->getMessage();
+        }
+    
+        return $mensajes;
+    }
+    
+    //this print the flash values 
+    public function gettingFlashMessages($mensajes){   
+        if(!empty($mensajes))
+        {
+            foreach ($mensajes as $mensaje ) {
+            $this->flashSession->warning($mensaje);               
+            }
+        }
+    
+    }
+    
+    public function setUpdate($id){
+        $this->actualizar = true;
+        $this->idBibliotecario=$id;
+    }
 }

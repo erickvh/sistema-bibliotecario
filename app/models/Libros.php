@@ -31,6 +31,12 @@ class Libros extends \Phalcon\Mvc\Model
 
     /**
      *
+     * @var string
+     */
+    public $isbn;
+
+    /**
+     *
      * @var integer
      */
     public $idmaterial;

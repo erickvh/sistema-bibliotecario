@@ -4,12 +4,24 @@ use App\Models\Formatos;
 use App\Models\Materialesbibliograficos;
 use App\Models\MaterialesAutores;
 use App\Models\Subcategorias;
+use App\Models\Categorias;
 use App\Models\Unidades;
 use App\Models\Bibliotecarios;
 use App\Models\Autores;
 use Phalcon\Http\Response;
 use App\Models\Users;
 use App\Validations\ValidacionRecurso;
+
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
+$dotenv->load();
+
+class jsonDataO {
+    public $file = "";
+    public $api_key = "";
+    public $timestamp = "";
+    public $signature = "";
+}
+
 class RecursoController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
@@ -70,9 +82,17 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $recursos = Recursos::find();
         $formatos = Formatos::find('idbiblioteca ='.$this->biblioteca->id);        
         $subcategorias = Subcategorias::find();
+        $subcat = array();
+        foreach ($subcategorias as $sub)
+        {
+            if($sub->categorias->idbiblioteca == $this->biblioteca->id)
+            {
+                array_push($subcat, $sub);
+            }
+        }
         $this->view->setVar('recursos', $recursos);
         $this->view->setVar('formatos', $formatos);         
-        $this->view->setVar('sub', $subcategorias); 
+        $this->view->setVar('sub', $subcat); 
         $this->view->setVar('error', false);
         $idusuario = $this->session->get('id');
         $bibliotecario = Bibliotecarios::findFirst([
@@ -87,32 +107,15 @@ class RecursoController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
             $validacion= new ValidacionRecurso;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes= $validacion->obtenerMensajes($_POST);
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);                
                //redirige al mismo formulario
-                $this->response->redirect('/recurso/crear');
-                
+                return  $this->response->redirect('/recurso/crear');                
             }
-            else
-            {//VALIDACION CON EXITO
 
             $material = new Materialesbibliograficos;
             $recurso = new Recursos;
@@ -122,8 +125,13 @@ class RecursoController extends \Phalcon\Mvc\Controller
            
             $material->nombre = $nomMaterial;
             $material->descripcion = $this->request->getPost('descMaterial');
-            $material->imagenurl = $this->request->getPost('imagenMaterial');
             $material->nombreimagen = $this->request->getPost('nomImgMaterial');
+            
+            $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+
+            $material->imagenurl = $this->guardarCloudinary($logourl);
+
+
             if($this->request->getPost('fechaMaterial'))
             {
                 $material->fechapublicacion = $this->request->getPost('fechaMaterial');
@@ -162,7 +170,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
            
         }
     }
-}
+
     public function editarAction()
     {
         $this->view->pick('recurso/editar');
@@ -196,55 +204,45 @@ class RecursoController extends \Phalcon\Mvc\Controller
         $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
         $this->view->autores = $autores;
         $this->view->mataut = $MatAut;
+
         if ($this->request->isPost()) {
             $validacion= new ValidacionRecurso;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes=$validacion->obtenerMensajes($_POST);
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado recurso, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/recurso/editar/'.$id);
-                
+                return $this->response->redirect('/recurso/editar/'.$id);
             }
-            else
-            {//VALIDACION CON EXITO            
+                //seccion para almacenar
             $nomMaterial = $this->request->getPost('nombreMaterial');
             $formato = $this->request->getPost('tipoFormato');
-          
-                $material->nombre = $nomMaterial;
-                $material->descripcion = $this->request->getPost('descMaterial');
-                $material->imagenurl = $this->request->getPost('imagenMaterial');
-                $material->nombreimagen = $this->request->getPost('nomImgMaterial');
-                if($this->request->getPost('fechaMaterial'))
-                {
-                    $material->fechapublicacion = $this->request->getPost('fechaMaterial');
-                }
-                
-                if($this->request->getPost('externoMaterial'))
-                {
-                    $material->esexterno = true;
-                }
-                else
-                {
-                    $material->esexterno = false;
-                }
-                foreach ($MatAut as $autmat){
+            $material->nombre = $nomMaterial;
+            $material->descripcion = $this->request->getPost('descMaterial');
+            $logourl=$this->request->getUploadedFiles('imagenMaterial'); //esto debe ser traido por cloud dinary
+            if($logourl)
+            {
+            $material->imagenurl = $this->guardarCloudinary($logourl);
+            }
+            $material->nombreimagen = $this->request->getPost('nomImgMaterial');
+            
+            if($this->request->getPost('fechaMaterial'))
+            {
+                $material->fechapublicacion = $this->request->getPost('fechaMaterial');
+            }
+            
+            if($this->request->getPost('externoMaterial'))
+            {
+                $material->esexterno = true;
+            }
+            else
+            {
+                $material->esexterno = false;
+            }
+            foreach ($MatAut as $autmat){
                     $i=0;
                     foreach ($this->request->getPost('autoresRecurso') as $aut){
                         if($aut==$autmat->idautor){
@@ -280,7 +278,7 @@ class RecursoController extends \Phalcon\Mvc\Controller
                 return $response;
                   }
     }
-    }
+    
     public function eliminarAction()
     {
         $this->view->pick('recurso/eliminar');
@@ -303,7 +301,125 @@ class RecursoController extends \Phalcon\Mvc\Controller
             $response->redirect('/recurso'); //Retornar al index formato
             return $response;
         }     
-    }   
+    }
+    
+    public function verAction()
+    {
+        $this->view->pick('recurso/ver');
+        $id = $this->dispatcher->getParam('id'); //Obtener parametros de la url
+        /* Para llenar el formulario
+        con sus datos Actuales */
+        /* Actualizar el formulario Recurso */
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
+        $material = Materialesbibliograficos::findFirst($id);
+        $formatos = Formatos::find();
+        $recursoActual = Recursos::findFirst("idmaterial='".$material->id."'");        
+        $subcategorias = Subcategorias::find();       
+        $unidadesExis = Unidades::findFirst("idmaterial='".$material->id."'");      
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$material->id."'");
+        $this->view->autores = $autores;
+        $this->view->mataut = $MatAut;
+        $this->view->material = $material;
+        $this->view->setVar('formatos', $formatos);
+        $this->view->setVar('sub', $subcategorias);
+        $this->view->setVar('recursoActual', $recursoActual);        
+        $this->view->setVar('unidades', $unidadesExis);       
+    }
+
+    public function graficarAction()
+    {
+        $this->view->pick('recurso/graficas');
+        $subcategorias = Subcategorias::find(['order'=>'nombre']);
+        $categorias = Categorias::find("idbiblioteca= '".$this->biblioteca->id."'");
+        /* Arreglos a utilizar para graficar */
+        $subcat = array();
+        $numRecurso = array();
+        $nomCategorias = array();
+        $cantidad = array();
+        /* Para las categorias */
+        foreach($categorias as $cat)
+        {
+            array_push($nomCategorias,$cat->nombre);
+            $subs = Subcategorias::find("idcategoria='".$cat->id."'");
+            $i = 0;
+            foreach($subs as $sub)
+            {
+                $material = Materialesbibliograficos::find("idsubcategoria='".$sub->id."'");
+                if(count($material)>0)
+                {
+                    $i +=count($material);
+                }
+            }
+            array_push($cantidad, $i);                        
+        }
+        /* Para las subcategorias*/
+        foreach ($subcategorias as $sub)
+        {
+            if($sub->categorias->idbiblioteca == $this->biblioteca->id)
+            {
+                array_push($subcat, $sub->nombre); // llenando arreglo                
+                $recurso = Recursos::find();
+                $material = Materialesbibliograficos::find("idsubcategoria='".$sub->id."'");
+                array_push($numRecurso,count($material));  
+                foreach($recurso as $mat)
+                {
+                    $conteo = Materialesbibliograficos::find($mat->idmaterial);
+                    $mat->materialesbibliograficos;
+                    //array_push($numRecurso,count($mat));   
+                }                            
+            }
+        }
+        /* Variables en la vista */
+        $this->view->sub = $subcat;
+        $this->view->cantidad = $numRecurso; 
+        $this->view->cat = $nomCategorias;  
+        $this->view->canCat = $cantidad;      
+    }
+
+    // Funcion usada en crear y editar para guardar la imagen en cloudinary
+    public function guardarCloudinary($logourl){
+        
+        //preparando parametros para cloudinary
+        $cloud_name = getenv("CLOUDINARY_cloudName");
+        $api_key = getenv("CLOUDINARY_apiKey");
+        $api_secret = getenv("CLOUDINARY_apiSecret");
+        $timestamp = time();
+        $signature = sha1("timestamp=".(string)$timestamp.$api_secret);
+        foreach ($logourl as $url){
+            $tmpDir=$url->getTempName();
+        }
+        //imagen a base64
+        $data = file_get_contents($tmpDir);
+        $base64 = 'data:image/jpeg;base64,' . base64_encode($data);
+        //POST a cloudinary
+        $url="https://api.cloudinary.com/v1_1/".$cloud_name."/image/upload";
+        $ch = curl_init($url);
+
+        $jsonData = new jsonDataO;
+        $jsonData->file = $base64;
+        $jsonData->api_key = $api_key;
+        $jsonData->timestamp = $timestamp;
+        $jsonData->signature = $signature;
+
+        $payload = json_encode($jsonData);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //$result = new jsonR;
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $url = json_decode($result);
+
+        return $url->{'url'};              
+    }
 
 }
 

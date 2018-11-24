@@ -12,6 +12,16 @@ use Phalcon\Http\Response;
 use App\Models\Users;
 use App\Validations\ValidacionLibro;
 
+$dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
+$dotenv->load();
+
+class jsonDataO {
+    public $file = "";
+    public $api_key = "";
+    public $timestamp = "";
+    public $signature = "";
+}
+
 
 class LibroController extends \Phalcon\Mvc\Controller
 {
@@ -100,33 +110,17 @@ class LibroController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
                 $validacion= new ValidacionLibro;
-                $mensajes=[];
-        
-                $messages = $validacion->validate($_POST); //recoge las variables globales post
-                
-                //captura mensajes que son al respecto de los campos encontrados
-                foreach ($messages as  $m) 
-                {
-                    $mensajes[$m->getField()]=$m->getMessage();
-                }
+                $mensajes= $validacion->obtenerMensajes($_POST);
+
                 
                 if(!empty($mensajes))
                 {   
                     $this->flashSession->error('No se ha guardado Libro, algunos errores en los campos mencionados');
-                    
-                    //hace el bucle media vez halla capturado validaciones
-                    foreach ($mensajes as $mensaje ) {
-                        $this->flashSession->warning($mensaje);                
-                        
-                    }
-        
+                    $validacion->gettingFlashMessages($mensajes);
                    //redirige al mismo formulario
-                    $this->response->redirect('/libro/crear');
-                    
+                    return $this->response->redirect('/libro/crear');
                 }
-                else
-                {//VALIDACION CON EXITO
-    
+ 
            
             $nombre = $this->request->getPost('nomLibro');
             $esexterno=$this->request->getPost('exLibro');
@@ -151,7 +145,9 @@ class LibroController extends \Phalcon\Mvc\Controller
                     $material->esexterno = false;
                 }
 
-                $material->imagenurl=$this->request->getPost('imagenLibro');
+                $logourl=$this->request->getUploadedFiles('imagenLibro'); //esto debe ser traido por cloud dinary
+                $material->imagenurl=$this->guardarCloudinary($logourl);
+
                 $material->nombreimagen=$this->request->getPost('nomImgLibro');
                 $material->idsubcategoria = $this->request->getPost('subLibro');
                 $material->save();
@@ -178,7 +174,7 @@ class LibroController extends \Phalcon\Mvc\Controller
         }
         
     }
-    }
+    
     public function editarAction()
     {
         $this->view->pick('libro/editar');
@@ -206,35 +202,17 @@ class LibroController extends \Phalcon\Mvc\Controller
 
         if ($this->request->isPost()) {
             $validacion= new ValidacionLibro;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes = $validacion->obtenerMensajes($_POST); //recoge las variables globales post
+
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado libro, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);    
                //redirige al mismo formulario
-                $this->response->redirect('/libro/editar/'.$id);
-                
+                return $this->response->redirect('/libro/editar/'.$id);
             }
-            else
-            {//VALIDACION CON EXITO
-
             
-            // Accedemos a los datos POST            
+           // Accedemos a los datos POST            
             $nombre = $this->request->getPost('nomLibro');
             $esexterno=$this->request->getPost('exLibro');
             if($nombre){
@@ -278,8 +256,11 @@ class LibroController extends \Phalcon\Mvc\Controller
                         $MaterialAutor->save();
                     }
                 }
-                
-                $libro->MaterialesBibliograficos->imagenurl=$this->request->getPost('imagenLibro');
+
+                $logourl=$this->request->getUploadedFiles('imagenLibro'); //esto debe ser traido por cloud dinary
+                if($logourl){
+                $libro->MaterialesBibliograficos->imagenurl=$this->guardarCloudinary($logourl);
+                }
                 $libro->MaterialesBibliograficos->nombreimagen=$this->request->getPost('nomImgLibro');
                 $libro->Materialesbibliograficos->idsubcategoria = $this->request->getPost('subLibro');
                 $unidades->unidadesexistentes=$this->request->getPost('cantidadLibro');
@@ -293,7 +274,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             return $response;          
         }
     }
-}
+
     public function eliminarAction()
     {
         $this->view->pick('libro/eliminar');
@@ -315,6 +296,69 @@ class LibroController extends \Phalcon\Mvc\Controller
             $response->redirect('/libro'); //Retornar al index formato
             return $response;
         }     
+    }
+
+    public function verAction(){
+        
+        $this->view->pick('libro/ver');
+        $idusuario = $this->session->get('id');
+        $bibliotecario = Bibliotecarios::findFirst([
+            'columns'    => 'idbiblioteca',
+            'conditions' => 'iduser = ?1',
+            'bind'       => [
+                    1 => $idusuario,
+                ]
+        ]);
+        $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
+        $libro = Libros::findFirst($id);
+        $unidades = Unidades::findFirst("idmaterial='".$libro->idmaterial."'");
+        $categorias= Categorias::find();
+        $subcategorias= Subcategorias::find();
+        $autores = Autores::find("idbiblioteca='".$bibliotecario->idbiblioteca."'");
+        $MatAut = MaterialesAutores::find("idmaterial='".$libro->idmaterial."'");
+        $this->view->libro = $libro;
+        $this->view->unidades = $unidades;
+        $this->view->categorias = $categorias;
+        $this->view->subcategorias = $subcategorias;
+        $this->view->autores = $autores;
+        $this->view->mataut = $MatAut;
+    }
+
+    // Funcion usada en crear y editar para guardar la imagen en cloudinary
+    public function guardarCloudinary($logourl){
+        
+        //preparando parametros para cloudinary
+        $cloud_name = getenv("CLOUDINARY_cloudName");
+        $api_key = getenv("CLOUDINARY_apiKey");
+        $api_secret = getenv("CLOUDINARY_apiSecret");
+        $timestamp = time();
+        $signature = sha1("timestamp=".(string)$timestamp.$api_secret);
+        foreach ($logourl as $url){
+            $tmpDir=$url->getTempName();
+        }
+        //imagen a base64
+        $data = file_get_contents($tmpDir);
+        $base64 = 'data:image/jpeg;base64,' . base64_encode($data);
+        //POST a cloudinary
+        $url="https://api.cloudinary.com/v1_1/".$cloud_name."/image/upload";
+        $ch = curl_init($url);
+
+        $jsonData = new jsonDataO;
+        $jsonData->file = $base64;
+        $jsonData->api_key = $api_key;
+        $jsonData->timestamp = $timestamp;
+        $jsonData->signature = $signature;
+
+        $payload = json_encode($jsonData);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $payload);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        //$result = new jsonR;
+        $result = curl_exec($ch);
+        curl_close($ch);
+        $url = json_decode($result);
+
+        return $url->{'url'};              
     }
 
 }

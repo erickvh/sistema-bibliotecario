@@ -13,6 +13,7 @@ $router->addGet('/logout','Index::logout');
  */
 $router->addGet('/administrador','Menu::admin');
 $router->addGet('/bibliotecario','Menu::bibliotecario');
+$router->addGet('/user','Menu::prestamista');
 /**
  * Rutas autor
  */

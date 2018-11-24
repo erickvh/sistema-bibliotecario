@@ -52,38 +52,21 @@ class CategoriaController extends \Phalcon\Mvc\Controller
 
     public function crearAction()
     {
+       // $this->view->disable();
     	$this->view->pick('Categoria/crear');
     	$this->view->setVar('error', false);
         if ($this->request->isPost()) {
 
-
             $validacion= new ValidacionCategoria;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes = $validacion->obtenerMensajes($_POST); 
+  
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado categoria, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
-               //redirige al mismo formulario
-                $this->response->redirect('/categoria/crear');
-                
+                $validacion->gettingFlashMessages($mensajes);
+                return $this->response->redirect('/categoria/crear');        
             }
-            else
-            {//VALIDACION CON EXITO
+
 
 
             $categoria = new Categorias;
@@ -102,7 +85,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
                 return $response;
         }
     }
-}
+
     public function editarAction()
     {
     	$this->view->pick('Categoria/editar');
@@ -112,33 +95,20 @@ class CategoriaController extends \Phalcon\Mvc\Controller
         $this->view->setVar('error', false);
         if ($this->request->isPost()) {            
 
+
             $validacion= new ValidacionCategoria;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
+            $validacion->setUpdate($id);
             
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
-            
+            $mensajes = $validacion->obtenerMensajes($_POST); 
+  
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha actualizado categoria, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/categoria/editar/'.$id);
-                
+                return $this->response->redirect('/categoria/editar/'.$id);                
             }
-            else
-            {//VALIDACION CON EXITO
 
             $nombre = $this->request->getPost('nombreCat');
             $desc = $this->request->getPost('descCat');
@@ -154,7 +124,7 @@ class CategoriaController extends \Phalcon\Mvc\Controller
             return $response;
         }
     }
-}
+
  	public function eliminarAction()
  	{
  		$this->view->pick('Categoria/eliminar');

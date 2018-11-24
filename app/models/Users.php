@@ -65,6 +65,7 @@ class Users extends \Phalcon\Mvc\Model
         $this->setSchema("public");
         $this->setSource("users");
         $this->hasMany('id', 'App\Models\Bibliotecarios', 'iduser', ['alias' => 'Bibliotecarios']);
+        $this->hasMany('id','App\Models\Prestamistas','iduser',['alias'=>'Prestamistas']);
         $this->belongsTo('idrol', 'App\Models\Roles', 'id', ['alias' => 'Roles']);
     }
 

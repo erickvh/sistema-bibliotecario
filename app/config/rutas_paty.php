@@ -10,6 +10,12 @@ $router->add(
         'id'     => 1
     ]);
 
+$router->addGet('/biblioteca/ver/:int',[
+        'controller'=>'Biblioteca',
+        'action'=>'ver',
+        'id'=>1
+]);
+
 
 /*rutas libro*/
 $router->addGet('/libro','Libro::index');
@@ -29,3 +35,56 @@ $router->add(
         'action'     => 'eliminar',
         'id'     => 1
     ]);
+
+$router->addGet('/libro/ver/:int',[
+        'controller'=>'Libro',
+        'action'=>'ver',
+        'id'=>1
+]);
+
+/*rutas gestion de prestamos*/
+$router->addGet('/reserva','Prestamo::index');
+$router->addGet('/prestamo','Prestamo::consultarPrestamos');
+$router->add(
+    '/reserva/cancelar/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'cancelarReserva',
+        'id'     => 1
+    ]);
+$router->add(
+    '/reserva/prestar/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'prestar',
+        'id'     => 1
+    ]);
+    
+$router->add(
+    '/prestamo/devolver/:int',
+    [
+        'controller' => 'Prestamo',
+        'action'     => 'devolver',
+        'id'     => 1
+    ]);
+
+/*rutas de busqueda*/
+$router->add('/busqueda','Busqueda::index');
+
+$router->addGet('/busqueda/ver/:int',[
+    'controller'=>'busqueda',
+    'action'=>'verLibro',
+    'id'=>1
+]);
+
+$router->addGet('/busqueda/verRecurso/:int',[
+    'controller'=>'busqueda',
+    'action'=>'verRecurso',
+    'id'=>1
+]);
+
+$router->add('/busqueda/reservar/:int',[
+    'controller'=>'busqueda',
+    'action'=>'reservar',
+    'id'=>1
+]);

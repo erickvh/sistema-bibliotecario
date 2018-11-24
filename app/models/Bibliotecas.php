@@ -73,6 +73,7 @@ class Bibliotecas extends \Phalcon\Mvc\Model
         $this->setSource("bibliotecas");
         $this->hasMany('id', 'App\Models\Autores', 'idbiblioteca', ['alias' => 'Autores']);
         $this->hasMany('id', 'App\Models\Bibliotecarios', 'idbiblioteca', ['alias' => 'Bibliotecarios']);
+        $this->hasMany('id', 'App\Models\Prestamistas', 'idbiblioteca', ['alias' => 'Prestamistas']);
         $this->hasMany('id', 'App\Models\Materialesbibliograficos', 'idbiblioteca', ['alias' => 'Materialesbibliograficos']);
     }
 
