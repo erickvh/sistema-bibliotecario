@@ -22,17 +22,27 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         public function initialize()
         {
             
-            //these middlewares will be apply in all the action of this controller
-            $AuthMiddleware= new AuthMiddleware;
-            $RolMiddleware = new RolMiddleware;
-
-            $AuthMiddleware->middleware($this->session,$this->response);
-            $RolMiddleware->middleware($this->session,$this->response,'Administrador'); 
-
-            //crea la busqueda si existe id
+            if($this->session->has('id'))
+            {
+                //crea la busqueda si existe id
             $this->idSesion = $this->session->get('id');
             $this->user=Users::findFirst($this->idSesion);
             $this->rol=$this->user->roles->nombre;
+            
+            // redirige si el rol cargado es diferente
+                switch($this->rol){
+                    case 'Bibliotecario': 
+                    case 'Prestamista':
+                    $this->response->redirect('/401');
+                    break;
+                    case 'Administrador':
+                    break;
+                                }
+            }
+            else
+            {
+                $this->response->redirect('/401');
+            }
         }
     
     public function indexAction()
