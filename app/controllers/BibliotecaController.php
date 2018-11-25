@@ -3,9 +3,7 @@
 use App\Models\Bibliotecas;
 use App\Models\Users;
 use App\Validations\ValidacionBiblioteca;
-use App\Middlewares\AuthMiddleware;
-use App\Middlewares\RolMiddleware;
-use App\Middlewares\NoResulSetMiddleware;
+
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
 $dotenv->load();
 
@@ -74,9 +72,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $this->view->pick('biblioteca/editar');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
-        $notFoundMiddleware=new NoResulSetMiddleware;
-        $notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
-
+        
         $this->view->biblioteca = $biblioteca;
         if ($this->request->isPost()) {
             $validacion= new ValidacionBiblioteca;
@@ -173,9 +169,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $this->view->pick('biblioteca/ver');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
-        $notFoundMiddleware=new NoResulSetMiddleware;
-        //$notFoundMiddleware->middleware($biblioteca,$this->dispatcher);
-
+        
         $this->view->biblioteca = $biblioteca;
     }
 
