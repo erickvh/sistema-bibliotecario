@@ -22,6 +22,10 @@
                     <textarea name="descLibro" cols="30" rows="3" class="form-control">{{libro.MaterialesBibliograficos.descripcion}}</textarea>
                 </div>
                 <div class="form-group">
+                    <label class="control-label">ISBN</label>
+                    <input name="isbnLibro" class="form-control" type="text" placeholder="ISBN" value="{{libro.isbn}}">
+                </div> 
+                <div class="form-group">
                     <label class="control-label">Editorial</label>
                     <input name="editLibro" class="form-control" type="text" placeholder="Editorial" value="{{libro.editorial}}">
                 </div> 
