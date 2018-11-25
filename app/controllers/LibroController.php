@@ -128,6 +128,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             if($nombre and $cantunidades){
                 $material->nombre=$nombre;
                 $material->descripcion=$this->request->getPost('descLibro');
+                $libro->isbn=$this->request->getPost('isbnLibro');
                 $libro->editorial=$this->request->getPost('editLibro');
                 $libro->volumen=$this->request->getPost('volLibro');
                 $libro->sinopsis=$this->request->getPost('sinLibro');
@@ -218,6 +219,7 @@ class LibroController extends \Phalcon\Mvc\Controller
             if($nombre){
                 $libro->MaterialesBibliograficos->nombre=$nombre;
                 $libro->MaterialesBibliograficos->descripcion=$this->request->getPost('descLibro');
+                $libro->isbn=$this->request->getPost('isbnLibro');
                 $libro->editorial=$this->request->getPost('editLibro');
                 $libro->volumen=$this->request->getPost('volLibro');
                 $libro->sinopsis=$this->request->getPost('sinLibro');

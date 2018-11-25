@@ -14,8 +14,6 @@ class BibController extends \Phalcon\Mvc\Controller
     //esta ruta se ejecuta antes de cada funcion en el controlador
     public function initialize()
     {
-        
-            //these middlewares will be apply in all the action of this controller
             if($this->session->has('id'))
             {
                 //crea la busqueda si existe id
