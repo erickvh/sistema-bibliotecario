@@ -180,7 +180,7 @@ class BusquedaController extends \Phalcon\Mvc\Controller
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $material = MaterialesBibliograficos::findFirst($id);
-        $prestamista = Prestamistas::findFirst($user->id);
+        $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
         $reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
         $prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
         $total=$reservas+$prestamos;
