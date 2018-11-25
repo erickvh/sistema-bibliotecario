@@ -4,9 +4,7 @@ use App\Models\Bibliotecarios;
 use App\Models\Users;
 use App\Models\Bibliotecas;
 use App\Validations\ValidacionBibliotecario;
-use App\Middlewares\AuthMiddleware;
-use App\Middlewares\RolMiddleware;
-use App\Middlewares\NoResulSetMiddleware;
+
 
 class BibController extends \Phalcon\Mvc\Controller
 {
@@ -17,8 +15,6 @@ class BibController extends \Phalcon\Mvc\Controller
     //esta ruta se ejecuta antes de cada funcion en el controlador
     public function initialize()
     {
-        
-            //these middlewares will be apply in all the action of this controller
             if($this->session->has('id'))
             {
                 //crea la busqueda si existe id
@@ -126,9 +122,6 @@ class BibController extends \Phalcon\Mvc\Controller
         $id=$this->dispatcher->getParam('id');
         $bibliotecario= Bibliotecarios::findFirst($id);
 
-        $notFoundMiddleware=new NoResulSetMiddleware;
-        $notFoundMiddleware->middleware($bibliotecario,$this->dispatcher);
-
         $bibliotecas= Bibliotecas::find();
         $this->view->pick('bibliotecarios/editar');
         $this->view->bibliotecario=$bibliotecario;
@@ -193,8 +186,6 @@ class BibController extends \Phalcon\Mvc\Controller
             $id=$this->dispatcher->getParam('id');
  
             $bibliotecario=Bibliotecarios::findFirst($id);
-            $notFoundMiddleware=new NoResulSetMiddleware;
-            $notFoundMiddleware->middleware($bibliotecario,$this->dispatcher);
     
             $this->view->pick("bibliotecarios/show");
             $this->view->bibliotecario=$bibliotecario;
