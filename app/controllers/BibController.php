@@ -5,6 +5,7 @@ use App\Models\Users;
 use App\Models\Bibliotecas;
 use App\Validations\ValidacionBibliotecario;
 
+
 class BibController extends \Phalcon\Mvc\Controller
 {
     protected $idSesion;
@@ -14,30 +15,28 @@ class BibController extends \Phalcon\Mvc\Controller
     //esta ruta se ejecuta antes de cada funcion en el controlador
     public function initialize()
     {
-        
-
-        if($this->session->has('id'))
-        {
-            //crea la busqueda si existe id
-        $this->idSesion = $this->session->get('id');
-        $this->user=Users::findFirst($this->idSesion);
-        $this->rol=$this->user->roles->nombre;
-        
-        // redirige si el rol cargado es diferente
-            switch($this->rol){
-                case 'Bibliotecario': 
-                case 'Prestamista':
+            if($this->session->has('id'))
+            {
+                //crea la busqueda si existe id
+            $this->idSesion = $this->session->get('id');
+            $this->user=Users::findFirst($this->idSesion);
+            $this->rol=$this->user->roles->nombre;
+            
+            // redirige si el rol cargado es diferente
+                switch($this->rol){
+                    case 'Bibliotecario': 
+                    case 'Prestamista':
+                    $this->response->redirect('/401');
+                    break;
+                    case 'Administrador':
+                    break;
+                                }
+            }
+            else
+            {
                 $this->response->redirect('/401');
-                break;
-                case 'Administrador':
-                break;
-                            }
-        }
-        else
-        {
-            $this->response->redirect('/401');
-        }
-  
+            }        
+
 
     }
 
@@ -54,33 +53,16 @@ class BibController extends \Phalcon\Mvc\Controller
         $this->view->disable();
         //validaciones correspondientes
         $validacion= new ValidacionBibliotecario;
-        $mensajes=[];
+        $mensajes=$validacion->obtenerMensajes($_POST);
 
-        $messages = $validacion->validate($_POST); //recoge las variables globales post
-        
-        //captura mensajes que son al respecto de los campos encontrados
-        foreach ($messages as  $m) 
-        {
-            $mensajes[$m->getField()]=$m->getMessage();
-        }
-        
         if(!empty($mensajes))
         {   
             $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
-            
-            //hace el bucle media vez halla capturado validaciones
-            foreach ($mensajes as $mensaje ) {
-                $this->flashSession->warning($mensaje);                
-                
-            }
-
+            $validacion->gettingFlashMessages($mensajes);            
            //redirige al mismo formulario
-            $this->response->redirect('/bibliotecarios/crear');
+            return $this->response->redirect('/bibliotecarios/crear');
             
         }
-        else
-        {//VALIDACION CON EXITO
-
         
         $user= new Users();
         $bibliotecario= new Bibliotecarios();
@@ -117,7 +99,7 @@ class BibController extends \Phalcon\Mvc\Controller
         
         $this->flashSession->success('Bibliotecario almacenado corectamente! Contraseña temporal: '.$password);
         $this->response->redirect('bibliotecarios');
-        }
+        
     }
 
     //generador de password
@@ -139,6 +121,7 @@ class BibController extends \Phalcon\Mvc\Controller
 
         $id=$this->dispatcher->getParam('id');
         $bibliotecario= Bibliotecarios::findFirst($id);
+
         $bibliotecas= Bibliotecas::find();
         $this->view->pick('bibliotecarios/editar');
         $this->view->bibliotecario=$bibliotecario;
@@ -147,38 +130,29 @@ class BibController extends \Phalcon\Mvc\Controller
     }
     public function updateAction(){
         $this->view->disable();    
-        $id=$this->dispatcher->getParam('id');
-        
+        $id=$this->dispatcher->getParam('id');        
+
+
+
+   
+   
         $bibliotecario= Bibliotecarios::findFirst($id);
-               //validaciones correspondientes
-               $validacion= new ValidacionBibliotecario;
-               $mensajes=[];
-       
-               $messages = $validacion->validate($_POST); //recoge las variables globales post
-               
-               //captura mensajes que son al respecto de los campos encontrados
-               foreach ($messages as  $m) 
-               {
-                   $mensajes[$m->getField()]=$m->getMessage();
-               }
-               
+
+        $validacion= new ValidacionBibliotecario;
+        $validacion->setUpdate($id);
+        $mensajes=$validacion->obtenerMensajes($_POST);
+
+        
                if(!empty($mensajes))
                {   
                    $this->flashSession->error('No se ha actualizado bibliotecario, algunos errores en los campos mencionados');
                    
-                   //hace el bucle media vez halla capturado validaciones
-                   foreach ($mensajes as $mensaje ) {
-                       $this->flashSession->warning($mensaje);                
-                       
-                   }
-       
+                    $validacion->gettingFlashMessages($mensajes);
                   //redirige al mismo formulario
-                   $this->response->redirect('/bibliotecarios/editar/'.$id);
+                    return $this->response->redirect('/bibliotecarios/editar/'.$id);
                    
                }
-               else
-               {//VALIDACION CON EXITO
-       
+
         /*requiriendo todos los parametros */
         $username=$this->request->getPost('username');
         $email=$this->request->getPost('email');
@@ -205,13 +179,14 @@ class BibController extends \Phalcon\Mvc\Controller
         $bibliotecario->save();
         $this->flashSession->success('Bibliotecario actualizado con exito');
         $this->response->redirect('bibliotecarios');
-            }
+            
     }
 
     public function showAction(){
             $id=$this->dispatcher->getParam('id');
  
             $bibliotecario=Bibliotecarios::findFirst($id);
+    
             $this->view->pick("bibliotecarios/show");
             $this->view->bibliotecario=$bibliotecario;
 

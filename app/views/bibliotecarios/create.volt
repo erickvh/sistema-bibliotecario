@@ -24,11 +24,11 @@
                     </div>
                     <div class="form-group">
                         <label class="control-label">Nombre usuario *</label>
-                        <input name="username" class="form-control" type="text" placeholder="Digite username" >
+                        <input name="username" class="form-control" type="text" placeholder="Digite username sin espacios" >
                     </div>
                     <div class="form-group">
                         <label class="control-label">Numero de DUI *</label>
-                        <input name="dui" class="form-control" type="text" placeholder="Digite numero de DUI">
+                        <input name="dui" class="form-control" type="text" placeholder="Digite numero de DUI: 00000000-0">
                     </div>
   
                     <div class="form-group">
@@ -42,7 +42,7 @@
 
                     <div class="form-group">
                         <label class="control-label">Telefono</label>
-                        <input name="telefono" class="form-control" type="tel" placeholder="Telefono" >
+                        <input name="telefono" class="form-control" type="tel" placeholder="Telefono 7777-7777" >
                     </div>
                  <div class="form-group">
                     <label for="sexo">Sexo *</label>
@@ -52,6 +52,7 @@
                     </select>
                   </div>
                                     <button type="Submit" class="btn btn-primary">Crear</button>
+                                    <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
 
             </form>
 

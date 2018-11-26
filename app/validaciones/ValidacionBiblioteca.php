@@ -6,10 +6,14 @@ use Phalcon\Validation\Validator\PresenceOf;
 use Phalcon\Validation\Validator\Email;
 use Phalcon\Validation\Validator\Date as DateValidator;
 use Phalcon\Validation\Validator\Regex;
+use Phalcon\Validation\Validator\Uniqueness as UniquenessValidator;
 use Phalcon\Validation\Validator\StringLength as StringLength;
+use App\Models\Bibliotecas;
 
 class ValidacionBiblioteca extends Validation
 {
+    protected $actualizar = true;
+    protected $idBiblioteca;
 
     public function initialize()
     {
@@ -83,6 +87,28 @@ class ValidacionBiblioteca extends Validation
     //get all the messages through of the validations, into an array with  one error for each post value
     public function obtenerMensajes($post)
     {
+
+                    //update validation is allowed, only when codigos are different db vs request
+        if(!$this->actualizar){
+            $this->add('emailBiblioteca', new UniquenessValidator([
+                "model"=> new Bibliotecas,
+                "attribute" => "email",
+                'message'=> 'El Email ya existe'
+                ]));
+        }
+        else if(Bibliotecas::findFirst($this->idBiblioteca)->email!=$this->request->getPost('emailBiblioteca'))
+        {
+
+            $this->add('emailBiblioteca', new UniquenessValidator([
+                "model"=> new Bibliotecas,
+                "attribute" => "email",
+                'message'=> 'El email ya existe en nuestros registros'
+                ]));
+
+        }
+        //end adding validation
+
+
         $mensajes=[];
     
         $messagesFromValidation=$this->validate($post);
@@ -108,6 +134,6 @@ class ValidacionBiblioteca extends Validation
     
     public function setUpdate($id){
         $this->actualizar = true;
-        $this->idCategoria=$id;
+        $this->idBiblioteca=$id;
     }
 }

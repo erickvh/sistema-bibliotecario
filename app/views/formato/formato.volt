@@ -71,6 +71,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
                         <button type="Submit" class="btn btn-primary">Crear</button>
+                        <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
                     </div>
                 </form>
             </div>

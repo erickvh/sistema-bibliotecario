@@ -1,10 +1,11 @@
 <?php
 
 use App\Models\Bibliotecas;
-use Phalcon\Http\Response;
 use App\Models\Users;
 use App\Validations\ValidacionBiblioteca;
-
+use App\Middlewares\AuthMiddleware;
+use App\Middlewares\RolMiddleware;
+use App\Middlewares\NoResulSetMiddleware;
 $dotenv = new Dotenv\Dotenv(__DIR__ . '/../../');
 $dotenv->load();
 
@@ -21,7 +22,6 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         public function initialize()
         {
             
-    
             if($this->session->has('id'))
             {
                 //crea la busqueda si existe id
@@ -43,8 +43,6 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             {
                 $this->response->redirect('/401');
             }
-      
-    
         }
     
     public function indexAction()
@@ -76,36 +74,20 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $this->view->pick('biblioteca/editar');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
+ 
         $this->view->biblioteca = $biblioteca;
         if ($this->request->isPost()) {
             $validacion= new ValidacionBiblioteca;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+            $validacion->setUpdate($id);
+            $mensajes=$validacion->obtenerMensajes($_POST);
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado biblioteca, algunos errores en los campos mencionados');
-                
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
-               //redirige al mismo formulario
-                $this->response->redirect('/biblioteca/editar'.$id);
-                
+                $validacion->gettingFlashMessages($mensajes);
+                //redirige al mismo formulario
+                return $this->response->redirect('/biblioteca/editar/'.$id);   
             }
-            else
-            {//VALIDACION CON EXITO
-
 
             $nombre = $this->request->getPost('nombreBiblioteca');
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
@@ -119,18 +101,20 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
             $biblioteca->ubicacion = $ubicacion;
             $biblioteca->telefono = $telefono;
             $biblioteca->clasificaion = $clasificacion;
+            if($logourl){
             $biblioteca->logourl = $this->guardarCloudinary($logourl);
+                        }
             $biblioteca->nombrelogo = $nombrelogo;
             $biblioteca->email = $email;
             $biblioteca->save();
             
-            $response = new Response();
+
             $this->flashSession->success('La biblioteca fue actualizada con exito');
-            $response->redirect('/biblioteca'); //Retornar a biblioteca
+            $this->response->redirect('/biblioteca'); //Retornar a biblioteca
             return $response;          
             }
         }
-    }
+    
 
     
     public function crearAction(){
@@ -140,33 +124,18 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         if ($this->request->isPost()) {
 
             $validacion= new ValidacionBiblioteca;
-            $mensajes=[];
-    
-            $messages = $validacion->validate($_POST); //recoge las variables globales post
-            
-            //captura mensajes que son al respecto de los campos encontrados
-            foreach ($messages as  $m) 
-            {
-                $mensajes[$m->getField()]=$m->getMessage();
-            }
+            $mensajes=$validacion->obtenerMensajes($_POST);
+
             
             if(!empty($mensajes))
             {   
                 $this->flashSession->error('No se ha guardado bibliotecario, algunos errores en los campos mencionados');
                 
-                //hace el bucle media vez halla capturado validaciones
-                foreach ($mensajes as $mensaje ) {
-                    $this->flashSession->warning($mensaje);                
-                    
-                }
-    
+                $validacion->gettingFlashMessages($mensajes);
                //redirige al mismo formulario
-                $this->response->redirect('/biblioteca/crear');
-                
+                return $this->response->redirect('/biblioteca/crear');                
             }
-            else
-            {//VALIDACION CON EXITO
-    
+
             $nombre = $this->request->getPost('nombreBiblioteca');
             $ubicacion = $this->request->getPost('ubicacionBiblioteca');
             $telefono = $this->request->getPost('telefonoBiblioteca');
@@ -194,8 +163,6 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $guardado = $biblioteca->save();
         $this->flashSession->success('La biblioteca fue guardada con exito');
         $this->response->redirect('/biblioteca');
-    
-            }
     }
 }
 
@@ -204,6 +171,7 @@ class BibliotecaController extends \Phalcon\Mvc\Controller
         $this->view->pick('biblioteca/ver');
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $biblioteca = Bibliotecas::findFirst($id);
+  
         $this->view->biblioteca = $biblioteca;
     }
 

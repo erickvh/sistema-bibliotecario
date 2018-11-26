@@ -23,6 +23,7 @@
                 </div>
                 <div class="form-group">                    
                     <button type="Submit" class="btn btn-primary">Crear</button>
+                    <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
                 </div>
             </form>
         </div>

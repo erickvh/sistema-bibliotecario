@@ -72,19 +72,19 @@ $router->add(
 $router->add('/busqueda','Busqueda::index');
 
 $router->addGet('/busqueda/ver/:int',[
-    'controller'=>'busqueda',
+    'controller'=>'Busqueda',
     'action'=>'verLibro',
     'id'=>1
 ]);
 
 $router->addGet('/busqueda/verRecurso/:int',[
-    'controller'=>'busqueda',
+    'controller'=>'Busqueda',
     'action'=>'verRecurso',
     'id'=>1
 ]);
 
 $router->add('/busqueda/reservar/:int',[
-    'controller'=>'busqueda',
+    'controller'=>'Busqueda',
     'action'=>'reservar',
     'id'=>1
 ]);

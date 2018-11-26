@@ -21,6 +21,10 @@
                     <textarea name="descLibro" cols="30" rows="3" class="form-control"></textarea>
                 </div>
                 <div class="form-group">
+                    <label class="control-label">ISBN</label>
+                    <input name="isbnLibro" class="form-control" type="text" placeholder="ISBN" value="">
+                </div>
+                <div class="form-group">
                     <label class="control-label">Editorial</label>
                     <input name="editLibro" class="form-control" type="text" placeholder="Editorial" value="">
                 </div> 
@@ -71,6 +75,7 @@
                     <input type="number" name="cantidadLibro" class="form-control" value="{{unidades.unidadesexistentes}}"  min="1" step="1" required>
                 </div>             
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
+                <input type="reset" class="text-center btn btn-secondary" value="Borrar datos del formulario">
             </form>
         </div>
     </div>

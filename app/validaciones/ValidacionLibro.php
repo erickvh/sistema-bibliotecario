@@ -28,6 +28,11 @@ class ValidacionLibro extends Validation
         'message'=>'Descripción libro debe ser alfanumerico',
         'allowEmpty'=>true]));
                 
+        $this->add('isbnLibro', new Regex([
+            'pattern'=>'/^\d+-\d+-\d+-\d$/',
+            'message'=>'ISBN del libro deben ser 13 cifras divididas en 4 partes separadas por guiones, la ultima parte solo debe tener 1 cifra',
+            'allowEmpty'=>true]));
+
         $this->add('editLibro', new Regex([
             'pattern'=>'/^([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9])+((\s*)+([a-zA-ZñÑáéíóúÁÉÍÓÚ0-9]*)*)+$/',
             'message'=>'Editorial de libro debe ser alfanumerico',
@@ -63,6 +68,16 @@ class ValidacionLibro extends Validation
                                  ]
                              )
                  );
+
+    $this->add("isbnLibro",new StringLength(
+         [
+             "max"            => 16,
+             "min"            => 16,
+             "messageMaximum" => "El ISBN del libro no debe contener mas de 16 caracteres",
+             "messageMinimum" => "El ISBN del libro no debe contener menos de 16 caracteres",
+            "allowEmpty"=>true
+             ]
+     ));
  
 
      $this->add("editLibro",new StringLength(

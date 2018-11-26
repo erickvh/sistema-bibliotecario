@@ -34,7 +34,6 @@
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Mis Préstamos</span></a></li>
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-clock-o"></i><span class="app-menu__label">Mis Reservas</span></a></li>
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-history"></i><span class="app-menu__label">Mi Historial </span></a></li>
-        <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-get-pocket"></i><span class="app-menu__label">Charts</span></a></li>
 
        
     </ul>
