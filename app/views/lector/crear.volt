@@ -14,23 +14,28 @@
                 
                 <div class="form-group">
                     <label class="control-label">Usuario</label>
-                    <input name="usuario" class="form-control" type="text" placeholder="Nombre de usuario" value="" required>
+                    <input name="usuario" class="form-control" type="text" placeholder="Digite el nombre de usuario" value="" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nombre</label>
-                    <input name="nom" class="form-control" type="text" placeholder="Nombre" value="" required>
+                    <input name="nombre" class="form-control" type="text" placeholder="Digite el nombre completo del lector" value="" required>
                 </div>
+                <div class="form-group">
+                    <label class="control-label">Email</label>
+                    <input name="email" class="form-control" type="text" placeholder="Digite el email del lector" value="" required>
+                </div>
+                <!--
                 <div class="form-group">
                     <label class="control-label">Apellido</label>
                     <input name="apellido" class="form-control" type="text" placeholder="apellido" value="" required>
-                </div>
+                </div>-->
                 <div class="form-group">
                     <label class="control-label">Fecha de nacimiento</label>
-                    <input name="fechadenacimiento" class="form-control" type="date" placeholder="fecha de nacimiento" value="">
+                    <input name="fechanacimiento" class="form-control" type="date" placeholder="Selecciones la fecha de nacimiento" value="">
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Lugar de estudio</label>
-                    <input name="lugardeestudio" class="form-control" type="text" placeholder="Lugar de estudio" value="">
+                    <input name="lugardeestudio" class="form-control" type="text" placeholder="Digite el Lugar de estudio" value="">
                 </div>
                 <div class="form-group">
                     <label for="sexo">Genero</label>
@@ -42,27 +47,35 @@
                   <div class="form-group">
                     <label for="ocupacion">Ocupacion</label>
                     <select class="form-control" id="ocupacion" name='ocupacion'>
-                      <option value=''>Estudiante</option>
-                      <option value=''>Trabajador</option>
-                      <option value=''>Ambos</option>
+                      <option value='estudiante'>Estudiante</option>
+                      <option value='trabajador'>Trabajador</option>
+                      <option value='ambos'>Ambos</option>
                     </select>
                   </div>
                  
                 <div class="form-group">
                     <label class="control-label">Direccion</label>
-                    <input name="direccion" class="form-control" type="text" placeholder="Direccion" value="">
+                    <input name="direccion" class="form-control" type="text" placeholder="Digite la Direccion del lector" value="">
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Nombre de padre</label>
-                    <input name="nomPadre" class="form-control" type="text" placeholder="Nombre de padre" value="">
+                    <label class="control-label">Municipio</label>
+                    <select name="municipio" id="municipio" class="form-control">
+                        {% for m in municipios %}
+                        <option value="{{m.id}}">{{m.nombre}}</option>
+                        {% endfor %}
+                    </select>
                 </div>
                 <div class="form-group">
-                    <label class="control-label">Nombre de madre</label>
-                    <input name="nomMadre" class="form-control" type="text" placeholder="Nombre de madre" value="">
+                    <label class="control-label">Nombre del padre</label>
+                    <input name="nombrePadre" class="form-control" type="text" placeholder="Digite el Nombre del padre" value="">
+                </div>
+                <div class="form-group">
+                    <label class="control-label">Nombre de la madre</label>
+                    <input name="nombreMadre" class="form-control" type="text" placeholder="Digite el Nombre de la madre" value="">
                 </div>
                 <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input name="telefono" class="form-control" type="tel" placeholder="Telefono" >
+                    <input name="telefono" class="form-control" type="tel" placeholder="Digite el Telefono del lector" >
                 </div>
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
             </form>
@@ -75,13 +88,22 @@
 <script type="text/javascript" src="js/plugins/bootstrap-datepicker.min.js"></script>
 <script type="text/javascript" src="js/plugins/select2.min.js"></script>
 <script src="//cdnjs.cloudflare.com/ajax/libs/select2/4.0.0/js/select2.full.js"></script>
+{% endblock %}
 
-
+{% block extraJS %}
 <script type="text/javascript">
-      
-      $('#autoresLibro').select2(); 
+var modal;
 
+function abrir_modal(url) {
+    $('#popup').load(url, function() {
+        $(this).modal('show');
+    });
+    return false;
+}
 
+function cerrar_modal() {
+    $('#popup').modal('hide');
+    return false;
+}
 </script>
-
 {% endblock %}
