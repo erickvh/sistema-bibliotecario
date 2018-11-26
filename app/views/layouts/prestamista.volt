@@ -30,7 +30,7 @@
     <ul class="app-menu">
         <li><a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-dashboard"></i><span class="app-menu__label">Panel Bibliotecario</span></a></li>
         <li><a class="app-menu__item" href="/busqueda"><i class="app-menu__icon fa fa-search"></i><span class="app-menu__label">Búsqueda</span></a></li>
-        <li><a class="app-menu__item" href="#"><i class="app-menu__icon fa fa-search-plus"></i><span class="app-menu__label">Búsqueda Avanzada</span></a></li>
+        <li><a class="app-menu__item" href="/busqueda-avanzada"><i class="app-menu__icon fa fa-search-plus"></i><span class="app-menu__label">Búsqueda Avanzada</span></a></li>
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-book"></i><span class="app-menu__label">Mis Préstamos</span></a></li>
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-clock-o"></i><span class="app-menu__label">Mis Reservas</span></a></li>
         <li><a class="app-menu__item" href="/"><i class="app-menu__icon fa fa-history"></i><span class="app-menu__label">Mi Historial </span></a></li>

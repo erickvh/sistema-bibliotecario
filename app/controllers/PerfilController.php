@@ -23,7 +23,7 @@ class PerfilController extends \Phalcon\Mvc\Controller
         // redirige si el rol cargado es diferente
             switch($this->rol){
                  case 'Prestamista':
-                $this->response->redirect('/401');
+                $this->biblioteca=$this->user->prestamistas[0]->bibliotecas;
                 break;
                 case 'Administrador':
                 break;
@@ -47,7 +47,8 @@ class PerfilController extends \Phalcon\Mvc\Controller
     
         if($this->biblioteca)//perfil de biblioteca necesita esto para ser cargada las imagenes
         {
-            $this->view->pick('perfil/perfil');
+            $this->rol!='Prestamista'? $this->view->pick('perfil/perfil'):$this->view->pick('perfil/perfilPrestamista');
+
             $this->view->biblioteca=$this->biblioteca;
         }
         else
@@ -60,7 +61,9 @@ class PerfilController extends \Phalcon\Mvc\Controller
     {   
         if($this->biblioteca)
         {
-        $this->view->pick('perfil/cambiar');
+        
+        $this->rol!='Prestamista'? $this->view->pick('perfil/cambiar'):$this->view->pick('perfil/cambiarPrestamista');
+
         $this->view->biblioteca=$this->biblioteca;
         }
         else

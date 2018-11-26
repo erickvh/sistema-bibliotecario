@@ -3,7 +3,7 @@
 /**
  * Rutas login
  */
-
+$router->addGet('/prueba','Prueba::index');
 $router->addGet('/','Index::index');
 $router->addPost('/','Index::login');
 $router->addGet('/logout','Index::logout');
@@ -83,3 +83,10 @@ $router->notFound([
     ]);
     
 $router->addGet('/401','Error::mostrar401');
+
+
+$router->addGet('/busqueda-avanzada','Busqueda::searchform');
+$router->addGet('/busqueda-avanzada/resultados','Busqueda::search');
+
+
+$router->addGet('/subcategories','Busqueda::subcategories');
