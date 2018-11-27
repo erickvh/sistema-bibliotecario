@@ -31,7 +31,7 @@ CREATE TABLE categorias(
     id smallserial,
     nombre VARCHAR(50) NOT NULL,
     descripcion TEXT,
-    codigo VARCHAR(8) UNIQUE,
+    codigo VARCHAR(8),
     idBiblioteca SMALLINT NOT NULL,
 
     CONSTRAINT pk_categorias PRIMARY KEY (id),
@@ -109,7 +109,7 @@ CREATE TABLE subcategorias(
     nombre VARCHAR(50) NOT NULL,
 
     descripcion TEXT,
-    codigo VARCHAR(8) UNIQUE,
+    codigo VARCHAR(8),
 
     idCategoria INTEGER,
 

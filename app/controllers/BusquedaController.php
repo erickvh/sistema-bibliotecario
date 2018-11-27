@@ -347,7 +347,7 @@ class BusquedaController extends \Phalcon\Mvc\Controller
       
               }
               
-              if($recurso){
+              if($recurso&&$recurso!="libro"){
 
                 $sql.=" and form.id =".$recurso;
               }
