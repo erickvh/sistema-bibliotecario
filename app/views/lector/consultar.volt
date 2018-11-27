@@ -15,7 +15,7 @@
       <tr>
         <th>Usuario</th>
         <th>Nombre</th>
-        <th>Apellido</th>
+   <!--     <th>Apellido</th> -->
         <th>Lugar de estudio</th>
         <th>Estado</th>
         <th width="28%">Acción</th>
@@ -27,7 +27,7 @@
       <tr>
         <td> {{ prestamist.users.username}} </td>
         <td> {{ prestamist.users.nombre}} </td>
-        <td> {{ prestamist.users.nombre}} </td>
+     <!--   <td> {{ prestamist.users.nombre}} </td> -->
         <td> {{ prestamist.lugardeestudio}} </td>
       {% if prestamist.activo == 1 %}  
         <td> activo </td>

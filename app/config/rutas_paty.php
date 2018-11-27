@@ -70,6 +70,7 @@ $router->add(
 
 /*rutas de busqueda*/
 $router->add('/busqueda','Busqueda::index');
+$router->add('/busquedaGeneral','Busqueda::busqueda');
 
 $router->addGet('/busqueda/ver/:int',[
     'controller'=>'Busqueda',

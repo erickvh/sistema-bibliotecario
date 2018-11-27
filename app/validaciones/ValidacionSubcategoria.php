@@ -57,7 +57,7 @@ class ValidacionSubcategoria extends Validation
     public function obtenerMensajes($post)
     {
         //update validation is allowed, only when codigos are different db vs request
-        if(!$this->actualizar){
+    /*    if(!$this->actualizar){
             $this->add('codCat', new UniquenessValidator([
                 "model"=> new Subcategorias,
                 "attribute" => "codigo",
@@ -75,7 +75,7 @@ class ValidacionSubcategoria extends Validation
 
         }
         //end adding validation
-
+*/
         $mensajes=[];
 
         $messagesFromValidation=$this->validate($post);

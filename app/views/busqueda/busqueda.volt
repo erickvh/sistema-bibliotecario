@@ -9,7 +9,7 @@
     <div class="container">
         <div class="row">
             <div class="col">
-                <form class="row" action="{{url('busqueda')}}" method="post" enctype="multipart/form-data">
+                <form class="row" action="{{url('busquedaGeneral')}}" method="get" enctype="multipart/form-data">
                     <div class="form-group col-md-11">
                         <input class="form-control" name="busqueda" class="form" type="text" placeholder="búsqueda" required>
                     </div>
