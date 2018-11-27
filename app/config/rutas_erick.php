@@ -90,3 +90,15 @@ $router->addGet('/busqueda-avanzada/resultados','Busqueda::search');
 
 
 $router->addGet('/subcategories','Busqueda::subcategories');
+
+$router->addGet('/reservados','Historial::reservado');
+$router->addPost('/reserva/eliminar/:int',[
+    'controller'=>'Historial',
+    'action'=>'cancelar',
+    'id'=>1
+
+]);//actualiza por post
+
+$router->addGet('/prestamos','Historial::prestamo');
+
+$router->addGet('/historial','Historial::historial');
