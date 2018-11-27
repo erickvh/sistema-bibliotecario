@@ -31,11 +31,11 @@
                 </div>-->
                 <div class="form-group">
                     <label class="control-label">Fecha de nacimiento</label>
-                    <input name="fechanacimiento" class="form-control" type="date" placeholder="Selecciones la fecha de nacimiento" value="">
+                    <input name="fechanacimiento" class="form-control" type="date" placeholder="Selecciones la fecha de nacimiento" value="" required>
                 </div> 
                  <div class="form-group">
                     <label class="control-label">Lugar de estudio</label>
-                    <input name="lugardeestudio" class="form-control" type="text" placeholder="Digite el Lugar de estudio" value="">
+                    <input name="lugardeestudio" class="form-control" type="text" placeholder="Digite el Lugar de estudio" value="" required>
                 </div>
                 <div class="form-group">
                     <label for="sexo">Genero</label>
@@ -55,7 +55,7 @@
                  
                 <div class="form-group">
                     <label class="control-label">Direccion</label>
-                    <input name="direccion" class="form-control" type="text" placeholder="Digite la Direccion del lector" value="">
+                    <input name="direccion" class="form-control" type="text" placeholder="Digite la Direccion del lector" value="" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Municipio</label>
@@ -67,15 +67,15 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nombre del padre</label>
-                    <input name="nombrePadre" class="form-control" type="text" placeholder="Digite el Nombre del padre" value="">
+                    <input name="nombrePadre" class="form-control" type="text" placeholder="Digite el Nombre del padre" value="" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nombre de la madre</label>
-                    <input name="nombreMadre" class="form-control" type="text" placeholder="Digite el Nombre de la madre" value="">
+                    <input name="nombreMadre" class="form-control" type="text" placeholder="Digite el Nombre de la madre" value="" required>
                 </div>
                 <div class="form-group">
                     <label class="control-label">Telefono</label>
-                    <input name="telefono" class="form-control" type="tel" placeholder="Digite el Telefono del lector" >
+                    <input name="telefono" class="form-control" type="tel" placeholder="Digite el Telefono del lector" required>
                 </div>
                 <input type="submit" class="text-center btn btn-primary" value="Guardar">
             </form>

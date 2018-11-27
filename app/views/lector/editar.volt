@@ -13,26 +13,26 @@
             <form method="post">
                     <div class="form-group">
                         <label class="control-label">Nombre de usuario</label>
-                        <input name="username"  value='{{prestamista.users.username}}'class="form-control" type="text" placeholder="" required>
+                        <input name="usuario"  value='{{prestamista.users.username}}'class="form-control" type="text" placeholder="" required>
                     </div>
                     <div class="form-group ">
                         <label class="control-label">Nombre del lector</label>
-                        <input name="nombre" value='{{prestamista.users.nombre}}' class="form-control" type="text" placeholder="Digite nombre completo"   >
+                        <input name="nombre" value='{{prestamista.users.nombre}}' class="form-control" type="text" placeholder="Digite nombre completo" required>
 
                     </div>
                     
                     <div class="form-group">
                         <label class="control-label">Email</label>
-                        <input name="email"  value='{{prestamista.users.email}}' class="form-control" type="text" placeholder="Digite su email"   >
+                        <input name="email"  value='{{prestamista.users.email}}' class="form-control" type="text" placeholder="Digite su email" required>
                     </div>
   
                     <div class="form-group">
                         <label class="control-label">Fecha Nacimiento</label>
-                        <input class="form-control" value='{{prestamista.users.fechanacimiento}}' id="fechanacimiento" name="fechanacimiento" type="date" placeholder="Seleccionar fecha">
+                        <input class="form-control" value='{{prestamista.users.fechanacimiento}}' id="fechanacimiento" name="fechanacimiento" type="date" placeholder="Seleccionar fecha" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Lugar de estudio</label>
-                        <input name="lugardeestudio"  value='{{prestamista.lugardeestudio}}'class="form-control" type="text" placeholder="Digite su lugar de estudio"   >
+                        <input name="lugardeestudio"  value='{{prestamista.lugardeestudio}}'class="form-control" type="text" placeholder="Digite su lugar de estudio" required >
                     </div>
                   <div class="form-group">
                     <label for="sexo">Genero</label>
@@ -54,7 +54,7 @@
 
                   <div class="form-group">
                     <label class="control-label">Direccion</label>
-                    <input name="direccion"  value='{{prestamista.direccion}}'class="form-control" type="text" placeholder="Digite su direccion"   >
+                    <input name="direccion"  value='{{prestamista.direccion}}'class="form-control" type="text" placeholder="Digite su direccion" required>
                   </div>
                   <div class="form-group">
                     <label class="control-label">Municipio</label>
@@ -67,15 +67,15 @@
                 </div>
                 <div class="form-group">
                     <label class="control-label">Nombre del padre </label>
-                    <input name="nombrePadre"  value='{{prestamista.nombredepadre}}'class="form-control" type="text" placeholder="nombre padre"   >
+                    <input name="nombrePadre"  value='{{prestamista.nombredepadre}}'class="form-control" type="text" placeholder="nombre padre"  required>
                 </div>
                     <div class="form-group">
                         <label class="control-label">Nombre de la madre </label>
-                        <input name="nombreMadre"  value='{{prestamista.nombredemadre}}'class="form-control" type="text" placeholder="nombre madre"   >
+                        <input name="nombreMadre"  value='{{prestamista.nombredemadre}}'class="form-control" type="text" placeholder="nombre madre" required>
                     </div>
                     <div class="form-group">
                         <label class="control-label">Telefono </label>
-                        <input name="telefono"  value='{{prestamista.telefono}}'class="form-control" type="text" placeholder="Telefono"   >
+                        <input name="telefono"  value='{{prestamista.telefono}}'class="form-control" type="text" placeholder="Telefono"  required >
                     </div>
                 
                     <button type="Submit" class="btn btn-primary">Actualizar</button>
