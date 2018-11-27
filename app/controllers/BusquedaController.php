@@ -55,9 +55,13 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     }
 
-    public function indexAction()
+    public function indexAction(){
+        $this->view->pick('busqueda/busqueda');
+    }
+
+    public function busquedaAction()
     {
-        if ($this->request->isPost()) {
+        //if ($this->request->isPost()) {
             $busqueda = $this->request->get('busqueda');
             $formaBuscar= $this->request->get('formaBuscar');
 
@@ -144,10 +148,10 @@ class BusquedaController extends \Phalcon\Mvc\Controller
                 $this->view->libros= $libros;
                 $this->view->matautores= $matautoresGen;
             }
-        }
-        else{
-            $this->view->pick('busqueda/busqueda');
-        }
+        //}
+        //else{
+            //$this->view->pick('busqueda/busqueda');
+        //}
 
     }
 
@@ -159,6 +163,15 @@ class BusquedaController extends \Phalcon\Mvc\Controller
         $unidades=Unidades::findFirst("idmaterial='".$libro->idmaterial."'");
         $unidadesDisp=$unidades->unidadesexistentes-($unidades->unidadesreservadas+$unidades->unidadesprestadas);
         $materialesautores=MaterialesAutores::find("idmaterial='".$libro->idmaterial."'");
+        
+        $diasHabiles=1;
+        $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
+        $reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
+        $prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
+        $total=$reservas+$prestamos;
+        $this->view->limite = Carbon::now()->addDay($diasHabiles)->format('d-m-Y');
+        $this->view->total = $total;
+
         $this->view->libro= $libro;
         $this->view->unidades= $unidadesDisp;
         $this->view->matauts= $materialesautores;
@@ -172,6 +185,15 @@ class BusquedaController extends \Phalcon\Mvc\Controller
         $unidades=Unidades::findFirst("idmaterial='".$recurso->idmaterial."'");
         $unidadesDisp=$unidades->unidadesexistentes-($unidades->unidadesreservadas+$unidades->unidadesprestadas);
         $materialesautores=MaterialesAutores::find("idmaterial='".$recurso->idmaterial."'");
+
+        $diasHabiles=1;
+        $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
+        $reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
+        $prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
+        $total=$reservas+$prestamos;
+        $this->view->limite = Carbon::now()->addDay($diasHabiles)->format('d-m-Y');
+        $this->view->total = $total;
+
         $this->view->recurso= $recurso;
         $this->view->unidades= $unidadesDisp;
         $this->view->matauts= $materialesautores;
@@ -179,17 +201,17 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
-        $this->view->pick('busqueda/reservar');
+        //$this->view->pick('busqueda/reservar');
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $material = MaterialesBibliograficos::findFirst($id);
         $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
-        $reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
-        $prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
-        $total=$reservas+$prestamos;
-        $this->view->material = $material;
-        $this->view->total = $total;
-        $this->view->limite = Carbon::now()->addDay($diasHabiles)->format('d-m-Y');
+        //$reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
+        //$prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
+        //$total=$reservas+$prestamos;
+        //$this->view->material = $material;
+        //$this->view->total = $total;
+        //$this->view->limite = Carbon::now()->addDay($diasHabiles)->format('d-m-Y');
         if ($this->request->isPost()) {
             $reserva=new Reservas;
             $reserva->fechasolicitud=Carbon::now()->format('Y-m-d');
