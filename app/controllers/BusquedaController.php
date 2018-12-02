@@ -201,7 +201,6 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
-        $this->view->disable();
         //$this->view->pick('busqueda/reservar');
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url

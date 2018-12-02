@@ -2,9 +2,12 @@
 
 $router = $di->getRouter(false);
 
+$router->removeExtraSlashes(true);
+
+
 
   
-// se integraran despues para evitar conflictos
+// se integraran despues para egit vitar conflictos
 
 require_once('rutas_erick.php'); 
 require_once('rutas_vero.php');
