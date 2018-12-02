@@ -201,18 +201,12 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
+        $this->view->disable();
         //$this->view->pick('busqueda/reservar');
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $material = MaterialesBibliograficos::findFirst($id);
         $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
-        //$reservas= Reservas::count("prestado=false and cancelado=false and idprestamista='".$prestamista->id."'");
-        //$prestamos= Prestamos::count("devuelto=false and idprestamista='".$prestamista->id."'");
-        //$total=$reservas+$prestamos;
-        //$this->view->material = $material;
-        //$this->view->total = $total;
-        //$this->view->limite = Carbon::now()->addDay($diasHabiles)->format('d-m-Y');
-        if ($this->request->isPost()) {
             $reserva=new Reservas;
             $reserva->fechasolicitud=Carbon::now()->format('Y-m-d');
             $reserva->fechareserva=Carbon::now()->addDay($diasHabiles)->format('Y-m-d');
@@ -224,11 +218,10 @@ class BusquedaController extends \Phalcon\Mvc\Controller
             $unidades=Unidades::findFirst("idmaterial='".$reserva->idmaterial."'");
             $unidades->unidadesreservadas=$unidades->unidadesreservadas+1;
             $unidades->save();
-            $response = new Response();
+
             $this->flashSession->success('Reservación del material "'.$material->nombre.'" realizada con exito');
-            $response->redirect('/busqueda'); //Retornar al index
-            return $response;
-        }     
+           return $this->response->redirect('/busqueda'); //Retornar al index
+           
     }
     
     function searchformAction(){

@@ -84,7 +84,7 @@ $router->addGet('/busqueda/verRecurso/:int',[
     'id'=>1
 ]);
 
-$router->add('/busqueda/reservar/:int',[
+$router->addPost('/busqueda/reservar/:int',[
     'controller'=>'Busqueda',
     'action'=>'reservar',
     'id'=>1
