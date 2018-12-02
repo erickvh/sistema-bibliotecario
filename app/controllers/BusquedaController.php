@@ -201,6 +201,8 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
+     if($this->request->isPost()){
+
         $this->view->disable();
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
@@ -220,7 +222,7 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
             $this->flashSession->success('Reservación del material "'.$material->nombre.'" realizada con exito');
             $this->response->redirect('/busqueda'); //Retornar al index
-           
+     }  
     }
     
     function searchformAction(){
