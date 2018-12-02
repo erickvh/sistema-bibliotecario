@@ -14,7 +14,6 @@ use Carbon\Carbon;
 use App\Models\Categorias;
 use App\Models\Subcategorias;
 use App\Models\Formatos;
-use App\Models\Materialesbibliograficos;
 
 class BusquedaController extends \Phalcon\Mvc\Controller
 {
