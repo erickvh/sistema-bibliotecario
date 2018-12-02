@@ -8,7 +8,7 @@ use App\Models\MaterialesAutores;
 use App\Models\Reservas;
 use App\Models\Prestamos;
 use App\Models\Prestamistas;
-use App\Models\MaterialesBibliograficos;
+use App\Models\Materialesbibliograficos;
 use Phalcon\Http\Response;
 use Carbon\Carbon;
 use App\Models\Categorias;
