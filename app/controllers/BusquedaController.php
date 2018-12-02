@@ -14,6 +14,7 @@ use Carbon\Carbon;
 use App\Models\Categorias;
 use App\Models\Subcategorias;
 use App\Models\Formatos;
+use App\Models\Materialesbibliograficos;
 
 class BusquedaController extends \Phalcon\Mvc\Controller
 {
@@ -205,7 +206,7 @@ class BusquedaController extends \Phalcon\Mvc\Controller
         $this->view->disable();
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
-        $material = MaterialesBibliograficos::findFirst($id);
+        $material = Materialesbibliograficos::findFirst($id);
         $prestamista = Prestamistas::findFirst("iduser='".$this->user->id."'");
             $reserva=new Reservas;
             $reserva->fechasolicitud=Carbon::now()->format('Y-m-d');
