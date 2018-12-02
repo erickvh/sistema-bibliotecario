@@ -201,7 +201,6 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
-     if($this->request->isPost()){
 
         $this->view->disable();
         $diasHabiles=1;
@@ -219,10 +218,8 @@ class BusquedaController extends \Phalcon\Mvc\Controller
             $unidades=Unidades::findFirst("idmaterial='".$reserva->idmaterial."'");
             $unidades->unidadesreservadas=$unidades->unidadesreservadas+1;
             $unidades->save();
-
             $this->flashSession->success('Reservación del material "'.$material->nombre.'" realizada con exito');
-            $this->response->redirect('/busqueda'); //Retornar al index
-     }  
+            $this->response->redirect('busqueda'); //Retornar al index
     }
     
     function searchformAction(){
