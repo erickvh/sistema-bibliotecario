@@ -2,7 +2,6 @@
 
 $router = $di->getRouter(false);
 
-$router->removeExtraSlashes(true);
 
 
 
