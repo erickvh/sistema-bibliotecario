@@ -6,6 +6,7 @@ use App\Validations\ValidacionLector;
 use App\Models\Bibliotecarios;
 use App\Models\Prestamistas;
 use App\Models\Municipios;
+use App\Models\Prestamos;
 use  Carbon\Carbon;
 
 
@@ -57,7 +58,7 @@ class LectorController extends \Phalcon\Mvc\Controller
    $this->view->prestamistas= $prestamistas;
   
     }
-
+    
     public function crearAction() {
        $this->view->pick('lector/crear');    
         
@@ -262,6 +263,27 @@ class LectorController extends \Phalcon\Mvc\Controller
         $response->redirect('/lector'); //Retornar la vista del lector
         return $response;
         }
+
+    }
+
+    public function historialAction(){
+        if($this->biblioteca){
+            $id=$this->dispatcher->getParam('id');
+            $prestamista=Prestamistas::findFirst($id);
+            $prestamosUsuario = Prestamos::find("idprestamista='".$prestamista->id."'");
+            $prestamos=[];
+            $i=0;
+            foreach ($prestamosUsuario as $prestamo) {
+                if($prestamo->prestamistas->bibliotecas->id==$this->biblioteca->id)
+                {  
+                    $prestamos[$i]= $prestamo;
+                    ++$i;
+                }
+            }
+        }
+        $this->view->pick('lector/historial');
+        $this->view->prestamos=$prestamos;
+
 
     }
 

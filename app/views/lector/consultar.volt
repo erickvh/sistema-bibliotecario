@@ -39,6 +39,7 @@
           <a href="{{url('lector/editar/'~ prestamist.id)}}" class="btn btn-success"><i class="fa fa-pencil" aria-hidden="true"></i>Editar</a>
           <a href="{{url('lector/ver/'~ prestamist.id)}}" class="btn btn-info"><i class="fa fa-eye" aria-hidden="true"></i> Ver </a>
           <a onclick="return abrir_modal('{{url('lector/deshabilitar/'~ prestamist.id)}}')" class="btn btn-warning"><i class="fa fa-lock" aria-hidden="true"></i>Deshabilitar</a>
+          <a href="{{url('lector/historial/'~ prestamist.id)}}" class="btn btn-primary"><i class="fa fa-book" aria-hidden="true"></i>Historial</a>
       </td>
       {% else %}
       <td>

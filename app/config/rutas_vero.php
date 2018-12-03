@@ -23,6 +23,13 @@ $router->addGet('/lector/ver/:int',[
     'action'=>'ver',
     'id'=>1
 ]);//visualizar los datos del lector
+// $router->addGet('/lector/historial/:int','Lector::historial');
+
+$router->addGet('/lector/historial/:int',[
+    'controller'=>'Lector',
+    'action'=>'historial',
+    'id'=>1
+]);//visualizar historial del lector
 
 $router->add('/lector/editar/:int',[
     'controller'=>'Lector',

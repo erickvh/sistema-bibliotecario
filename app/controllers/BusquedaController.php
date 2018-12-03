@@ -201,8 +201,8 @@ class BusquedaController extends \Phalcon\Mvc\Controller
 
     public function reservarAction()
     {
-
         $this->view->disable();
+        //$this->view->pick('busqueda/reservar');
         $diasHabiles=1;
         $id = $this->dispatcher->getParam('id'); //Obtener el parametros de la Url
         $material = Materialesbibliograficos::findFirst($id);
@@ -218,8 +218,10 @@ class BusquedaController extends \Phalcon\Mvc\Controller
             $unidades=Unidades::findFirst("idmaterial='".$reserva->idmaterial."'");
             $unidades->unidadesreservadas=$unidades->unidadesreservadas+1;
             $unidades->save();
+
             $this->flashSession->success('Reservación del material "'.$material->nombre.'" realizada con exito');
-            $this->response->redirect('busqueda'); //Retornar al index
+           return $this->response->redirect('/busqueda'); //Retornar al index
+           
     }
     
     function searchformAction(){
