@@ -35,7 +35,7 @@
                             <td>{{reserva.fechareserva}}</td>
                             <td>{{reserva.fechasolicitud}}</td>
                             <td>
-                                <a onclick="return abrir_modal('{{url('reservados/cancelar/'~ reservado.id)}}')" class="btn btn-warning"><i class="fa fa-trash" aria-hidden="true"></i>Eliminar</a>
+                                <button  class="btn btn-warning" data-toggle="modal" data-target="#cancelar"><i class="fa fa-trash" aria-hidden="true"></i>Cancelar Reserva</button>
                             </td>
                         </tr>
                         {% endfor %}
@@ -47,7 +47,7 @@
 </div>
 
 <!-- Modal Eliminar -->
-<div id="popup" class="modal fade" role="dialog">
+<div id="cancelar" class="modal fade" role="dialog">
 <div class="modal-dialog">
     <div class="modal-content">
         <div class="modal-header">
